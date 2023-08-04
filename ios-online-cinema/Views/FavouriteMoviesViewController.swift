@@ -1,5 +1,5 @@
 //
-//  MoviesDetailsVC.swift
+//  FavouriteMoviesViewController.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 01.08.2023.
@@ -7,15 +7,16 @@
 
 import UIKit
 
-class MoviesDetailsVC : UIViewController {
+class FavouriteMoviesViewController : UIViewController, Coordinating {
     
-    var viewModel = MoviesDetailsVM()
+    var coordinator: Coordinator?
+    var viewModel = FavouriteMoviesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
         viewModel.fetch()
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .yellow
     }
     
     func bindViewModel() {
@@ -24,7 +25,7 @@ class MoviesDetailsVC : UIViewController {
                 return
             }
             DispatchQueue.main.async {
-                self.title = title
+//                self.title = title
             }
         }
     }

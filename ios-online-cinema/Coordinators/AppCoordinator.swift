@@ -7,32 +7,38 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
-    var navigationController: UINavigationController
+protocol AppCoordinatorProtocol {
+    func showTabBar()
+}
+
+class AppCoordinator: Coordinator, AppCoordinatorProtocol {
     
-    init(navVC: UINavigationController) {
-        self.navigationController = navVC
+    var parentCoordinator: Coordinator?
+    var childCoordinators = [Coordinator]()
+    var navigationController: UINavigationController
+    var type: CoordinatorType { .app }
+    weak var finishDelegate: CoordinatorFinishDelegate? = nil
+    
+    required init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        navigationController.setNavigationBarHidden(true, animated: true)
     }
     
     func start() {
         print("AppCordinator starts!")
-        var vc: UIViewController & Coordinating = MoviesFeedVC()
-        vc.coordinator = self
-        navigationController.setViewControllers([vc], animated: false)
+        showTabBar()
     }
     
-    func goToMoviesFeed() {
-        print("Going to movies feed!")
+    func showTabBar() {
+        let vc = TabBarCoordinator(navigationController)
+        childCoordinators.append(vc)
+        vc.parentCoordinator = self
+        vc.start()
     }
-    
-    func goToMoviesDetails() {
-        print("Going to movies details!")
-        
-    }
-    
-    func goToFavouriteMovies() {
-        print("Going to favourite movies!")
+}
+
+extension AppCoordinator: CoordinatorFinishDelegate {
+    func coordinatorDidFinish(childCoordinator: Coordinator) {
+        childCoordinators = childCoordinators.filter({$0.type != childCoordinator.type})
     }
 }

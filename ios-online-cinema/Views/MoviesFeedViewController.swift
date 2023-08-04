@@ -1,5 +1,5 @@
 //
-//  MoviesFeedVC.swift
+//  MoviesFeedViewController.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 01.08.2023.
@@ -8,10 +8,10 @@
 import UIKit
 import SnapKit
 
-class MoviesFeedVC : UIViewController, Coordinating{
+class MoviesFeedViewController : UIViewController, Coordinating{
     
     var coordinator: Coordinator?
-    var viewModel = MoviesFeedVM()
+    var viewModel = MoviesFeedViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class MoviesFeedVC : UIViewController, Coordinating{
                 return
             }
             DispatchQueue.main.async {
-                self.title = title
+//                self.title = title
             }
         }
     }
