@@ -8,8 +8,10 @@
 import Foundation
 
 struct TrendMoviesResponseModel: Codable {
-    let page: String
+    let page: Int
     let results: [MovieShortModel]
+    let total_pages: Int
+    let total_results: Int
 }
 
 struct MovieShortModel: Codable {
@@ -18,6 +20,7 @@ struct MovieShortModel: Codable {
     let id: Int
     let title: String
     let original_language: String
+    let original_title: String
     let overview: String
     let poster_path: String
     let media_type: String

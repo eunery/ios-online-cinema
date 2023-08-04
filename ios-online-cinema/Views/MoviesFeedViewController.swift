@@ -26,7 +26,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
                 return
             }
             DispatchQueue.main.async {
-//                self.title = title
+                self.title = title
             }
         }
     }

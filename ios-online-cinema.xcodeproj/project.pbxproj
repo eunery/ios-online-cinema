@@ -34,6 +34,8 @@
 		85F3FB312A7B90CA00F0B849 /* MoviesFeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB302A7B90CA00F0B849 /* MoviesFeedCoordinator.swift */; };
 		85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB322A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift */; };
 		85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB342A7CD47000F0B849 /* TabBarPage.swift */; };
+		85F3FB372A7CFC8200F0B849 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB362A7CFC8200F0B849 /* APIService.swift */; };
+		85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB382A7CFFF600F0B849 /* APIError.swift */; };
 		92A9BE28792FDC27D8869EF5 /* Pods_ios_online_cinema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +89,8 @@
 		85F3FB302A7B90CA00F0B849 /* MoviesFeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFeedCoordinator.swift; sourceTree = "<group>"; };
 		85F3FB322A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteMoviesCoordinator.swift; sourceTree = "<group>"; };
 		85F3FB342A7CD47000F0B849 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
+		85F3FB362A7CFC8200F0B849 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		85F3FB382A7CFFF600F0B849 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		B088D5416E9253D3914DA36F /* Pods-ios-online-cinemaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.debug.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_online_cinema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF0FE93836042491867D13BC /* Pods-ios-online-cinemaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.release.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,8 +162,8 @@
 		85072F662A78ECFC006E3D58 /* ios-online-cinema */ = {
 			isa = PBXGroup;
 			children = (
-				85F3FAB82A7923FE00F0B849 /* Network */,
 				858A4A222A7901D400B2042E /* Coordinators */,
+				85F3FAB82A7923FE00F0B849 /* Network */,
 				858A4A1E2A78FD2500B2042E /* Views */,
 				858A4A1D2A78FD1D00B2042E /* ViewModels */,
 				858A4A1C2A78FD1500B2042E /* Models */,
@@ -253,6 +257,8 @@
 		85F3FAB82A7923FE00F0B849 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				85F3FB382A7CFFF600F0B849 /* APIError.swift */,
+				85F3FB362A7CFC8200F0B849 /* APIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -520,12 +526,14 @@
 				85F3FB052A7A54B500F0B849 /* FavouriteMovies.xcdatamodeld in Sources */,
 				85F3FAC02A79259F00F0B849 /* MoviesDetailsViewModel.swift in Sources */,
 				85F3FAB52A791F5E00F0B849 /* MoviesModel.swift in Sources */,
+				85F3FB372A7CFC8200F0B849 /* APIService.swift in Sources */,
 				85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */,
 				858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */,
 				85F3FB272A7A617300F0B849 /* Movie+CoreDataProperties.swift in Sources */,
 				85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */,
 				858A4A212A78FD5F00B2042E /* Dynamic.swift in Sources */,
 				85F3FB262A7A617300F0B849 /* Movie+CoreDataClass.swift in Sources */,
+				85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */,
 				85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */,
 				85F3FABA2A7924BE00F0B849 /* MoviesFeedViewModel.swift in Sources */,
 				85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */,
