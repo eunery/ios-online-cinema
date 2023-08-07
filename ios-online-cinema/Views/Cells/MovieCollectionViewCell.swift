@@ -51,8 +51,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
             maker.trailing.equalTo(contentView)
             maker.bottom.equalTo(contentView)
         }
-        
-        
     }
     
     required init?(coder: NSCoder) {

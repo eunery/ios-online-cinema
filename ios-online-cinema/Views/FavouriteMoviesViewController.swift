@@ -20,13 +20,11 @@ class FavouriteMoviesViewController : UIViewController, Coordinating {
     }
     
     func bindViewModel() {
-        viewModel.title.bind { [weak self] title in
-            guard let self = self else {
-                return
-            }
-            DispatchQueue.main.async {
-//                self.title = title
-            }
-        }
+//        viewModel.title.bind { [weak self] title in
+//            guard let self else { return }
+//            DispatchQueue.main.async {
+//                
+//            }
+//        }
     }
 }

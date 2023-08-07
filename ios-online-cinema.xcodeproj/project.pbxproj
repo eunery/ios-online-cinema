@@ -46,6 +46,7 @@
 		85F3FB4A2A7E6DBA00F0B849 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */; };
 		85F3FB4F2A7E70D300F0B849 /* ProximaNovaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */; };
 		85F3FB522A7E736A00F0B849 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */; };
+		85F3FB542A810B8500F0B849 /* MovieGenresResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */; };
 		92A9BE28792FDC27D8869EF5 /* Pods_ios_online_cinema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
 		85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximaNovaFont.swift; sourceTree = "<group>"; };
 		85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenresResponseModel.swift; sourceTree = "<group>"; };
 		B088D5416E9253D3914DA36F /* Pods-ios-online-cinemaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.debug.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_online_cinema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF0FE93836042491867D13BC /* Pods-ios-online-cinemaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.release.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				85F3FAB42A791F5E00F0B849 /* MoviesModel.swift */,
 				85F3FAB62A791FFB00F0B849 /* MoviesDetailsModel.swift */,
+				85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */,
 				85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */,
 			);
 			path = Models;
@@ -590,6 +593,7 @@
 				85F3FB262A7A617300F0B849 /* Movie+CoreDataClass.swift in Sources */,
 				85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */,
 				85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */,
+				85F3FB542A810B8500F0B849 /* MovieGenresResponseModel.swift in Sources */,
 				85F3FABA2A7924BE00F0B849 /* MoviesFeedViewModel.swift in Sources */,
 				85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */,
 				85F3FAB72A791FFB00F0B849 /* MoviesDetailsModel.swift in Sources */,

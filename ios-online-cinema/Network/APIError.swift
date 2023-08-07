@@ -19,8 +19,8 @@ enum APIError: Error, CustomStringConvertible {
         switch self {
         case .badURL:
             return "Invalid url. Check credentials."
-        case .parsing(let error):
-            return "Parsing error. \(error)"
+        case .parsing:
+            return "Parsing error."
         case .unknown:
             return "Unknown error."
         case .badResponse(let statusCode):
