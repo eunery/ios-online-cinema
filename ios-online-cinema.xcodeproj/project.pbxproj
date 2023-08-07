@@ -36,6 +36,16 @@
 		85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB342A7CD47000F0B849 /* TabBarPage.swift */; };
 		85F3FB372A7CFC8200F0B849 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB362A7CFC8200F0B849 /* APIService.swift */; };
 		85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB382A7CFFF600F0B849 /* APIError.swift */; };
+		85F3FB432A7E6DBA00F0B849 /* ProximaNova-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB3B2A7E6DBA00F0B849 /* ProximaNova-ExtraBold.ttf */; };
+		85F3FB442A7E6DBA00F0B849 /* ProximaNova-Black_1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB3C2A7E6DBA00F0B849 /* ProximaNova-Black_1.ttf */; };
+		85F3FB452A7E6DBA00F0B849 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB3D2A7E6DBA00F0B849 /* ProximaNova-Bold.ttf */; };
+		85F3FB462A7E6DBA00F0B849 /* ProximaNova-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB3E2A7E6DBA00F0B849 /* ProximaNova-Black.ttf */; };
+		85F3FB472A7E6DBA00F0B849 /* ProximaNova-BoldIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB3F2A7E6DBA00F0B849 /* ProximaNova-BoldIt.ttf */; };
+		85F3FB482A7E6DBA00F0B849 /* ProximaNova-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB402A7E6DBA00F0B849 /* ProximaNova-Light.ttf */; };
+		85F3FB492A7E6DBA00F0B849 /* ProximaNova-BlackIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB412A7E6DBA00F0B849 /* ProximaNova-BlackIt.ttf */; };
+		85F3FB4A2A7E6DBA00F0B849 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */; };
+		85F3FB4F2A7E70D300F0B849 /* ProximaNovaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */; };
+		85F3FB522A7E736A00F0B849 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */; };
 		92A9BE28792FDC27D8869EF5 /* Pods_ios_online_cinema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +101,16 @@
 		85F3FB342A7CD47000F0B849 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		85F3FB362A7CFC8200F0B849 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		85F3FB382A7CFFF600F0B849 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		85F3FB3B2A7E6DBA00F0B849 /* ProximaNova-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-ExtraBold.ttf"; sourceTree = "<group>"; };
+		85F3FB3C2A7E6DBA00F0B849 /* ProximaNova-Black_1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Black_1.ttf"; sourceTree = "<group>"; };
+		85F3FB3D2A7E6DBA00F0B849 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
+		85F3FB3E2A7E6DBA00F0B849 /* ProximaNova-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Black.ttf"; sourceTree = "<group>"; };
+		85F3FB3F2A7E6DBA00F0B849 /* ProximaNova-BoldIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-BoldIt.ttf"; sourceTree = "<group>"; };
+		85F3FB402A7E6DBA00F0B849 /* ProximaNova-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Light.ttf"; sourceTree = "<group>"; };
+		85F3FB412A7E6DBA00F0B849 /* ProximaNova-BlackIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-BlackIt.ttf"; sourceTree = "<group>"; };
+		85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
+		85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximaNovaFont.swift; sourceTree = "<group>"; };
+		85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		B088D5416E9253D3914DA36F /* Pods-ios-online-cinemaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.debug.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_online_cinema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF0FE93836042491867D13BC /* Pods-ios-online-cinemaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.release.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +188,7 @@
 				858A4A1D2A78FD1D00B2042E /* ViewModels */,
 				858A4A1C2A78FD1500B2042E /* Models */,
 				85F3FB1F2A7A601900F0B849 /* FavoriteMoviesItem */,
+				85F3FB3A2A7E6D9400F0B849 /* Fonts */,
 				85072F672A78ECFC006E3D58 /* AppDelegate.swift */,
 				85072F702A78ECFD006E3D58 /* Assets.xcassets */,
 				85072F752A78ECFD006E3D58 /* Info.plist */,
@@ -198,6 +219,7 @@
 			children = (
 				85F3FAB42A791F5E00F0B849 /* MoviesModel.swift */,
 				85F3FAB62A791FFB00F0B849 /* MoviesDetailsModel.swift */,
+				85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,6 +238,7 @@
 		858A4A1E2A78FD2500B2042E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				85F3FB502A7E733E00F0B849 /* Cells */,
 				85F3FAAE2A791C1A00F0B849 /* MoviesFeedViewController.swift */,
 				85F3FAB02A791C2F00F0B849 /* MoviesDetailsViewController.swift */,
 				85F3FAB22A791C4800F0B849 /* FavouriteMoviesViewController.swift */,
@@ -270,6 +293,29 @@
 				85F3FB252A7A617300F0B849 /* Movie+CoreDataProperties.swift */,
 			);
 			path = FavoriteMoviesItem;
+			sourceTree = "<group>";
+		};
+		85F3FB3A2A7E6D9400F0B849 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				85F3FB3C2A7E6DBA00F0B849 /* ProximaNova-Black_1.ttf */,
+				85F3FB3E2A7E6DBA00F0B849 /* ProximaNova-Black.ttf */,
+				85F3FB412A7E6DBA00F0B849 /* ProximaNova-BlackIt.ttf */,
+				85F3FB3D2A7E6DBA00F0B849 /* ProximaNova-Bold.ttf */,
+				85F3FB3F2A7E6DBA00F0B849 /* ProximaNova-BoldIt.ttf */,
+				85F3FB3B2A7E6DBA00F0B849 /* ProximaNova-ExtraBold.ttf */,
+				85F3FB402A7E6DBA00F0B849 /* ProximaNova-Light.ttf */,
+				85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		85F3FB502A7E733E00F0B849 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		91E8142493B718C8AD84E65F /* Pods */ = {
@@ -394,7 +440,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F3FB442A7E6DBA00F0B849 /* ProximaNova-Black_1.ttf in Resources */,
+				85F3FB482A7E6DBA00F0B849 /* ProximaNova-Light.ttf in Resources */,
+				85F3FB462A7E6DBA00F0B849 /* ProximaNova-Black.ttf in Resources */,
 				85072F712A78ECFD006E3D58 /* Assets.xcassets in Resources */,
+				85F3FB472A7E6DBA00F0B849 /* ProximaNova-BoldIt.ttf in Resources */,
+				85F3FB4A2A7E6DBA00F0B849 /* ProximaNova-Regular.ttf in Resources */,
+				85F3FB452A7E6DBA00F0B849 /* ProximaNova-Bold.ttf in Resources */,
+				85F3FB492A7E6DBA00F0B849 /* ProximaNova-BlackIt.ttf in Resources */,
+				85F3FB432A7E6DBA00F0B849 /* ProximaNova-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +581,7 @@
 				85F3FAC02A79259F00F0B849 /* MoviesDetailsViewModel.swift in Sources */,
 				85F3FAB52A791F5E00F0B849 /* MoviesModel.swift in Sources */,
 				85F3FB372A7CFC8200F0B849 /* APIService.swift in Sources */,
+				85F3FB522A7E736A00F0B849 /* MovieCollectionViewCell.swift in Sources */,
 				85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */,
 				858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */,
 				85F3FB272A7A617300F0B849 /* Movie+CoreDataProperties.swift in Sources */,
@@ -538,6 +593,7 @@
 				85F3FABA2A7924BE00F0B849 /* MoviesFeedViewModel.swift in Sources */,
 				85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */,
 				85F3FAB72A791FFB00F0B849 /* MoviesDetailsModel.swift in Sources */,
+				85F3FB4F2A7E70D300F0B849 /* ProximaNovaFont.swift in Sources */,
 				85F3FB312A7B90CA00F0B849 /* MoviesFeedCoordinator.swift in Sources */,
 				85F3FAB32A791C4800F0B849 /* FavouriteMoviesViewController.swift in Sources */,
 				85F3FABE2A7924D400F0B849 /* FavouriteMoviesViewModel.swift in Sources */,

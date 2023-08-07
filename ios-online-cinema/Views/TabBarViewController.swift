@@ -12,6 +12,5 @@ class TabBarViewController: UITabBarController, Coordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
     }
 }
