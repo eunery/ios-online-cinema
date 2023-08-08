@@ -45,6 +45,7 @@ struct APIService: APIServiceProtocol {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
                     let response = try decoder.decode(TrendMoviesResponseModel.self, from: data)
                     completionHandler(Result.success(response))
@@ -83,6 +84,7 @@ struct APIService: APIServiceProtocol {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
                     let response = try decoder.decode(MoviesDetailsModel.self, from: data)
                     completionHandler(Result.success(response))
@@ -119,6 +121,7 @@ struct APIService: APIServiceProtocol {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
                     let response = try decoder.decode(MovieGenresResponseModel.self, from: data)
                     completionHandler(Result.success(response))

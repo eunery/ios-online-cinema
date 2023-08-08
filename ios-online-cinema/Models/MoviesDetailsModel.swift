@@ -9,37 +9,72 @@ import Foundation
 
 struct MoviesDetailsModel: Codable {
     let adult: Bool
-    let backdrop_path: String
-    let belongs_to_collection: MovieCollectionModel?
+    let backdropPath: String
+    let belongsToCollection: MovieCollectionModel?
     let budget: Int
     let genres: [GenreIdModel]
     let homepage: String
     let id: Int
-    let imdb_id: String
-    let original_language: String
-    let original_title: String
+    let imdbId: String
+    let originalLanguage: String
+    let originalTitle: String
     let overview: String
     let popularity: Double
-    let poster_path: String
-    let production_companies: [ProductionCompaniesModel?]
-    let production_countries: [ProductionCountriesModel?]
-    let release_date: String
+    let posterPath: String
+    let productionCompanies: [ProductionCompaniesModel?]
+    let productionCountries: [ProductionCountriesModel?]
+    let releaseDate: String
     let revenue: Int
     let runtime: Int
-    let spoken_languages: [SpokenLanguagesModel]
+    let spokenLanguages: [SpokenLanguagesModel]
     let status: String
     let tagline: String
     let title: String
     let video: Bool
-    let vote_average: Double
-    let vote_count: Int
+    let voteAverage: Double
+    let voteCount: Int
+    
+    enum codingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case belongsToCollection = "belongs_to_collection"
+        case budget
+        case genres
+        case homepage = "homepage"
+        case id
+        case imdbId = "imdb_id"
+        case originalLanguage = "original_language"
+        case originalTitle = "original_title"
+        case overview
+        case popularity
+        case posterPath = "poster_path"
+        case productionCompanies = "production_companies"
+        case productionCountries = "production_countries"
+        case releaseDate = "release_date"
+        case revenue
+        case runtime
+        case spokenLanguages = "spoken_languages"
+        case status
+        case tagline
+        case title
+        case video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
 }
 
 struct MovieCollectionModel: Codable {
     let id: Int
     let name: String
-    let poster_path: String
-    let backdrop_path: String
+    let posterPath: String
+    let backdropPath: String
+    
+    enum codingKeys: String, CodingKey {
+        case id
+        case name
+        case posterPath = "poster_path"
+        case backdropPath = "backdrop_path"
+    }
 }
 
 struct GenreIdModel: Codable {
@@ -49,18 +84,36 @@ struct GenreIdModel: Codable {
 
 struct ProductionCompaniesModel: Codable {
     let id: Int
-    let logo_path: String?
+    let logoPath: String?
     let name: String
     let origin_country: String?
+    
+    enum codingKeys: String, CodingKey {
+        case id
+        case logoPath = "logo_path"
+        case name
+        case originCountry = "origin_country"
+    }
 }
 
 struct ProductionCountriesModel: Codable {
     let iso_3166_1: String
     let name: String
+    
+    enum codingKeys: String, CodingKey {
+        case iso316611 = "iso_3166_1"
+        case name
+    }
 }
 
 struct SpokenLanguagesModel: Codable {
-    let english_name: String
-    let iso_639_1: String
+    let englishName: String
+    let iso6391: String
     let name: String
+    
+    enum codingKeys: String, CodingKey {
+        case englishName = "english_name"
+        case iso6391 = "iso_639_1"
+        case name
+    }
 }

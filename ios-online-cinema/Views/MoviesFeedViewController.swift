@@ -13,7 +13,11 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     var coordinator: Coordinator?
     var viewModel = MoviesFeedViewModel()
     
-    var movies: TrendMoviesResponseModel?
+    var movies: TrendMoviesViewControllerModel? {
+        didSet {
+            print(movies)
+        }
+    }
     var genres: Dictionary<Int, String> = Dictionary<Int, String>()
     var isLoading: Bool = false
     
@@ -24,25 +28,22 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         setupUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        print("123")
+    }
     
     #warning("TODO: make one variable to bind all data")
     func bindViewModel() {
-        viewModel.isLoading.bind { [weak self] isLoading in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.isLoading = isLoading
-            }
-        }
         viewModel.movies.bind { [weak self] movies in
             guard let self else { return }
             DispatchQueue.main.async {
                 self.movies = movies
             }
         }
-        viewModel.genres.bind { [weak self] genres in
+        viewModel.isLoading.bind { [weak self] isLoading in
             guard let self else { return }
             DispatchQueue.main.async {
-                self.genres = genres
+                self.isLoading = isLoading
             }
         }
     }
@@ -102,14 +103,14 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         moviesFeedCollectionView.delegate = self
         moviesFeedCollectionView.backgroundColor = .none
         
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
-//        moviesFeedCollectionView.refreshControl = refreshControl
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
+        moviesFeedCollectionView.refreshControl = refreshControl
     }
     
-//    @objc func loadData() {
-//
-//    }
+    @objc func loadData() {
+        print(movies)
+    }
     
 }
 
@@ -120,18 +121,9 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-        var genresNames = [String]()
-        var genresIds = [Int]()
-        for movieItem in movies!.results {
-            cell.title.text = movieItem.title
-            genresIds = movieItem.genre_ids
-            for genresId in genresIds {
-                genresNames.append(genres[genresId]!)
-            }
-        }
-        cell.genre.text = genresNames.first
         cell.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
-        
+//        cell.title.text = "\(self.movies?.results[indexPath.item])"
+//        cell.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
         return cell
     }
     

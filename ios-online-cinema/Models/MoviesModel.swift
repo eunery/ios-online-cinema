@@ -10,24 +10,99 @@ import Foundation
 struct TrendMoviesResponseModel: Codable {
     let page: Int
     let results: [MovieShortModel]
-    let total_pages: Int
-    let total_results: Int
+    let totalPages: Int
+    let totalResults: Int
+    
+    enum codingKeys: String, CodingKey {
+        case page
+        case results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
 }
 
 struct MovieShortModel: Codable {
     let adult: Bool
-    let backdrop_path: String
+    let backdropPath: String
     let id: Int
     let title: String
-    let original_language: String
-    let original_title: String
+    let originalLanguage: String
+    let originalTitle: String
     let overview: String
-    let poster_path: String
-    let media_type: String
-    let genre_ids: [Int]
+    let posterPath: String
+    let mediaType: String
+    let genreIds: [Int]
     let popularity: Double
-    let release_date: String
+    let releaseDate: String
     let video: Bool
-    let vote_average: Double
-    let vote_count: Int
+    let voteAverage: Double
+    let voteCount: Int
+    
+    enum codingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case id
+        case title
+        case originalLanguage = "original_language"
+        case originalTitle = "original_title"
+        case overview
+        case posterPath = "poster_path"
+        case mediaType = "media_type"
+        case genreIds = "genre_ids"
+        case popularity
+        case releaseDate = "release_date"
+        case video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
+}
+
+struct TrendMoviesViewControllerModel: Codable {
+    var page: Int
+    var results: [MovieShortViewControllerModel]
+    var totalPages: Int
+    var totalResults: Int
+    
+    enum codingKeys: String, CodingKey {
+        case page
+        case results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
+}
+
+struct MovieShortViewControllerModel: Codable {
+    var adult: Bool
+    var backdropPath: String
+    var id: Int
+    var title: String
+    var originalLanguage: String
+    var originalTitle: String
+    var overview: String
+    var posterPath: String
+    var mediaType: String
+    var genreStrings: [String]
+    var popularity: Double
+    var releaseDate: String
+    var video: Bool
+    var voteAverage: Double
+    var voteCount: Int
+    
+    enum codingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case id
+        case title
+        case originalLanguage = "original_language"
+        case originalTitle = "original_title"
+        case overview
+        case posterPath = "poster_path"
+        case mediaType = "media_type"
+        case genreStrings
+        case popularity
+        case releaseDate = "release_date"
+        case video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
 }
