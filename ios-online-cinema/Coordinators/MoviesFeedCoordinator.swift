@@ -21,7 +21,6 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
     
     init(_ navVC: UINavigationController) {
         self.navigationController = navVC
-        
     }
     
     func start() {
