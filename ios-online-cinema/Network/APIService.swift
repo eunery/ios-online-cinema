@@ -8,8 +8,8 @@
 import Foundation
 
 protocol APIServiceProtocol {
-    func getTrendingMovies(url: URLComponents?, completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void)
-    func getMoviesDetails(movieId: Int, url: URLComponents?, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void)
+    func getTrendingMovies(completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void)
+    func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void)
 }
 
 struct APIService: APIServiceProtocol {
@@ -18,11 +18,9 @@ struct APIService: APIServiceProtocol {
     let scheme = "https"
     let host = "api.themoviedb.org"
     let trendMoviesEndpoint = "/3/trending/movie/day"
-    let movieDetailsEndpoint = "/3/trending/movie/day"
-//    var urlTrends = URLComponents(string: "https://api.themoviedb.org/3/trending/movie/day")
-//    var urlDetails = URLComponents(string: "https://api.themoviedb.org/3/movie/")
+    let movieDetailsEndpoint = "/3/movie/"
     
-    func getTrendingMovies(url: URLComponents?, completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
+    func getTrendingMovies(completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
         var url = URLComponents()
         url.scheme = scheme
         url.host = host
@@ -57,18 +55,17 @@ struct APIService: APIServiceProtocol {
         task.resume()
     }
     
-    func getMoviesDetails(movieId: Int, url: URLComponents?, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void) {
-        guard var url = url else {
-            completionHandler(Result.failure(APIError.badURL))
-            return
-        }
+    func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void) {
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = movieDetailsEndpoint
+        url.path.append("\(movieId)")
         
         let headers = [
             "accept": "application/json",
             "Authorization": "\(token.token)"
         ]
-        
-        url.path.append("\(movieId)")
         
         var request = URLRequest(
             url: url.url!,
