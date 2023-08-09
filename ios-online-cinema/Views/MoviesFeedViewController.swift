@@ -11,23 +11,25 @@ import SnapKit
 class MoviesFeedViewController : UIViewController, Coordinating{
     
     var coordinator: Coordinator?
-    var viewModel = MoviesFeedViewModel()
+    var viewModel: MoviesFeedViewModel
+    
+    init(viewModel: MoviesFeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        viewModel.fetch()
-        view.backgroundColor = .systemPink
+        self.bindViewModel()
+        self.viewModel.fetch()
+        self.view.backgroundColor = .systemPink
     }
     
     func bindViewModel() {
-        viewModel.title.bind { [weak self] title in
-            guard let self = self else {
-                return
-            }
-            DispatchQueue.main.async {
-//                self.title = title
-            }
-        }
+        
     }
 }

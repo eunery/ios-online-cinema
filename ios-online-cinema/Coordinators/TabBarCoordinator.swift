@@ -35,13 +35,11 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
-//        self.tabBarController = .init()
     }
     
     
     
     func start() {
-        print("TabBarCoordinator starts!")
         
         let pages: [TabBarPage] = [.moviesFeed, .favouriteMovies]
             .sorted(by: {$0.pageOrderNumber() < $1.pageOrderNumber() })
@@ -49,10 +47,6 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
         let controllers: [UINavigationController] = pages.map({ getTabController($0) })
         
         prepareTabBarController(withTabBarControllers: controllers)
-    }
-    
-    deinit {
-        print("TabBarCoordinator deinit")
     }
     
     func prepareTabBarController(withTabBarControllers tabControllers: [UIViewController]) {
@@ -68,7 +62,13 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     private func getTabController(_ page: TabBarPage) -> UINavigationController {
         let navController = UINavigationController()
         navController.setNavigationBarHidden(false, animated: true)
-        navController.tabBarItem = UITabBarItem(title: page.pageTitleValue(), image: resizeImage(image: page.pageIcon(), targetSize: CGSize(width: 25, height: 25)), tag: page.pageOrderNumber())
+        navController.tabBarItem = UITabBarItem(
+            title: page.pageTitleValue(),
+            image: resizeImage(
+                image: page.pageIcon(),
+                targetSize: CGSize(width: 25, height: 25)
+            ),
+            tag: page.pageOrderNumber())
         
         switch page {
         case .moviesFeed:
@@ -82,8 +82,6 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
         }
         return navController
     }
-    
-    
     
     func selectPage(_ page: TabBarPage) {
         tabBarController.selectedIndex = page.pageOrderNumber()
@@ -99,7 +97,8 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
         TabBarPage.init(index: tabBarController.selectedIndex)
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
+    func resizeImage(image: UIImage?, targetSize: CGSize) -> UIImage? {
+        guard let image = image else { return UIImage() }
         let size = image.size
         
         let widthRatio  = targetSize.width  / size.width
