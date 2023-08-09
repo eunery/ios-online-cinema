@@ -23,17 +23,12 @@ class MoviesDetailsViewController : UIViewController, Coordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        viewModel.fetch()
-        view.backgroundColor = .systemPink
+        self.bindViewModel()
+        self.viewModel.fetch()
+        self.view.backgroundColor = .systemPink
     }
     
     func bindViewModel() {
-        viewModel.title.bind { [weak self] title in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.title = title
-            }
-        }
+        
     }
 }

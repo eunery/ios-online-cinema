@@ -8,9 +8,8 @@
 import Foundation
 
 class MoviesFeedViewModel: ObservableObject {
-    var title: Dynamic<String> = Dynamic(String())
     
     func fetch() {
-        title.value = "Movie Feed"
+        
     }
 }
