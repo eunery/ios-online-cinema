@@ -13,27 +13,31 @@ protocol APIServiceProtocol {
 }
 
 struct APIService: APIServiceProtocol {
-    
-    private let token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzljMGMyNzllODJiZjQ3NDY2ZTU4NjcwNDRkNjJlNiIsInN1YiI6IjY0YzhiZjBiZjc5NGFkMDBlMjZjODk4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TX6MXCYPqauaAqZrXR2YLESOlkobEcz80IwZWFmTM1I"
-    var urlTrends = URLComponents(string: "https://api.themoviedb.org/3/trending/movie/day")
-    var urlDetails = URLComponents(string: "https://api.themoviedb.org/3/movie/")
+    let token = APIKeys()
+    let decoder = JSONDecoder()
+    let scheme = "https"
+    let host = "api.themoviedb.org"
+    let trendMoviesEndpoint = "/3/trending/movie/day"
+    let movieDetailsEndpoint = "/3/trending/movie/day"
+//    var urlTrends = URLComponents(string: "https://api.themoviedb.org/3/trending/movie/day")
+//    var urlDetails = URLComponents(string: "https://api.themoviedb.org/3/movie/")
     
     func getTrendingMovies(url: URLComponents?, completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
-        guard let url = url else {
-            completionHandler(Result.failure(APIError.badURL))
-            return
-        }
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = trendMoviesEndpoint
         
         let headers = [
             "accept": "application/json",
-            "Authorization": "\(token)"
+            "Authorization": "\(token.token)"
         ]
         
         var request = URLRequest(
             url: url.url!,
             cachePolicy: .reloadIgnoringLocalCacheData
         )
-        request.httpMethod = "GET"
+        request.httpMethod = APIMethods.get.type()
         request.allHTTPHeaderFields = headers
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -42,7 +46,6 @@ struct APIService: APIServiceProtocol {
             } else if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
-                let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(TrendMoviesResponseModel.self, from: data)
                     completionHandler(Result.success(response))
@@ -62,7 +65,7 @@ struct APIService: APIServiceProtocol {
         
         let headers = [
             "accept": "application/json",
-            "Authorization": "\(token)"
+            "Authorization": "\(token.token)"
         ]
         
         url.path.append("\(movieId)")
@@ -71,10 +74,8 @@ struct APIService: APIServiceProtocol {
             url: url.url!,
             cachePolicy: .reloadIgnoringLocalCacheData
         )
-        request.httpMethod = "GET"
+        request.httpMethod = APIMethods.get.type()
         request.allHTTPHeaderFields = headers
-        
-        print(url)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error as? URLError {
@@ -82,7 +83,6 @@ struct APIService: APIServiceProtocol {
             } else if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
-                let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(MoviesDetailsModel.self, from: data)
                     completionHandler(Result.success(response))
