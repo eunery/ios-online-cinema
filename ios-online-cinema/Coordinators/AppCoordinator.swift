@@ -18,7 +18,7 @@ class AppCoordinator: Coordinator {
     
     func start() {
         print("AppCordinator starts!")
-        var vc: UIViewController & Coordinating = MoviesFeedVC()
+        var vc: UIViewController & Coordinating = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
         vc.coordinator = self
         navigationController.setViewControllers([vc], animated: false)
     }

@@ -1,5 +1,5 @@
 //
-//  FavouriteMoviesVM.swift
+//  MoviesDetailsViewModel.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 01.08.2023.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class FavouriteMoviesVM: ObservableObject {
+class MoviesDetailsViewModel: ObservableObject {
     var title: Dynamic<String> = Dynamic(String())
     
     func fetch() {
-        title.value = "Favourite Movies"
+        title.value = "Movie Details"
     }
 }
