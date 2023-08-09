@@ -173,8 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				8542CBAC2A839C8C008025BE /* TabBar */,
-				8542CBA92A839C36008025BE /* MoviesDetails */,
 				8542CBA32A839B91008025BE /* MoviesFeed */,
+				8542CBA92A839C36008025BE /* MoviesDetails */,
 				8542CBA42A839B98008025BE /* FavouriteMovies */,
 			);
 			path = Scenes;
