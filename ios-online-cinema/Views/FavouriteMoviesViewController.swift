@@ -10,25 +10,23 @@ import UIKit
 class FavouriteMoviesViewController : UIViewController, Coordinating {
     
     var coordinator: Coordinator?
-    var viewModel: FavouriteMoviesViewModel
-    
-    init(viewModel: FavouriteMoviesViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var viewModel = FavouriteMoviesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bindViewModel()
-        self.viewModel.fetch()
-        self.view.backgroundColor = .yellow
+        bindViewModel()
+        viewModel.fetch()
+        view.backgroundColor = .yellow
     }
     
     func bindViewModel() {
-        
+        viewModel.title.bind { [weak self] title in
+            guard let self = self else {
+                return
+            }
+            DispatchQueue.main.async {
+//                self.title = title
+            }
+        }
     }
 }

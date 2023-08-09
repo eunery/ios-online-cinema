@@ -26,7 +26,8 @@ class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesProtocol {
     }
     
     func start() {
-        let vc = FavouriteMoviesViewController(viewModel: FavouriteMoviesViewModel())
+        print("FavouriteMoviesCoordinator starts!")
+        let vc = FavouriteMoviesViewController()
         vc.coordinator = self
         navigationController.setViewControllers([vc], animated: false)
     }

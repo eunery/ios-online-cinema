@@ -41,12 +41,16 @@ enum TabBarPage {
         }
     }
     
-    func pageIcon() -> UIImage? {
+    func pageIcon() -> UIImage {
         switch self {
         case .moviesFeed:
-            return UIImage(named: "feed")
+            return UIImage(named: "feed")!
         case .favouriteMovies:
-            return UIImage(named: "like")
+            return UIImage(named: "like")!
         }
+    }
+    
+    func pageIconSelected() {
+        
     }
 }
