@@ -13,13 +13,18 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     var coordinator: Coordinator?
     var viewModel = MoviesFeedViewModel()
     
-    var movies: TrendMoviesViewControllerModel? {
-        didSet {
-            print(movies)
-        }
-    }
+    let main = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    let container = UIView()
+    let loader = UIActivityIndicatorView()
+    let headerLabel = UILabel()
+    let moviesFeedCollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let moviesFeedCollectionView = UICollectionView()
+    let refreshControl = UIRefreshControl()
+    
+    var movies: TrendMoviesViewControllerModel?
     var genres: Dictionary<Int, String> = Dictionary<Int, String>()
     var isLoading: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +37,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         print("123")
     }
     
-    #warning("TODO: make one variable to bind all data")
     func bindViewModel() {
         viewModel.movies.bind { [weak self] movies in
             guard let self else { return }
@@ -44,6 +48,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
             guard let self else { return }
             DispatchQueue.main.async {
                 self.isLoading = isLoading
+                self.handleLoadingIndication(isLoading: isLoading)
             }
         }
     }
@@ -52,15 +57,17 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         view.backgroundColor = .systemPink
         
         #warning("TODO: make appear when making api call and disappear when api call ends")
-        let loader = UIActivityIndicatorView()
+        
         view.addSubview(loader)
+        loader.hidesWhenStopped = true
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
-        loader.startAnimating()
+        handleLoadingIndication(isLoading: isLoading)
         
         
-        let main = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        
         view.addSubview(main)
         main.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
@@ -69,7 +76,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
             maker.trailing.equalToSuperview()
             
         }
-        let container = UIView()
+        
         main.addSubview(container)
         container.snp.makeConstraints { maker in
             maker.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(10)
@@ -78,7 +85,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             
         }
-        let headerLabel = UILabel()
+        
         headerLabel.text = "Trending movies today"
         headerLabel.font = ProximaNovaFont.font(type: .extraBold, size: 28)
         container.addSubview(headerLabel)
@@ -88,8 +95,9 @@ class MoviesFeedViewController : UIViewController, Coordinating{
             maker.trailing.equalToSuperview()
         }
         
-        let moviesFeedCollectionViewFlowLayout = UICollectionViewFlowLayout()
-        let moviesFeedCollectionView = UICollectionView(frame: container.bounds, collectionViewLayout: moviesFeedCollectionViewFlowLayout)
+        
+        moviesFeedCollectionView.frame = container.bounds
+        moviesFeedCollectionView.collectionViewLayout = moviesFeedCollectionViewFlowLayout
         container.addSubview(moviesFeedCollectionView)
         moviesFeedCollectionView.snp.makeConstraints { maker in
             maker.leading.equalTo(container)
@@ -103,27 +111,35 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         moviesFeedCollectionView.delegate = self
         moviesFeedCollectionView.backgroundColor = .none
         
-        let refreshControl = UIRefreshControl()
+        
         refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         moviesFeedCollectionView.refreshControl = refreshControl
     }
     
     @objc func loadData() {
-        print(movies)
+        
     }
     
+    
+    func handleLoadingIndication(isLoading: Bool) {
+        if isLoading {
+            self.loader.startAnimating()
+        } else {
+            self.loader.stopAnimating()
+        }
+    }
 }
 
 extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.results.count ?? 0
+        return self.movies?.results.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
         cell.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
-//        cell.title.text = "\(self.movies?.results[indexPath.item])"
-//        cell.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
+        cell.title.text = self.movies?.results[indexPath.item].title
+        cell.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
         return cell
     }
     

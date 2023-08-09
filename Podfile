@@ -7,7 +7,7 @@ target 'ios-online-cinema' do
 
   # Pods for ios-online-cinema
 
-pod 'SnapKit'
+pod 'SnapKit', '5.6.0'
 
   target 'ios-online-cinemaTests' do
     inherit! :search_paths
