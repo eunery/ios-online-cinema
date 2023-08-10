@@ -19,6 +19,9 @@
 		858A4A212A78FD5F00B2042E /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A202A78FD5F00B2042E /* Dynamic.swift */; };
 		858A4A242A7901F100B2042E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A232A7901F100B2042E /* Coordinator.swift */; };
 		858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A252A79027B00B2042E /* AppCoordinator.swift */; };
+		85C2F0F92A84F40A001395FC /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C2F0F82A84F40A001395FC /* Endpoints.swift */; };
+		85C2F0FB2A84F4D3001395FC /* NetworkWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C2F0FA2A84F4D3001395FC /* NetworkWorker.swift */; };
+		85C2F0FD2A84F50A001395FC /* NetworkWorkerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C2F0FC2A84F50A001395FC /* NetworkWorkerProtocol.swift */; };
 		85E5434B2A84CF48008B714A /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5434A2A84CF48008B714A /* APIServiceProtocol.swift */; };
 		85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FAAE2A791C1A00F0B849 /* MoviesFeedViewController.swift */; };
 		85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FAB02A791C2F00F0B849 /* MoviesDetailsViewController.swift */; };
@@ -74,6 +77,9 @@
 		858A4A202A78FD5F00B2042E /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		858A4A232A7901F100B2042E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		858A4A252A79027B00B2042E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		85C2F0F82A84F40A001395FC /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		85C2F0FA2A84F4D3001395FC /* NetworkWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWorker.swift; sourceTree = "<group>"; };
+		85C2F0FC2A84F50A001395FC /* NetworkWorkerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWorkerProtocol.swift; sourceTree = "<group>"; };
 		85E5434A2A84CF48008B714A /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
 		85F3FAAE2A791C1A00F0B849 /* MoviesFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFeedViewController.swift; sourceTree = "<group>"; };
 		85F3FAB02A791C2F00F0B849 /* MoviesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailsViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +266,9 @@
 				85F3FB382A7CFFF600F0B849 /* APIError.swift */,
 				85F3FB362A7CFC8200F0B849 /* APIService.swift */,
 				85E5434A2A84CF48008B714A /* APIServiceProtocol.swift */,
+				85C2F0F82A84F40A001395FC /* Endpoints.swift */,
+				85C2F0FA2A84F4D3001395FC /* NetworkWorker.swift */,
+				85C2F0FC2A84F50A001395FC /* NetworkWorkerProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -522,7 +531,9 @@
 				85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */,
 				858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */,
 				85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */,
+				85C2F0FB2A84F4D3001395FC /* NetworkWorker.swift in Sources */,
 				858A4A212A78FD5F00B2042E /* Dynamic.swift in Sources */,
+				85C2F0FD2A84F50A001395FC /* NetworkWorkerProtocol.swift in Sources */,
 				85E5434B2A84CF48008B714A /* APIServiceProtocol.swift in Sources */,
 				85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */,
 				85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */,
@@ -536,6 +547,7 @@
 				858A4A242A7901F100B2042E /* Coordinator.swift in Sources */,
 				85F3FB002A7A345700F0B849 /* Coordinating.swift in Sources */,
 				85072F682A78ECFC006E3D58 /* AppDelegate.swift in Sources */,
+				85C2F0F92A84F40A001395FC /* Endpoints.swift in Sources */,
 				8542CB9F2A838FD4008025BE /* APIMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
