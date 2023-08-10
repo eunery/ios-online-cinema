@@ -7,10 +7,9 @@
 
 import Foundation
 
-class MoviesDetailsViewModel: ObservableObject {
-    var title: Dynamic<String> = Dynamic(String())
+class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     func fetch() {
-        title.value = "Movie Details"
+        
     }
 }

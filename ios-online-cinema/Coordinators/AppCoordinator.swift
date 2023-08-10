@@ -25,7 +25,6 @@ class AppCoordinator: Coordinator, AppCoordinatorProtocol {
     }
     
     func start() {
-        print("AppCordinator starts!")
         showTabBar()
     }
     

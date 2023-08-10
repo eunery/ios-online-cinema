@@ -21,18 +21,17 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
     
     init(_ navVC: UINavigationController) {
         self.navigationController = navVC
-        
     }
     
     func start() {
         print("MoviesFeedCordinator starts!")
-        let vc = MoviesFeedViewController()
+        let vc = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
         vc.coordinator = self
         navigationController.setViewControllers([vc], animated: true)
     }
     
     func showMoviesDetails() {
-        let vc = MoviesDetailsViewController()
+        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel())
         navigationController.setViewControllers([vc], animated: true)
     }
 }

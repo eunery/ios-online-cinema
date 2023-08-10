@@ -11,46 +11,33 @@ import SnapKit
 class MoviesFeedViewController : UIViewController, Coordinating{
     
     var coordinator: Coordinator?
-    var viewModel = MoviesFeedViewModel()
+    let viewModel: MoviesFeedViewModelProtocol
     
     let main = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let container = UIView()
     let loader = UIActivityIndicatorView()
     let headerLabel = UILabel()
-    let moviesFeedCollectionViewFlowLayout = UICollectionViewFlowLayout()
-    let moviesFeedCollectionView = UICollectionView()
+    let moviesFeedCollectionView = UICollectionView(frame: .zero,
+                                                    collectionViewLayout: UICollectionViewFlowLayout())
     let refreshControl = UIRefreshControl()
     
     var movies: TrendMoviesViewControllerModel?
     var genres: Dictionary<Int, String> = Dictionary<Int, String>()
     var isLoading: Bool = false
     
+    init(viewModel: MoviesFeedViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        viewModel.fetch()
+        self.viewModel.fetch()
         setupUI()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("123")
-    }
-    
-    func bindViewModel() {
-        viewModel.movies.bind { [weak self] movies in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.movies = movies
-            }
-        }
-        viewModel.isLoading.bind { [weak self] isLoading in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.isLoading = isLoading
-                self.handleLoadingIndication(isLoading: isLoading)
-            }
-        }
     }
     
     func setupUI() {
@@ -97,7 +84,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         
         
         moviesFeedCollectionView.frame = container.bounds
-        moviesFeedCollectionView.collectionViewLayout = moviesFeedCollectionViewFlowLayout
         container.addSubview(moviesFeedCollectionView)
         moviesFeedCollectionView.snp.makeConstraints { maker in
             maker.leading.equalTo(container)
@@ -136,11 +122,11 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-        cell.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
-        cell.title.text = self.movies?.results[indexPath.item].title
-        cell.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell
+        cell?.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
+        cell?.title.text = self.movies?.results[indexPath.item].title
+        cell?.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
+        return cell ?? UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -180,3 +166,4 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
 }
+
