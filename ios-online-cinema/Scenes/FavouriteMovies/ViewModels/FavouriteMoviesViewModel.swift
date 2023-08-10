@@ -7,7 +7,11 @@
 
 import Foundation
 
-class FavouriteMoviesViewModel: ObservableObject {
+protocol FavouriteMoviesProtocol {
+    func fetch()
+}
+
+class FavouriteMoviesViewModel: ObservableObject, FavouriteMoviesProtocol {
     
     func fetch() {
         

@@ -7,7 +7,11 @@
 
 import Foundation
 
-class MoviesDetailsViewModel: ObservableObject {
+protocol MoviesDetailsProtocol {
+    func fetch()
+}
+
+class MoviesDetailsViewModel: ObservableObject, MoviesDetailsProtocol {
     
     func fetch() {
         

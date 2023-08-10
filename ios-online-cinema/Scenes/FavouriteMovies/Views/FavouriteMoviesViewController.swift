@@ -22,12 +22,7 @@ class FavouriteMoviesViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bindViewModel()
         self.viewModel.fetch()
         self.view.backgroundColor = .yellow
-    }
-    
-    func bindViewModel() {
-        
     }
 }
