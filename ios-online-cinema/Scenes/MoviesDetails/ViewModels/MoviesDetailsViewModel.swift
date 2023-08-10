@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol MoviesDetailsProtocol {
-    func fetch()
-}
-
 class MoviesDetailsViewModel: MoviesDetailsProtocol {
     
     func fetch() {
