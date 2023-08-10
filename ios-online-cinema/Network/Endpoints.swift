@@ -10,4 +10,5 @@ import Foundation
 enum Endpoints: String {
     case trendMoviesEndpoint = "/3/trending/movie/day"
     case movieDetailsEndpoint = "/3/movie/"
+    case moviesGenres = "/3/genre/movie/list"
 }
