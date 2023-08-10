@@ -7,16 +7,7 @@
 
 import Foundation
 
-enum APIMethods {
-    case get
-    case post
-    
-    func type() -> String {
-        switch self {
-        case .get:
-            return "GET"
-        case .post:
-            return "POST"
-        }
-    }
+enum APIMethods: String {
+    case get = "GET"
+    case post = "POST"
 }
