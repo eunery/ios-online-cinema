@@ -13,7 +13,7 @@ struct TrendMoviesResponseModel: Codable {
     let totalPages: Int
     let totalResults: Int
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case page
         case results
         case totalPages = "total_pages"
@@ -38,7 +38,7 @@ struct MovieShortModel: Codable {
     let voteAverage: Double
     let voteCount: Int
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
         case id
@@ -63,7 +63,7 @@ struct TrendMoviesViewControllerModel: Codable {
     var totalPages: Int
     var totalResults: Int
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case page
         case results
         case totalPages = "total_pages"
@@ -88,7 +88,7 @@ struct MovieShortViewControllerModel: Codable {
     var voteAverage: Double
     var voteCount: Int
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
         case id

@@ -34,7 +34,7 @@ struct MoviesDetailsModel: Codable {
     let voteAverage: Double
     let voteCount: Int
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
         case belongsToCollection = "belongs_to_collection"
@@ -69,7 +69,7 @@ struct MovieCollectionModel: Codable {
     let posterPath: String
     let backdropPath: String
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case id
         case name
         case posterPath = "poster_path"
@@ -86,9 +86,9 @@ struct ProductionCompaniesModel: Codable {
     let id: Int
     let logoPath: String?
     let name: String
-    let origin_country: String?
+    let originCountry: String?
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case id
         case logoPath = "logo_path"
         case name
@@ -97,10 +97,10 @@ struct ProductionCompaniesModel: Codable {
 }
 
 struct ProductionCountriesModel: Codable {
-    let iso_3166_1: String
+    let iso316611: String
     let name: String
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case iso316611 = "iso_3166_1"
         case name
     }
@@ -111,7 +111,7 @@ struct SpokenLanguagesModel: Codable {
     let iso6391: String
     let name: String
     
-    enum codingKeys: String, CodingKey {
+    enum СodingKeys: String, CodingKey {
         case englishName = "english_name"
         case iso6391 = "iso_639_1"
         case name

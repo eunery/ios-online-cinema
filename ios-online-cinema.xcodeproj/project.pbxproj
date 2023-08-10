@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,9 +11,6 @@
 		818979DE0E78606DB0958BCE /* Pods_ios_online_cinema_ios_online_cinemaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E55289162C20CABB5BA27EFA /* Pods_ios_online_cinema_ios_online_cinemaUITests.framework */; };
 		85072F682A78ECFC006E3D58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85072F672A78ECFC006E3D58 /* AppDelegate.swift */; };
 		85072F712A78ECFD006E3D58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85072F702A78ECFD006E3D58 /* Assets.xcassets */; };
-		85072F7F2A78ECFD006E3D58 /* ios_online_cinemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85072F7E2A78ECFD006E3D58 /* ios_online_cinemaTests.swift */; };
-		85072F892A78ECFD006E3D58 /* ios_online_cinemaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85072F882A78ECFD006E3D58 /* ios_online_cinemaUITests.swift */; };
-		85072F8B2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85072F8A2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift */; };
 		858A4A242A7901F100B2042E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A232A7901F100B2042E /* Coordinator.swift */; };
 		858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A252A79027B00B2042E /* AppCoordinator.swift */; };
 		85E543452A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543442A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift */; };
@@ -58,10 +55,7 @@
 		85072F702A78ECFD006E3D58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85072F752A78ECFD006E3D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85072F7A2A78ECFD006E3D58 /* ios-online-cinemaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-online-cinemaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		85072F7E2A78ECFD006E3D58 /* ios_online_cinemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_online_cinemaTests.swift; sourceTree = "<group>"; };
 		85072F842A78ECFD006E3D58 /* ios-online-cinemaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-online-cinemaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		85072F882A78ECFD006E3D58 /* ios_online_cinemaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_online_cinemaUITests.swift; sourceTree = "<group>"; };
-		85072F8A2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_online_cinemaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		858A4A232A7901F100B2042E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		858A4A252A79027B00B2042E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		85E543442A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteMoviesViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -127,8 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				85072F662A78ECFC006E3D58 /* ios-online-cinema */,
-				85072F7D2A78ECFD006E3D58 /* ios-online-cinemaTests */,
-				85072F872A78ECFD006E3D58 /* ios-online-cinemaUITests */,
 				85072F652A78ECFC006E3D58 /* Products */,
 				91E8142493B718C8AD84E65F /* Pods */,
 				44E5D9E6C794B49828A30D13 /* Frameworks */,
@@ -156,23 +148,6 @@
 				85072F752A78ECFD006E3D58 /* Info.plist */,
 			);
 			path = "ios-online-cinema";
-			sourceTree = "<group>";
-		};
-		85072F7D2A78ECFD006E3D58 /* ios-online-cinemaTests */ = {
-			isa = PBXGroup;
-			children = (
-				85072F7E2A78ECFD006E3D58 /* ios_online_cinemaTests.swift */,
-			);
-			path = "ios-online-cinemaTests";
-			sourceTree = "<group>";
-		};
-		85072F872A78ECFD006E3D58 /* ios-online-cinemaUITests */ = {
-			isa = PBXGroup;
-			children = (
-				85072F882A78ECFD006E3D58 /* ios_online_cinemaUITests.swift */,
-				85072F8A2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift */,
-			);
-			path = "ios-online-cinemaUITests";
 			sourceTree = "<group>";
 		};
 		8542CBA22A839B86008025BE /* Scenes */ = {
@@ -340,6 +315,7 @@
 				85072F612A78ECFC006E3D58 /* Frameworks */,
 				85072F622A78ECFC006E3D58 /* Resources */,
 				F33260FA9E7391C13F2E427C /* [CP] Embed Pods Frameworks */,
+				77E4F28D2A84D1070028EACA /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -413,7 +389,7 @@
 				};
 			};
 			buildConfigurationList = 85072F5F2A78ECFC006E3D58 /* Build configuration list for PBXProject "ios-online-cinema" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -541,6 +517,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		77E4F28D2A84D1070028EACA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		F33260FA9E7391C13F2E427C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -588,7 +582,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85072F7F2A78ECFD006E3D58 /* ios_online_cinemaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,8 +589,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85072F8B2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift in Sources */,
-				85072F892A78ECFD006E3D58 /* ios_online_cinemaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
