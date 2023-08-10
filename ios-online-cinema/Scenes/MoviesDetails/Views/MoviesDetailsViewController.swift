@@ -10,9 +10,9 @@ import UIKit
 class MoviesDetailsViewController : UIViewController, Coordinating {
     
     var coordinator: Coordinator?
-    let viewModel: MoviesDetailsViewModel
+    let viewModel: MoviesDetailsProtocol
     
-    init(viewModel: MoviesDetailsViewModel) {
+    init(viewModel: MoviesDetailsProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

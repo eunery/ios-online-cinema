@@ -11,7 +11,7 @@ protocol MoviesFeedProtocol {
     func fetch()
 }
 
-class MoviesFeedViewModel: ObservableObject, MoviesFeedProtocol {
+class MoviesFeedViewModel: MoviesFeedProtocol {
     
     func fetch() {
         

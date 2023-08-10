@@ -11,7 +11,7 @@ protocol FavouriteMoviesProtocol {
     func fetch()
 }
 
-class FavouriteMoviesViewModel: ObservableObject, FavouriteMoviesProtocol {
+class FavouriteMoviesViewModel: FavouriteMoviesProtocol {
     
     func fetch() {
         
