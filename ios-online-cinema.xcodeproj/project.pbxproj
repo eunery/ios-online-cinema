@@ -258,17 +258,33 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		85C2F0FE2A850758001395FC /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				85F3FB362A7CFC8200F0B849 /* APIService.swift */,
+				85E5434A2A84CF48008B714A /* APIServiceProtocol.swift */,
+			);
+			path = ApiService;
+			sourceTree = "<group>";
+		};
+		85C2F0FF2A850762001395FC /* NetworkWorker */ = {
+			isa = PBXGroup;
+			children = (
+				85C2F0FA2A84F4D3001395FC /* NetworkWorker.swift */,
+				85C2F0FC2A84F50A001395FC /* NetworkWorkerProtocol.swift */,
+			);
+			path = NetworkWorker;
+			sourceTree = "<group>";
+		};
 		85F3FAB82A7923FE00F0B849 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				85C2F0FF2A850762001395FC /* NetworkWorker */,
+				85C2F0FE2A850758001395FC /* ApiService */,
 				8542CB9E2A838FD4008025BE /* APIMethods.swift */,
 				8542CBA02A839063008025BE /* Constants.swift */,
 				85F3FB382A7CFFF600F0B849 /* APIError.swift */,
-				85F3FB362A7CFC8200F0B849 /* APIService.swift */,
-				85E5434A2A84CF48008B714A /* APIServiceProtocol.swift */,
 				85C2F0F82A84F40A001395FC /* Endpoints.swift */,
-				85C2F0FA2A84F4D3001395FC /* NetworkWorker.swift */,
-				85C2F0FC2A84F50A001395FC /* NetworkWorkerProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

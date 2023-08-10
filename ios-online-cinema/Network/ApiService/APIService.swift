@@ -8,7 +8,11 @@
 import Foundation
 
 struct APIService: APIServiceProtocol {
-    let worker = NetworkWorker()
+    let worker: NetworkWorkerProtocol
+    
+    init(worker: NetworkWorkerProtocol) {
+        self.worker = worker
+    }
     
     func getTrendingMovies(completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
         worker.performRequest(

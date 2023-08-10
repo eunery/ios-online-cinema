@@ -7,11 +7,7 @@
 
 import Foundation
 
-protocol NetworkWorkerProtocol {
-    var scheme: String { get }
-    var host: String { get }
-    var token: String { get }
-    
+protocol NetworkWorkerProtocol {    
     func performRequest<T: Codable>(endpoint: Endpoints, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void)
 }
 
