@@ -11,9 +11,9 @@ import SnapKit
 class MoviesFeedViewController : UIViewController, Coordinating{
     
     var coordinator: Coordinator?
-    let viewModel: MoviesFeedProtocol
+    let viewModel: MoviesFeedViewModelProtocol
     
-    init(viewModel: MoviesFeedProtocol) {
+    init(viewModel: MoviesFeedViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

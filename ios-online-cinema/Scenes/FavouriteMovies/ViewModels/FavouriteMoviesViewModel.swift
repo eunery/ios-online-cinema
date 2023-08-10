@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavouriteMoviesViewModel: FavouriteMoviesProtocol {
+class FavouriteMoviesViewModel: FavouriteMoviesViewModelProtocol {
     
     func fetch() {
         

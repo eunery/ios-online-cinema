@@ -16,9 +16,9 @@
 		85072F8B2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85072F8A2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift */; };
 		858A4A242A7901F100B2042E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A232A7901F100B2042E /* Coordinator.swift */; };
 		858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A4A252A79027B00B2042E /* AppCoordinator.swift */; };
-		85E543452A84C498008B714A /* FavouriteMoviesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543442A84C498008B714A /* FavouriteMoviesProtocol.swift */; };
-		85E543472A84C4AC008B714A /* MoviesDetailsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543462A84C4AC008B714A /* MoviesDetailsProtocol.swift */; };
-		85E543492A84C4BC008B714A /* MoviesFeedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543482A84C4BC008B714A /* MoviesFeedProtocol.swift */; };
+		85E543452A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543442A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift */; };
+		85E543472A84C4AC008B714A /* MoviesDetailsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543462A84C4AC008B714A /* MoviesDetailsViewModelProtocol.swift */; };
+		85E543492A84C4BC008B714A /* MoviesFeedViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E543482A84C4BC008B714A /* MoviesFeedViewModelProtocol.swift */; };
 		85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FAAE2A791C1A00F0B849 /* MoviesFeedViewController.swift */; };
 		85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FAB02A791C2F00F0B849 /* MoviesDetailsViewController.swift */; };
 		85F3FAB32A791C4800F0B849 /* FavouriteMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FAB22A791C4800F0B849 /* FavouriteMoviesViewController.swift */; };
@@ -64,9 +64,9 @@
 		85072F8A2A78ECFD006E3D58 /* ios_online_cinemaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_online_cinemaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		858A4A232A7901F100B2042E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		858A4A252A79027B00B2042E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		85E543442A84C498008B714A /* FavouriteMoviesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteMoviesProtocol.swift; sourceTree = "<group>"; };
-		85E543462A84C4AC008B714A /* MoviesDetailsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailsProtocol.swift; sourceTree = "<group>"; };
-		85E543482A84C4BC008B714A /* MoviesFeedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFeedProtocol.swift; sourceTree = "<group>"; };
+		85E543442A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteMoviesViewModelProtocol.swift; sourceTree = "<group>"; };
+		85E543462A84C4AC008B714A /* MoviesDetailsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailsViewModelProtocol.swift; sourceTree = "<group>"; };
+		85E543482A84C4BC008B714A /* MoviesFeedViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFeedViewModelProtocol.swift; sourceTree = "<group>"; };
 		85F3FAAE2A791C1A00F0B849 /* MoviesFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFeedViewController.swift; sourceTree = "<group>"; };
 		85F3FAB02A791C2F00F0B849 /* MoviesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailsViewController.swift; sourceTree = "<group>"; };
 		85F3FAB22A791C4800F0B849 /* FavouriteMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteMoviesViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				85F3FAB92A7924BE00F0B849 /* MoviesFeedViewModel.swift */,
-				85E543482A84C4BC008B714A /* MoviesFeedProtocol.swift */,
+				85E543482A84C4BC008B714A /* MoviesFeedViewModelProtocol.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				85F3FABD2A7924D400F0B849 /* FavouriteMoviesViewModel.swift */,
-				85E543442A84C498008B714A /* FavouriteMoviesProtocol.swift */,
+				85E543442A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -259,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				85F3FABF2A79259F00F0B849 /* MoviesDetailsViewModel.swift */,
-				85E543462A84C4AC008B714A /* MoviesDetailsProtocol.swift */,
+				85E543462A84C4AC008B714A /* MoviesDetailsViewModelProtocol.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -571,13 +571,13 @@
 				85F3FAAF2A791C1A00F0B849 /* MoviesFeedViewController.swift in Sources */,
 				858A4A262A79027B00B2042E /* AppCoordinator.swift in Sources */,
 				85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */,
-				85E543452A84C498008B714A /* FavouriteMoviesProtocol.swift in Sources */,
+				85E543452A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift in Sources */,
 				85F3FABA2A7924BE00F0B849 /* MoviesFeedViewModel.swift in Sources */,
 				85F3FAB72A791FFB00F0B849 /* MoviesDetailsModel.swift in Sources */,
 				85F3FAB32A791C4800F0B849 /* FavouriteMoviesViewController.swift in Sources */,
-				85E543472A84C4AC008B714A /* MoviesDetailsProtocol.swift in Sources */,
+				85E543472A84C4AC008B714A /* MoviesDetailsViewModelProtocol.swift in Sources */,
 				85F3FABE2A7924D400F0B849 /* FavouriteMoviesViewModel.swift in Sources */,
-				85E543492A84C4BC008B714A /* MoviesFeedProtocol.swift in Sources */,
+				85E543492A84C4BC008B714A /* MoviesFeedViewModelProtocol.swift in Sources */,
 				858A4A242A7901F100B2042E /* Coordinator.swift in Sources */,
 				85F3FB002A7A345700F0B849 /* Coordinating.swift in Sources */,
 				85072F682A78ECFC006E3D58 /* AppDelegate.swift in Sources */,

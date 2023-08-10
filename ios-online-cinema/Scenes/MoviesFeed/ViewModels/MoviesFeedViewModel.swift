@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MoviesFeedViewModel: MoviesFeedProtocol {
+class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     
     func fetch() {
         
