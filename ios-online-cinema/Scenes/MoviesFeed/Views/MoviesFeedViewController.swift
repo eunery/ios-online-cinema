@@ -21,10 +21,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
                                                     collectionViewLayout: UICollectionViewFlowLayout())
     let refreshControl = UIRefreshControl()
     
-    var movies: TrendMoviesViewControllerModel?
-    var genres: Dictionary<Int, String> = Dictionary<Int, String>()
-    var isLoading: Bool = false
-    
     init(viewModel: MoviesFeedViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -36,12 +32,15 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.fetch()
+        self.viewModel.fetch {
+            self.moviesFeedCollectionView.reloadData()
+            self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+        }
         setupUI()
     }
     
     func setupUI() {
-        view.backgroundColor = .systemPink
+        self.view.backgroundColor = .white
         
         #warning("TODO: make appear when making api call and disappear when api call ends")
         view.addSubview(loader)
@@ -49,7 +48,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
-        handleLoadingIndication(isLoading: isLoading)
+        self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
         
         view.addSubview(main)
         main.snp.makeConstraints { maker in
@@ -111,14 +110,14 @@ class MoviesFeedViewController : UIViewController, Coordinating{
 
 extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.movies?.results.count ?? 0
+        return self.viewModel.movies?.results.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell
         cell?.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
-        cell?.title.text = self.movies?.results[indexPath.item].title
-        cell?.genre.text = "\(self.movies?.results[indexPath.item].genreStrings)"
+        cell?.title.text = self.viewModel.movies?.results[indexPath.item].title
+        cell?.genre.text = self.viewModel.movies?.results[indexPath.item].genreStrings.formatted()
         return cell ?? UICollectionViewCell()
     }
     
@@ -157,6 +156,5 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
         
         return newImage
     }
-    
 }
 

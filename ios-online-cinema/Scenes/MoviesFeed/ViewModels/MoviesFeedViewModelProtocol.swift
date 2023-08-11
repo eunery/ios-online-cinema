@@ -8,5 +8,8 @@
 import Foundation
 
 protocol MoviesFeedViewModelProtocol {
-    func fetch()
+    var isLoading: Bool {get set}
+    var movies: TrendMoviesViewControllerModel? {get set}
+    
+    func fetch(completionHandler: @escaping () -> Void)
 }

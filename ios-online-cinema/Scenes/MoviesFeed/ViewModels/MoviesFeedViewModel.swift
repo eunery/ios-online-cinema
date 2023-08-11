@@ -8,19 +8,20 @@
 import Foundation
 
 class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
+    var isLoading: Bool = false
     var error: String?
     var movies: TrendMoviesViewControllerModel?
     var fetchedMovies: TrendMoviesResponseModel?
-    var genres: Dictionary<Int,String> = Dictionary<Int, String>()
+    var genres: [Int: String] = [Int: String]()
     let service = APIService(worker: NetworkWorker())
     let fetchMoviesGroup = DispatchGroup()
     let queueMovies = DispatchQueue(label: "queueMovies")
     let queueGenres = DispatchQueue(label: "queueGenres")
 
-    func fetch() {
+    func fetch(completionHandler: @escaping () -> Void) {
+        self.isLoading = true
         getGenres()
         getMovies()
-        
         fetchMoviesGroup.notify(queue: .main) { [weak self] in
             guard let self else { return }
             guard let fetchedMovies = self.fetchedMovies else { return }
@@ -53,6 +54,8 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 totalPages: fetchedMovies.totalPages,
                 totalResults: fetchedMovies.totalResults
             )
+            self.isLoading = false
+            completionHandler()
         }
     }
     

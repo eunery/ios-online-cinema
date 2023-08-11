@@ -35,7 +35,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         title  = UILabel()
         self.contentView.addSubview(title)
-        title.font = ProximaNovaFont.font(type: .bold, size: 20)
+        title.font = ProximaNovaFont.font(type: .bold, size: 14)
         title.snp.makeConstraints { maker in
             maker.leading.equalTo(poster.snp.leading)
             maker.top.equalTo(poster.snp.bottom)
@@ -44,7 +44,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         genre = UILabel()
         self.contentView.addSubview(genre)
-        genre.font = ProximaNovaFont.font(type: .regular, size: 17)
+        genre.font = ProximaNovaFont.font(type: .regular, size: 12)
         genre.snp.makeConstraints { maker in
             maker.leading.equalTo(title.snp.leading)
             maker.top.equalTo(title.snp.bottom)

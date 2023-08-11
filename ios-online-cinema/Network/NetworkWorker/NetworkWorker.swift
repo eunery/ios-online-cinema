@@ -42,6 +42,7 @@ class NetworkWorker: NetworkWorkerProtocol {
             } else if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
+                self.decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
                     let response = try self.decoder.decode(responseType.self, from: data)
                     completionHandler(Result.success(response))
