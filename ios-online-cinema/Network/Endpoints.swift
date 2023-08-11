@@ -8,7 +8,8 @@
 import Foundation
 
 enum Endpoints: String {
-    case trendMoviesEndpoint = "/3/trending/movie/day"
-    case movieDetailsEndpoint = "/3/movie/"
+    case trendMovies = "/3/trending/movie/day"
+    case movieDetails = "/3/movie/"
     case moviesGenres = "/3/genre/movie/list"
+    case image = "/t/p/w500/"
 }

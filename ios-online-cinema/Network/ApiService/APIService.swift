@@ -13,7 +13,7 @@ struct APIService: APIServiceProtocol {
     
     func getTrendingMovies(completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
         worker.performRequest(
-            endpoint: .trendMoviesEndpoint,
+            endpoint: Endpoints.trendMovies.rawValue,
             apiMethod: .get,
             responseType: TrendMoviesResponseModel.self,
             completionHandler: completionHandler
@@ -22,7 +22,7 @@ struct APIService: APIServiceProtocol {
     
     func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void) {
         worker.performRequest(
-            endpoint: .movieDetailsEndpoint,
+            endpoint: Endpoints.movieDetails.rawValue + movieId.description,
             apiMethod: .get,
             responseType: MoviesDetailsModel.self,
             completionHandler: completionHandler
@@ -31,11 +31,10 @@ struct APIService: APIServiceProtocol {
     
     func getMoviesGenres(completionHandler: @escaping (Result<MovieGenresResponseModel, APIError>) -> Void) {
         worker.performRequest(
-            endpoint: .moviesGenres,
+            endpoint: Endpoints.moviesGenres.rawValue,
             apiMethod: .get,
             responseType: MovieGenresResponseModel.self,
             completionHandler: completionHandler
         )
     }
-    
 }

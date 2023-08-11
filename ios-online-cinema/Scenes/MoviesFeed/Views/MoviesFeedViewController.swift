@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class MoviesFeedViewController : UIViewController, Coordinating{
     
@@ -42,7 +43,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     func setupUI() {
         self.view.backgroundColor = .white
         
-        #warning("TODO: make appear when making api call and disappear when api call ends")
         view.addSubview(loader)
         loader.hidesWhenStopped = true
         loader.snp.makeConstraints { maker in
@@ -115,7 +115,15 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell
-        cell?.poster.image = resizeImage(image: UIImage(named: "keanu")!, targetSize: CGSize(width: 180, height: 240))
+        let poster = self.viewModel.movies?.results[indexPath.row].posterPath.description
+        let host = "image.tmdb.org"
+        let scheme = "https"
+        let path = "/t/p/w500"
+        var ttt = URLComponents()
+        ttt.scheme = scheme
+        ttt.host = host
+        ttt.path = path + poster!
+        cell?.poster.sd_setImage(with: ttt.url)
         cell?.title.text = self.viewModel.movies?.results[indexPath.item].title
         cell?.genre.text = self.viewModel.movies?.results[indexPath.item].genreStrings.formatted()
         return cell ?? UICollectionViewCell()

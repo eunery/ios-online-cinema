@@ -54,6 +54,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 totalPages: fetchedMovies.totalPages,
                 totalResults: fetchedMovies.totalResults
             )
+            
             self.isLoading = false
             completionHandler()
         }

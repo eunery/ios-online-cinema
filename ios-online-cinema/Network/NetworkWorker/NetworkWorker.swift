@@ -11,13 +11,14 @@ class NetworkWorker: NetworkWorkerProtocol {
     let token: String = Constants.apiKey
     let scheme: String = "https"
     let host: String = "api.themoviedb.org"
+    let imageHost: String = "image.tmdb.org"
     let decoder = JSONDecoder()
     
-    func performRequest<T: Codable>(endpoint: Endpoints, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
+    func performRequest<T: Codable>(endpoint: String, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
-        components.path = endpoint.rawValue
+        components.path = endpoint 
         
         guard let url = components.url else {
             completionHandler(Result.failure(APIError.badURL))
