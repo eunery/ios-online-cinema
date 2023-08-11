@@ -44,16 +44,12 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         view.backgroundColor = .systemPink
         
         #warning("TODO: make appear when making api call and disappear when api call ends")
-        
         view.addSubview(loader)
         loader.hidesWhenStopped = true
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
         handleLoadingIndication(isLoading: isLoading)
-        
-        
-        
         
         view.addSubview(main)
         main.snp.makeConstraints { maker in
@@ -82,7 +78,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
             maker.trailing.equalToSuperview()
         }
         
-        
         moviesFeedCollectionView.frame = container.bounds
         container.addSubview(moviesFeedCollectionView)
         moviesFeedCollectionView.snp.makeConstraints { maker in
@@ -97,7 +92,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         moviesFeedCollectionView.delegate = self
         moviesFeedCollectionView.backgroundColor = .none
         
-        
         refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         moviesFeedCollectionView.refreshControl = refreshControl
     }
@@ -105,7 +99,6 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     @objc func loadData() {
         
     }
-    
     
     func handleLoadingIndication(isLoading: Bool) {
         if isLoading {

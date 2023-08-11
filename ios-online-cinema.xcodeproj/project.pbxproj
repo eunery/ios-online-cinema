@@ -218,7 +218,6 @@
 				8542CBA22A839B86008025BE /* Scenes */,
 				85F3FAB82A7923FE00F0B849 /* Network */,
 				858A4A1C2A78FD1500B2042E /* Models */,
-				85F3FB1F2A7A601900F0B849 /* FavoriteMoviesItem */,
 				85F3FB3A2A7E6D9400F0B849 /* Fonts */,
 				85072F672A78ECFC006E3D58 /* AppDelegate.swift */,
 				85072F702A78ECFD006E3D58 /* Assets.xcassets */,
@@ -402,13 +401,6 @@
 				85C2F0F82A84F40A001395FC /* Endpoints.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		85F3FB1F2A7A601900F0B849 /* FavoriteMoviesItem */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FavoriteMoviesItem;
 			sourceTree = "<group>";
 		};
 		85F3FB3A2A7E6D9400F0B849 /* Fonts */ = {
