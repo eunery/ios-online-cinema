@@ -10,6 +10,8 @@ import Foundation
 protocol MoviesFeedViewModelProtocol {
     var isLoading: Bool {get set}
     var movies: TrendMoviesViewControllerModel? {get set}
+    var dataSource: [MovieCollectionViewCellModel] {get set}
     
     func fetch(completionHandler: @escaping () -> Void)
+    func createCollectionCell()
 }

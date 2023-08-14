@@ -11,38 +11,36 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "MovieCell"
     
-    var poster: UIImageView!
-    var title: UILabel!
-    var genre: UILabel!
+    var poster: String = String()
+    var posterView = UIImageView()
+    var title: UILabel = UILabel()
+    var genre: UILabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        setupUI()
     }
     
-    func configure() {
-        poster = UIImageView()
-        self.contentView.addSubview(poster)
-        poster.translatesAutoresizingMaskIntoConstraints = false
-        poster.clipsToBounds = true
-        poster.layer.cornerRadius = 8
-        poster.contentMode = .scaleAspectFill
-        poster.snp.makeConstraints { maker in
+    func setupUI() {
+        self.contentView.addSubview(posterView)
+        posterView.translatesAutoresizingMaskIntoConstraints = false
+        posterView.clipsToBounds = true
+        posterView.layer.cornerRadius = 8
+        posterView.contentMode = .scaleAspectFill
+        posterView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView)
             maker.top.equalTo(contentView)
             maker.trailing.equalTo(contentView)
         }
         
-        title  = UILabel()
         self.contentView.addSubview(title)
         title.font = ProximaNovaFont.font(type: .bold, size: 14)
         title.snp.makeConstraints { maker in
-            maker.leading.equalTo(poster.snp.leading)
-            maker.top.equalTo(poster.snp.bottom)
+            maker.leading.equalTo(posterView.snp.leading)
+            maker.top.equalTo(posterView.snp.bottom)
             maker.trailing.equalTo(contentView)
         }
         
-        genre = UILabel()
         self.contentView.addSubview(genre)
         genre.font = ProximaNovaFont.font(type: .regular, size: 12)
         genre.snp.makeConstraints { maker in
@@ -51,6 +49,19 @@ class MovieCollectionViewCell: UICollectionViewCell {
             maker.trailing.equalTo(contentView)
             maker.bottom.equalTo(contentView)
         }
+    }
+    
+    func configure(cell: MovieCollectionViewCellModel) {
+        let host = "image.tmdb.org"
+        let scheme = "https"
+        let path = "/t/p/w500"
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = path + cell.poster
+        self.posterView.sd_setImage(with: url.url)
+        self.title.text = cell.title
+        self.genre.text = cell.genre
     }
     
     required init?(coder: NSCoder) {

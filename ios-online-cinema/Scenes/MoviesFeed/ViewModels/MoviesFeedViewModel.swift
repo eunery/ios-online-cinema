@@ -17,6 +17,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     let fetchMoviesGroup = DispatchGroup()
     let queueMovies = DispatchQueue(label: "queueMovies")
     let queueGenres = DispatchQueue(label: "queueGenres")
+    var dataSource = [MovieCollectionViewCellModel]()
 
     func fetch(completionHandler: @escaping () -> Void) {
         self.isLoading = true
@@ -54,9 +55,20 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 totalPages: fetchedMovies.totalPages,
                 totalResults: fetchedMovies.totalResults
             )
-            
             self.isLoading = false
             completionHandler()
+        }
+    }
+    
+    func createCollectionCell() {
+        guard let movies = self.movies else { return }
+        self.dataSource = movies.results.map {
+            return MovieCollectionViewCellModel(
+                id: $0.id,
+                poster: $0.posterPath,
+                title: $0.title,
+                genre: $0.genreStrings.formatted()
+            )
         }
     }
     

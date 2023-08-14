@@ -34,6 +34,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel.fetch {
+            self.viewModel.createCollectionCell()
             self.moviesFeedCollectionView.reloadData()
             self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
         }
@@ -115,17 +116,7 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell
-        let poster = self.viewModel.movies?.results[indexPath.row].posterPath.description
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
-        var ttt = URLComponents()
-        ttt.scheme = scheme
-        ttt.host = host
-        ttt.path = path + poster!
-        cell?.poster.sd_setImage(with: ttt.url)
-        cell?.title.text = self.viewModel.movies?.results[indexPath.item].title
-        cell?.genre.text = self.viewModel.movies?.results[indexPath.item].genreStrings.formatted()
+        cell?.configure(cell: self.viewModel.dataSource[indexPath.row])
         return cell ?? UICollectionViewCell()
     }
     
