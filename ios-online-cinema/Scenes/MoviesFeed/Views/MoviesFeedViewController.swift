@@ -12,7 +12,7 @@ import SDWebImage
 class MoviesFeedViewController : UIViewController, Coordinating{
     
     var coordinator: Coordinator?
-    let viewModel: MoviesFeedViewModelProtocol
+    var viewModel: MoviesFeedViewModelProtocol
     
     let main = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let container = UIView()
@@ -21,6 +21,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     let moviesFeedCollectionView = UICollectionView(frame: .zero,
                                                     collectionViewLayout: UICollectionViewFlowLayout())
     let refreshControl = UIRefreshControl()
+    var currentPage = 1
     
     init(viewModel: MoviesFeedViewModelProtocol) {
         self.viewModel = viewModel
@@ -33,10 +34,10 @@ class MoviesFeedViewController : UIViewController, Coordinating{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.fetch {
-            self.viewModel.createCollectionCell()
+        self.viewModel.fetch(page: nil) {
             self.moviesFeedCollectionView.reloadData()
             self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+            self.currentPage += 1
         }
         setupUI()
     }
@@ -91,13 +92,18 @@ class MoviesFeedViewController : UIViewController, Coordinating{
         moviesFeedCollectionView.dataSource = self
         moviesFeedCollectionView.delegate = self
         moviesFeedCollectionView.backgroundColor = .none
-        
-        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
-        moviesFeedCollectionView.refreshControl = refreshControl
     }
     
-    @objc func loadData() {
-        
+    func loadData() {
+        self.viewModel.fetch(page: self.viewModel.page) {
+            self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+            self.moviesFeedCollectionView.performBatchUpdates({
+                let indexPath = IndexPath(row: self.viewModel.dataSource.count, section: 0)
+                self.moviesFeedCollectionView.insertItems(at: [indexPath])
+                
+            })
+        }
+        self.currentPage += 1
     }
     
     func handleLoadingIndication(isLoading: Bool) {
@@ -111,7 +117,7 @@ class MoviesFeedViewController : UIViewController, Coordinating{
 
 extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.movies?.results.count ?? 0
+        return self.viewModel.dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -124,36 +130,18 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
         let cellsPerRow: CGFloat = 2
         let padding: CGFloat = 10
         let cellWidth = (collectionView.bounds.width / cellsPerRow) - padding
-//        let cellHeight = collectionView.frame.height - (2 * padding) / 2
         let cellHeight: CGFloat = 286
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == self.viewModel.dataSource.count - 1, self.currentPage < self.viewModel.totalPages {
+            self.viewModel.fetch(page: self.currentPage) {
+                collectionView.reloadData()
+                self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+            }
+            self.currentPage += 1
         }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(origin: .zero, size: newSize)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
     }
 }
-

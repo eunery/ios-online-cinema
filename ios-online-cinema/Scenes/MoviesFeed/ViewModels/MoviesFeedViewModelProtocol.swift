@@ -11,7 +11,9 @@ protocol MoviesFeedViewModelProtocol {
     var isLoading: Bool {get set}
     var movies: TrendMoviesViewControllerModel? {get set}
     var dataSource: [MovieCollectionViewCellModel] {get set}
+    var page: Int {get set}
+    var totalPages: Int {get set}
     
-    func fetch(completionHandler: @escaping () -> Void)
+    func fetch(page: Int?, completionHandler: @escaping () -> Void)
     func createCollectionCell()
 }

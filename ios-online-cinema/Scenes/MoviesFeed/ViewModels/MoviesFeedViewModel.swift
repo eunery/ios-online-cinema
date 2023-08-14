@@ -18,15 +18,19 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     let queueMovies = DispatchQueue(label: "queueMovies")
     let queueGenres = DispatchQueue(label: "queueGenres")
     var dataSource = [MovieCollectionViewCellModel]()
+    var page = 1
+    var totalPages = 1
 
-    func fetch(completionHandler: @escaping () -> Void) {
+    func fetch(page: Int?, completionHandler: @escaping () -> Void) {
         self.isLoading = true
         getGenres()
-        getMovies()
+        getMovies(page: page)
         fetchMoviesGroup.notify(queue: .main) { [weak self] in
             guard let self else { return }
             guard let fetchedMovies = self.fetchedMovies else { return }
             var genresString: [String] = [String]()
+            self.page = fetchedMovies.page
+            self.totalPages = fetchedMovies.totalPages
             self.movies = TrendMoviesViewControllerModel(
                 page: fetchedMovies.page,
                 results: fetchedMovies.results.map {
@@ -56,13 +60,14 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 totalResults: fetchedMovies.totalResults
             )
             self.isLoading = false
+            createCollectionCell()
             completionHandler()
         }
     }
     
     func createCollectionCell() {
         guard let movies = self.movies else { return }
-        self.dataSource = movies.results.map {
+        var tempArray = movies.results.map {
             return MovieCollectionViewCellModel(
                 id: $0.id,
                 poster: $0.posterPath,
@@ -70,6 +75,10 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 genre: $0.genreStrings.formatted()
             )
         }
+        for item in tempArray {
+            self.dataSource.append(item)
+        }
+        tempArray.removeAll()
     }
     
     func getGenres() {
@@ -90,9 +99,9 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
         }
     }
     
-    func getMovies() {
+    func getMovies(page: Int?) {
         self.fetchMoviesGroup.enter()
-        self.service.getTrendingMovies { result in
+        self.service.getTrendingMovies(page: page) { result in
             self.queueMovies.async(group: self.fetchMoviesGroup) { [weak self] in
                 guard let self else { return }
                 switch result {

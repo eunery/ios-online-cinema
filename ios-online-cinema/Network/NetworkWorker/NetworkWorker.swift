@@ -14,15 +14,19 @@ class NetworkWorker: NetworkWorkerProtocol {
     let imageHost: String = "image.tmdb.org"
     let decoder = JSONDecoder()
     
-    func performRequest<T: Codable>(endpoint: String, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
+    func performRequest<T: Codable>(page: Int?, endpoint: String, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
-        components.path = endpoint 
-        
-        guard let url = components.url else {
+        components.path = endpoint
+
+        guard var url = components.url else {
             completionHandler(Result.failure(APIError.badURL))
             return
+        }
+        
+        if let page = page {
+            url.append(queryItems: [URLQueryItem(name: "page", value: "\(page)")])
         }
         
         let headers = [
