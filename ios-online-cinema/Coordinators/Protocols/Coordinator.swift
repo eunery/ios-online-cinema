@@ -36,5 +36,5 @@ protocol CoordinatorFinishDelegate: AnyObject {
 
 
 enum CoordinatorType {
-    case app, tabbar, moviesFeed, favouriteMovies
+    case app, tabbar, moviesFeed, favouriteMovies, moviesDetails
 }

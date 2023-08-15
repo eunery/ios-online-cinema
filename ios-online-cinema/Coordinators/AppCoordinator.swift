@@ -25,11 +25,19 @@ class AppCoordinator: Coordinator, AppCoordinatorProtocol {
     }
     
     func start() {
-        showTabBar()
+        showDetailsView()
+//        showTabBar()
     }
     
     func showTabBar() {
         let vc = TabBarCoordinator(navigationController)
+        childCoordinators.append(vc)
+        vc.parentCoordinator = self
+        vc.start()
+    }
+    
+    func showDetailsView() {
+        let vc = MoviesDetailsCoordinator(navigationController)
         childCoordinators.append(vc)
         vc.parentCoordinator = self
         vc.start()
