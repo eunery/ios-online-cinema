@@ -11,9 +11,14 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     var isLoading: Bool = false
     var error: String?
     var movie: MoviesDetailsModel?
+    var movieId: Int
     let service = APIService(worker: NetworkWorker())
     let fetchMovie = DispatchGroup()
     let queueMovie = DispatchQueue(label: "queueMovie")
+    
+    init(movieId: Int) {
+        self.movieId = movieId
+    }
     
     func fetch(movieId: Int, completionHandler: @escaping () -> Void) {
         self.isLoading = true

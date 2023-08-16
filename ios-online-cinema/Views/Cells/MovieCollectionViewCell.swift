@@ -11,6 +11,7 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "MovieCell"
     
+    var id: Int?
     var poster: String = String()
     var posterView = UIImageView()
     var title: UILabel = UILabel()
@@ -60,6 +61,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         url.host = host
         url.path = path + cell.poster
         self.posterView.sd_setImage(with: url.url)
+        self.id = cell.id
         self.title.text = cell.title
         self.genre.text = cell.genre
     }

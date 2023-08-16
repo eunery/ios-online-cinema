@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-class MoviesFeedViewController : UIViewController, Coordinating{
+class MoviesFeedViewController : UIViewController{
     
-    var coordinator: Coordinator?
+    var coordinator: MoviesFeedCoordinatorProtocol?
     var viewModel: MoviesFeedViewModelProtocol
     
     let main = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -142,6 +142,13 @@ extension MoviesFeedViewController: UICollectionViewDelegate, UICollectionViewDa
                 self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
             }
             self.currentPage += 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
+            guard let id = cell.id else { return }
+            self.coordinator?.showMoviesDetails(movieId: id)
         }
     }
 }

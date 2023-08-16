@@ -8,9 +8,8 @@
 import UIKit
 import SDWebImage
 
-class MoviesDetailsViewController: UIViewController, Coordinating {
+class MoviesDetailsViewController: UIViewController {
     
-    var coordinator: Coordinator?
     let viewModel: MoviesDetailsViewModelProtocol
     
     let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -24,7 +23,6 @@ class MoviesDetailsViewController: UIViewController, Coordinating {
     let date = UILabel()
     let overview = UILabel()
     
-    
     init(viewModel: MoviesDetailsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -32,7 +30,7 @@ class MoviesDetailsViewController: UIViewController, Coordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.fetch(movieId: 35) {
+        self.viewModel.fetch(movieId: self.viewModel.movieId) {
             guard let movie = self.viewModel.movie else { return }
             self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
             let host = "image.tmdb.org"
@@ -56,6 +54,7 @@ class MoviesDetailsViewController: UIViewController, Coordinating {
     }
     
     func setupUI() {
+        UINavigationBar.appearance().barStyle = .default
         self.view.backgroundColor = .white
         
         view.addSubview(loader)
@@ -77,17 +76,17 @@ class MoviesDetailsViewController: UIViewController, Coordinating {
         posterView.layer.shadowOffset = CGSize(width: 0, height: 5)
         posterView.layer.shadowRadius = 10
         posterView.layer.cornerRadius = 10
-//        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 10).cgPath
         posterView.snp.makeConstraints { maker in
             maker.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             maker.top.equalTo(self.view.snp.top)
             maker.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            maker.height.equalTo(UIScreen.main.bounds.height/2)
+            maker.height.equalTo(UIScreen.main.bounds.height/2 + 100)
         }
         
         posterView.addSubview(poster)
         poster.clipsToBounds = true
         poster.layer.cornerRadius = 26
+        poster.contentMode = .scaleAspectFill
         poster.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }

@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-protocol MoviesFeedProtocol: Coordinator {
-    func showMoviesDetails()
+protocol MoviesFeedCoordinatorProtocol: Coordinator {
+    func showMoviesDetails(movieId: Int)
 }
 
-class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
+class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType {.moviesFeed}
@@ -29,8 +29,8 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
         navigationController.setViewControllers([vc], animated: true)
     }
     
-    func showMoviesDetails() {
-        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel())
-        navigationController.setViewControllers([vc], animated: true)
+    func showMoviesDetails(movieId: Int) {
+        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
+        navigationController.pushViewController(vc, animated: true)
     }
 }

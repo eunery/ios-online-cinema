@@ -10,6 +10,7 @@ import Foundation
 protocol MoviesDetailsViewModelProtocol {
     var isLoading: Bool {get set}
     var movie: MoviesDetailsModel? {get set}
+    var movieId: Int {get set}
     
     func fetch(movieId: Int, completionHandler: @escaping () -> Void)
 }

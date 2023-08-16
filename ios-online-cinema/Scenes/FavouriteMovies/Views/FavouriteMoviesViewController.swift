@@ -10,7 +10,7 @@ import UIKit
 class FavouriteMoviesViewController : UIViewController {
     
     let viewModel: FavouriteMoviesViewModelProtocol
-    var coordinator: Coordinator?
+    var coordinator: FavouriteMoviesCoordinatorProtocol?
     
     init(viewModel: FavouriteMoviesViewModelProtocol) {
         self.viewModel = viewModel
