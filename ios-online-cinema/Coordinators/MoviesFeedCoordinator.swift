@@ -9,28 +9,36 @@ import Foundation
 import UIKit
 
 protocol MoviesFeedProtocol: Coordinator {
+    
     func showMoviesDetails()
 }
 
 class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
+    
+    // MARK: - Properties
+    
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType {.moviesFeed}
     var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     
+    // MARK: - Init
+    
     init(_ navVC: UINavigationController) {
         self.navigationController = navVC
     }
     
+    // MARK: - Methods
+    
     func start() {
-        let vc = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
-        vc.coordinator = self
-        navigationController.setViewControllers([vc], animated: true)
+        let viewController = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
+        viewController.coordinator = self
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showMoviesDetails() {
-        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel())
-        navigationController.setViewControllers([vc], animated: true)
+        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel())
+        navigationController.setViewControllers([viewController], animated: true)
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
+    
     var finishDelegate: CoordinatorFinishDelegate? { get set }
     
     var parentCoordinator: Coordinator? { get set }
@@ -33,7 +34,6 @@ extension Coordinator {
 protocol CoordinatorFinishDelegate: AnyObject {
     func coordinatorDidFinish(childCoordinator: Coordinator)
 }
-
 
 enum CoordinatorType {
     case app, tabbar, moviesFeed, favouriteMovies

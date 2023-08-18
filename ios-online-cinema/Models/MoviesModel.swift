@@ -106,4 +106,3 @@ struct MovieShortViewControllerModel: Codable {
         case voteCount = "vote_count"
     }
 }
-

@@ -177,19 +177,10 @@
 		77E4F2972A8510DE0028EACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				77E4F2982A8510FB0028EACA /* Cells */,
+				85F7CD7B2A8F848B002762D4 /* Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
-		};
-		77E4F2982A8510FB0028EACA /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				77E4F29E2A8512140028EACA /* MovieCollectionViewCell.swift */,
-			);
-			name = Cells;
-			path = "ios-online-cinema/1/Cells";
-			sourceTree = SOURCE_ROOT;
 		};
 		85072F5B2A78ECFC006E3D58 = {
 			isa = PBXGroup;
@@ -419,6 +410,14 @@
 				85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		85F7CD7B2A8F848B002762D4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				77E4F29E2A8512140028EACA /* MovieCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		91E8142493B718C8AD84E65F /* Pods */ = {

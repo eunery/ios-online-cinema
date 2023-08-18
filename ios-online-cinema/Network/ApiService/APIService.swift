@@ -11,9 +11,13 @@ struct APIService: APIServiceProtocol {
     
     let worker: NetworkWorkerProtocol
     
-    func getTrendingMovies(page: Int?, completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
+    func getTrendingMovies(
+        page: Int?,
+        completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
         worker.performRequest(
-            page: page,
+            queryParametres: [
+                URLQueryItem(name: "page", value: page?.description)
+            ],
             endpoint: Endpoints.trendMovies.rawValue,
             apiMethod: .get,
             responseType: TrendMoviesResponseModel.self,
@@ -23,7 +27,7 @@ struct APIService: APIServiceProtocol {
     
     func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void) {
         worker.performRequest(
-            page: nil,
+            queryParametres: nil,
             endpoint: Endpoints.movieDetails.rawValue + movieId.description,
             apiMethod: .get,
             responseType: MoviesDetailsModel.self,
@@ -33,7 +37,7 @@ struct APIService: APIServiceProtocol {
     
     func getMoviesGenres(completionHandler: @escaping (Result<MovieGenresResponseModel, APIError>) -> Void) {
         worker.performRequest(
-            page: nil,
+            queryParametres: nil,
             endpoint: Endpoints.moviesGenres.rawValue,
             apiMethod: .get,
             responseType: MovieGenresResponseModel.self,

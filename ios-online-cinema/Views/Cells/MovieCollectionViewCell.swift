@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
     static let identifier: String = "MovieCell"
     
     var poster: String = String()
@@ -16,33 +19,40 @@ class MovieCollectionViewCell: UICollectionViewCell {
     var title: UILabel = UILabel()
     var genre: UILabel = UILabel()
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setup()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    // MARK: - Methods
+    
+    func setup() {
         self.contentView.addSubview(posterView)
-        posterView.translatesAutoresizingMaskIntoConstraints = false
-        posterView.clipsToBounds = true
-        posterView.layer.cornerRadius = 8
-        posterView.contentMode = .scaleAspectFill
+        self.contentView.addSubview(title)
+        self.contentView.addSubview(genre)
+        
+        setupUI()
+        setupLayout()
+    }
+    
+    func setupLayout() {
         posterView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView)
             maker.top.equalTo(contentView)
             maker.trailing.equalTo(contentView)
         }
         
-        self.contentView.addSubview(title)
-        title.font = ProximaNovaFont.font(type: .bold, size: 14)
         title.snp.makeConstraints { maker in
             maker.leading.equalTo(posterView.snp.leading)
             maker.top.equalTo(posterView.snp.bottom)
             maker.trailing.equalTo(contentView)
         }
         
-        self.contentView.addSubview(genre)
-        genre.font = ProximaNovaFont.font(type: .regular, size: 12)
         genre.snp.makeConstraints { maker in
             maker.leading.equalTo(title.snp.leading)
             maker.top.equalTo(title.snp.bottom)
@@ -51,20 +61,19 @@ class MovieCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func setupUI() {
+        posterView.translatesAutoresizingMaskIntoConstraints = false
+        posterView.clipsToBounds = true
+        posterView.layer.cornerRadius = 8
+        posterView.contentMode = .scaleAspectFill
+        title.font = ProximaNovaFont.font(type: .bold, size: 14)
+        genre.font = ProximaNovaFont.font(type: .regular, size: 12)
+    }
+    
     func configure(cell: MovieCollectionViewCellModel) {
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + cell.poster
-        self.posterView.sd_setImage(with: url.url)
+        self.posterView.sd_setImage(with: URL(string: cell.poster))
         self.title.text = cell.title
         self.genre.text = cell.genre
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

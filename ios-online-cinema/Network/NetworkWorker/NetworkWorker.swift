@@ -8,13 +8,24 @@
 import Foundation
 
 class NetworkWorker: NetworkWorkerProtocol {
+    
+    // MARK: - Properties
+    
     let token: String = Constants.apiKey
     let scheme: String = "https"
     let host: String = "api.themoviedb.org"
     let imageHost: String = "image.tmdb.org"
     let decoder = JSONDecoder()
     
-    func performRequest<T: Codable>(page: Int?, endpoint: String, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
+    // MARK: - Methods
+    
+    func performRequest<T: Codable>(
+        queryParametres: [URLQueryItem]?,
+        endpoint: String,
+        apiMethod: APIMethods,
+        responseType: T.Type,
+        completionHandler: @escaping(Result<T, APIError>) -> Void) {
+            
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
@@ -25,8 +36,10 @@ class NetworkWorker: NetworkWorkerProtocol {
             return
         }
         
-        if let page = page {
-            url.append(queryItems: [URLQueryItem(name: "page", value: "\(page)")])
+        if let queryParametres = queryParametres {
+            if queryParametres[0].name == "page" && queryParametres[0].value != nil {
+                url.append(queryItems: queryParametres)
+            }
         }
         
         let headers = [
