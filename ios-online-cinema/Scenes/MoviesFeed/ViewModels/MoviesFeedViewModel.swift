@@ -11,7 +11,6 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     
     // MARK: - Properties
     
-    var isLoading: Bool = false
     var error: String?
     var genres: [Int: String] = [Int: String]()
     let service = APIService(worker: NetworkWorker())
@@ -22,19 +21,15 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     // MARK: - Methods
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.isLoading = true
         getGenresAndMovies { result in
             completionHandler(result)
         }
-        self.isLoading = false
     }
     
     func fetch(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.isLoading = true
         getMovies(page: page) { result in
             completionHandler(result)
         }
-        self.isLoading = false
     }
     
     func getGenresAndMovies(completionHandler: @escaping (Result<Void, APIError>) -> Void) {

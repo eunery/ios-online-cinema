@@ -35,13 +35,14 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.handleLoadingIndication(isLoading: true)
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
                 self.errorDidAppear(error: error)
             case .success(()):
                 self.moviesFeedCollectionView.reloadData()
-                self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+                self.handleLoadingIndication(isLoading: false)
                 self.viewModel.currentPage += 1
             }
         }
@@ -62,7 +63,8 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     }
     
     func setupLayout() {
-        
+        loader.color = .black
+        loader.style = .large
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
@@ -85,7 +87,7 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     func setupUI() {
         self.view.backgroundColor = .white
         self.loader.hidesWhenStopped = true
-        self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+        self.handleLoadingIndication(isLoading: false)
         self.headerLabel.text = "Trending movies today"
         self.headerLabel.font = ProximaNovaFont.font(type: .extraBold, size: 28)
     }
@@ -148,13 +150,15 @@ extension MoviesFeedViewController:
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath) {
             if self.viewModel.validatePage(indexPath: indexPath) {
+                self.handleLoadingIndication(isLoading: true)
                 self.viewModel.fetch(page: self.viewModel.currentPage) { result in
                     switch result {
                     case .failure(let error):
                         self.errorDidAppear(error: error)
+                        self.handleLoadingIndication(isLoading: false)
                     case .success:
                         collectionView.reloadData()
-                        self.handleLoadingIndication(isLoading: self.viewModel.isLoading)
+                        self.handleLoadingIndication(isLoading: false)
                     }
                 }
             }

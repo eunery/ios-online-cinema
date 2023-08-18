@@ -9,7 +9,6 @@ import Foundation
 
 protocol MoviesFeedViewModelProtocol {
     
-    var isLoading: Bool {get set}
     var dataSource: [MovieCollectionViewCellModel] {get set}
     var currentPage: Int {get set}
     
