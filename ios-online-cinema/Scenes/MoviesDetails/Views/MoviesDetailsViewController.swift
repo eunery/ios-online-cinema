@@ -18,7 +18,6 @@ class MoviesDetailsViewController: UIViewController {
         frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     )
     let loader = UIActivityIndicatorView()
-    let favouriteButton = UIButton()
     
     // MARK: - Init
     

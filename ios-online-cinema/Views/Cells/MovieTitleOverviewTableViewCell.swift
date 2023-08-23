@@ -13,6 +13,7 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
     
     var header = UILabel()
     var overview = UILabel()
+    var button = UIButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,6 +34,16 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
         overview.snp.makeConstraints { maker in
             maker.leading.equalTo(header)
             maker.top.equalTo(header.snp.bottom).offset(16)
+            maker.trailing.equalTo(header)
+        }
+        
+        self.contentView.addSubview(button)
+        button.backgroundColor = .red
+        button.setTitle("Add to favourites", for: .normal)
+        button.layer.cornerRadius = 10
+        button.snp.makeConstraints { maker in
+            maker.leading.equalTo(header)
+            maker.top.equalTo(overview.snp.bottom).offset(10)
             maker.trailing.equalTo(header)
         }
     }

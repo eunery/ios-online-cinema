@@ -35,14 +35,14 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
                 case .success(let response):
                     self?.movie = response
                 }
-                self?.mapToCellDataSource { result in
+                self?.setupDataSource { result in
                     completionHandler(result)
                 }
             }
         }
     }
     
-    func mapToCellDataSource(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func setupDataSource(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         guard let movie = self.movie else { return }
         var tempArray = movie.genres.map {
             $0.name
