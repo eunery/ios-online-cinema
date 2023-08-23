@@ -15,5 +15,5 @@ protocol MoviesFeedViewModelProtocol {
     var totalPages: Int {get set}
     
     func fetch(page: Int?, completionHandler: @escaping () -> Void)
-    func createCollectionCell()
+    func mapToCellDataSource()
 }

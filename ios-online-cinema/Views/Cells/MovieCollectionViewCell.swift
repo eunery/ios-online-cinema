@@ -12,7 +12,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "MovieCell"
     
     var id: Int?
-    var poster: String = String()
     var posterView = UIImageView()
     var title: UILabel = UILabel()
     var genre: UILabel = UILabel()

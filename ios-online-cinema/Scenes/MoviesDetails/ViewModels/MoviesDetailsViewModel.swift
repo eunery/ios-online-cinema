@@ -8,36 +8,54 @@
 import Foundation
 
 class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
-    var isLoading: Bool = false
+    
+    // MARK: - Properties
+    
     var error: String?
     var movie: MoviesDetailsModel?
     var movieId: Int
     let service = APIService(worker: NetworkWorker())
-    let fetchMovie = DispatchGroup()
-    let queueMovie = DispatchQueue(label: "queueMovie")
+    var dataSource: MovieDetailsTableViewCellModel?
+    
+    // MARK: - Init
     
     init(movieId: Int) {
         self.movieId = movieId
     }
     
-    func fetch(movieId: Int, completionHandler: @escaping () -> Void) {
-        self.isLoading = true
-        self.fetchMovie.enter()
+    // MARK: - Methods
+    
+    func fetch(movieId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         service.getMoviesDetails(movieId: movieId) { result in
-            self.queueMovie.async(group: self.fetchMovie) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 switch result {
                 case .failure(let error):
                     self?.error = error.localizedDescription
+                    completionHandler(Result.failure(error))
                 case .success(let response):
                     self?.movie = response
                 }
-                self?.fetchMovie.leave()
+                self?.mapToCellDataSource { result in
+                    completionHandler(result)
+                }
             }
         }
-        self.fetchMovie.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            self.isLoading = false
-            completionHandler()
+    }
+    
+    func mapToCellDataSource(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        guard let movie = self.movie else { return }
+        var tempArray = movie.genres.map {
+            $0.name
         }
+        self.dataSource = MovieDetailsTableViewCellModel(
+            id: movie.id,
+            poster: movie.posterPath,
+            genre: tempArray.formatted(),
+            vote: movie.voteAverage.description,
+            releaseDate: String(movie.releaseDate.prefix(4)),
+            title: movie.title,
+            overview: movie.overview
+        )
+        completionHandler(Result.success(()))
     }
 }

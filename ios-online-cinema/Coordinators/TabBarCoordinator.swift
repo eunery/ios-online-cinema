@@ -37,8 +37,6 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
         self.navigationController = navigationController
     }
     
-    
-    
     func start() {
         let pages: [TabBarPage] = [.moviesFeed, .favouriteMovies]
             .sorted(by: {$0.pageOrderNumber() < $1.pageOrderNumber() })

@@ -49,6 +49,10 @@
 		85F3FB4A2A7E6DBA00F0B849 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85F3FB422A7E6DBA00F0B849 /* ProximaNova-Regular.ttf */; };
 		85F3FB4F2A7E70D300F0B849 /* ProximaNovaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */; };
 		85F3FB542A810B8500F0B849 /* MovieGenresResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */; };
+		85F7CD742A8CE9CD002762D4 /* MoviePosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F7CD732A8CE9CD002762D4 /* MoviePosterTableViewCell.swift */; };
+		85F7CD762A8CE9E1002762D4 /* MovieInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F7CD752A8CE9E1002762D4 /* MovieInfoTableViewCell.swift */; };
+		85F7CD782A8CEA13002762D4 /* MovieTitleOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F7CD772A8CEA13002762D4 /* MovieTitleOverviewTableViewCell.swift */; };
+		85F7CD7A2A8CF204002762D4 /* MovieDetailsTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F7CD792A8CF204002762D4 /* MovieDetailsTableViewCellModel.swift */; };
 		92A9BE28792FDC27D8869EF5 /* Pods_ios_online_cinema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +122,10 @@
 		85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximaNovaFont.swift; sourceTree = "<group>"; };
 		85F3FB512A7E736A00F0B849 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenresResponseModel.swift; sourceTree = "<group>"; };
+		85F7CD732A8CE9CD002762D4 /* MoviePosterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MoviePosterTableViewCell.swift; path = "ios-online-cinema/Views/Cells/MoviePosterTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		85F7CD752A8CE9E1002762D4 /* MovieInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieInfoTableViewCell.swift; path = "ios-online-cinema/Views/Cells/MovieInfoTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		85F7CD772A8CEA13002762D4 /* MovieTitleOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieTitleOverviewTableViewCell.swift; path = "ios-online-cinema/Views/Cells/MovieTitleOverviewTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		85F7CD792A8CF204002762D4 /* MovieDetailsTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsTableViewCellModel.swift; sourceTree = "<group>"; };
 		B088D5416E9253D3914DA36F /* Pods-ios-online-cinemaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.debug.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D13BA8A99BA4B74C7A39E5FA /* Pods_ios_online_cinema.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_online_cinema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF0FE93836042491867D13BC /* Pods-ios-online-cinemaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-online-cinemaTests.release.xcconfig"; path = "Target Support Files/Pods-ios-online-cinemaTests/Pods-ios-online-cinemaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -175,19 +183,10 @@
 		77E4F2972A8510DE0028EACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				77E4F2982A8510FB0028EACA /* Cells */,
+				853BC3B12A96181200510A72 /* Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
-		};
-		77E4F2982A8510FB0028EACA /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				77E4F29E2A8512140028EACA /* MovieCollectionViewCell.swift */,
-			);
-			name = Cells;
-			path = "ios-online-cinema/1/Cells";
-			sourceTree = SOURCE_ROOT;
 		};
 		85072F5B2A78ECFC006E3D58 = {
 			isa = PBXGroup;
@@ -224,6 +223,17 @@
 				85072F752A78ECFD006E3D58 /* Info.plist */,
 			);
 			path = "ios-online-cinema";
+			sourceTree = "<group>";
+		};
+		853BC3B12A96181200510A72 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				77E4F29E2A8512140028EACA /* MovieCollectionViewCell.swift */,
+				85F7CD732A8CE9CD002762D4 /* MoviePosterTableViewCell.swift */,
+				85F7CD752A8CE9E1002762D4 /* MovieInfoTableViewCell.swift */,
+				85F7CD772A8CEA13002762D4 /* MovieTitleOverviewTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		8542CBA22A839B86008025BE /* Scenes */ = {
@@ -347,6 +357,7 @@
 				85F3FB532A810B8500F0B849 /* MovieGenresResponseModel.swift */,
 				85F3FB4E2A7E70D300F0B849 /* ProximaNovaFont.swift */,
 				855485B72A864E7D00A18BE0 /* MovieCollectionViewCellModel.swift */,
+				85F7CD792A8CF204002762D4 /* MovieDetailsTableViewCellModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -705,10 +716,13 @@
 				85F3FAB12A791C2F00F0B849 /* MoviesDetailsViewController.swift in Sources */,
 				85E543452A84C498008B714A /* FavouriteMoviesViewModelProtocol.swift in Sources */,
 				85C2F0FB2A84F4D3001395FC /* NetworkWorker.swift in Sources */,
+				85F7CD7A2A8CF204002762D4 /* MovieDetailsTableViewCellModel.swift in Sources */,
 				85C2F0FD2A84F50A001395FC /* NetworkWorkerProtocol.swift in Sources */,
 				85E5434B2A84CF48008B714A /* APIServiceProtocol.swift in Sources */,
 				85F3FB392A7CFFF600F0B849 /* APIError.swift in Sources */,
+				85F7CD742A8CE9CD002762D4 /* MoviePosterTableViewCell.swift in Sources */,
 				85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */,
+				85F7CD762A8CE9E1002762D4 /* MovieInfoTableViewCell.swift in Sources */,
 				85F3FB542A810B8500F0B849 /* MovieGenresResponseModel.swift in Sources */,
 				85F3FABA2A7924BE00F0B849 /* MoviesFeedViewModel.swift in Sources */,
 				85F3FAB72A791FFB00F0B849 /* MoviesDetailsModel.swift in Sources */,
@@ -721,6 +735,7 @@
 				85F3FB332A7B90D500F0B849 /* FavouriteMoviesCoordinator.swift in Sources */,
 				85F3FB352A7CD47000F0B849 /* TabBarPage.swift in Sources */,
 				85F3FB312A7B90CA00F0B849 /* MoviesFeedCoordinator.swift in Sources */,
+				85F7CD782A8CEA13002762D4 /* MovieTitleOverviewTableViewCell.swift in Sources */,
 				85F3FB2D2A7B870E00F0B849 /* TabBarCoordinator.swift in Sources */,
 				858A4A242A7901F100B2042E /* Coordinator.swift in Sources */,
 				85072F682A78ECFC006E3D58 /* AppDelegate.swift in Sources */,
@@ -891,12 +906,13 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ios-online-cinema";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ios-online-cinema";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -920,12 +936,13 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ios-online-cinema";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ios-online-cinema";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SDWebImage
 
-struct MovieCollectionViewCellModel{
+struct MovieCollectionViewCellModel {
     let id: Int
     var poster: String
     var title: String

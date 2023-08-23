@@ -60,12 +60,12 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 totalResults: fetchedMovies.totalResults
             )
             self.isLoading = false
-            createCollectionCell()
+            mapToCellDataSource()
             completionHandler()
         }
     }
     
-    func createCollectionCell() {
+    func mapToCellDataSource() {
         guard let movies = self.movies else { return }
         var tempArray = movies.results.map {
             return MovieCollectionViewCellModel(
