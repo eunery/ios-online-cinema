@@ -9,16 +9,25 @@ import Foundation
 import UIKit
 
 class MovieTitleOverviewTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
     static let identifier: String = "MovieTitleOverviewCell"
     
     var header = UILabel()
     var overview = UILabel()
-    var button = UIButton()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
     
     func setupUI() {
         self.contentView.addSubview(header)
@@ -36,25 +45,11 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
             maker.top.equalTo(header.snp.bottom).offset(16)
             maker.trailing.equalTo(header)
         }
-        
-        self.contentView.addSubview(button)
-        button.backgroundColor = .red
-        button.setTitle("Add to favourites", for: .normal)
-        button.layer.cornerRadius = 10
-        button.snp.makeConstraints { maker in
-            maker.leading.equalTo(header)
-            maker.top.equalTo(overview.snp.bottom).offset(10)
-            maker.trailing.equalTo(header)
-        }
     }
     
     func configure(cell: MovieDetailsTableViewCellModel?) {
         guard let cell = cell else { return }
         self.header.text = cell.title
         self.overview.text = cell.overview
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

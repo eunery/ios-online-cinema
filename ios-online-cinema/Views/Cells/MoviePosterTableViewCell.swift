@@ -10,10 +10,15 @@ import UIKit
 import SDWebImage
 
 class MoviePosterTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
     static let identifier: String = "MoviePosterCell"
     
     let posterView = UIView()
     let poster = UIImageView()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,6 +27,8 @@ class MoviePosterTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
     
     func setupUI() {
         self.contentView.addSubview(posterView)

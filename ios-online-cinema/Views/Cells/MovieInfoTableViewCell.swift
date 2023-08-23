@@ -9,17 +9,29 @@ import Foundation
 import UIKit
 
 class MovieInfoTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
     static let identifier: String = "MovieInfoCell"
+    var isButtonOn: Bool = false
     
     let stackView = UIStackView()
     var genre = UILabel()
     var vote = UILabel()
     var date = UILabel()
+    var button = UIButton()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
     
     func setupUI() {
         self.contentView.addSubview(stackView)
@@ -42,6 +54,11 @@ class MovieInfoTableViewCell: UITableViewCell {
         vote.font = ProximaNovaFont.font(type: .bold, size: 16)
         vote.textAlignment = .center
 
+        stackView.addArrangedSubview(button)
+        button.tintColor = .red
+        button.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        
         stackView.addArrangedSubview(date)
         date.font = ProximaNovaFont.font(type: .bold, size: 14)
         date.textAlignment = .center
@@ -54,7 +71,37 @@ class MovieInfoTableViewCell: UITableViewCell {
         self.date.text = cell.releaseDate
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    @objc func buttonPressed() {
+        isButtonOn.toggle()
+        button.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+    }
+    
+    func resizeImage(image: UIImage?, targetSize: CGSize) -> UIImage? {
+        guard let image = image else {
+            return UIImage()
+        }
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(origin: .zero, size: newSize)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }
