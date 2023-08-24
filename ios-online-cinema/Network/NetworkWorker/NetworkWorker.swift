@@ -36,7 +36,7 @@ class NetworkWorker: NetworkWorkerProtocol {
             return
         }
             
-        if let queryParametres = queryParametres, queryParametres.count != 0 {
+        if let queryParametres = queryParametres {
             url.append(queryItems: queryParametres)
         }
             
