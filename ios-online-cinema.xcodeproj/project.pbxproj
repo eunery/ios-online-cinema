@@ -429,6 +429,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		85F7CD7B2A8F848B002762D4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				77E4F29E2A8512140028EACA /* MovieCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		91E8142493B718C8AD84E65F /* Pods */ = {
 			isa = PBXGroup;
 			children = (

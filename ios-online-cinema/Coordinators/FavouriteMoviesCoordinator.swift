@@ -16,20 +16,21 @@ class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtoco
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType {.favouriteMovies}
-    
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
+    
+    // MARK: - Init
     
     init(_ navVC: UINavigationController) {
         self.navigationController = navVC
     }
     
+    // MARK: - Methods
+    
     func start() {
-        let vc = FavouriteMoviesViewController(viewModel: FavouriteMoviesViewModel())
-        vc.coordinator = self
-        navigationController.setViewControllers([vc], animated: false)
+        let viewController = FavouriteMoviesViewController(viewModel: FavouriteMoviesViewModel())
+        viewController.coordinator = self
+        navigationController.setViewControllers([viewController], animated: false)
     }
-    
-    
 }

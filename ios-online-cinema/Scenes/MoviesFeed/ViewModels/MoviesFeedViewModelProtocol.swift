@@ -8,12 +8,14 @@
 import Foundation
 
 protocol MoviesFeedViewModelProtocol {
-    var isLoading: Bool {get set}
-    var movies: TrendMoviesViewControllerModel? {get set}
-    var dataSource: [MovieCollectionViewCellModel] {get set}
-    var page: Int {get set}
-    var totalPages: Int {get set}
     
-    func fetch(page: Int?, completionHandler: @escaping () -> Void)
-    func mapToCellDataSource()
+    var dataSource: [MovieCollectionViewCellModel] { get set }
+    var currentPage: Int { get set }
+    
+    func start(completionHandler: @escaping (Result<Void, APIError>) -> Void)
+    func fetch(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+    func setupDataSource(
+        response: TrendMoviesResponseModel,
+        completionHandler: @escaping (Result<Void, APIError>) -> Void)
+    func validatePage(indexPath: IndexPath) -> Bool
 }

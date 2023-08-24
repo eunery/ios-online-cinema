@@ -8,110 +8,103 @@
 import Foundation
 
 class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
-    var isLoading: Bool = false
+    
+    // MARK: - Properties
+    
     var error: String?
-    var movies: TrendMoviesViewControllerModel?
-    var fetchedMovies: TrendMoviesResponseModel?
     var genres: [Int: String] = [Int: String]()
     let service = APIService(worker: NetworkWorker())
-    let fetchMoviesGroup = DispatchGroup()
-    let queueMovies = DispatchQueue(label: "queueMovies")
-    let queueGenres = DispatchQueue(label: "queueGenres")
     var dataSource = [MovieCollectionViewCellModel]()
-    var page = 1
+    var currentPage = 1
     var totalPages = 1
+    let host = "image.tmdb.org"
+    let scheme = "https"
+    let path = "/t/p/w500"
 
-    func fetch(page: Int?, completionHandler: @escaping () -> Void) {
-        self.isLoading = true
-        getGenres()
-        getMovies(page: page)
-        fetchMoviesGroup.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            guard let fetchedMovies = self.fetchedMovies else { return }
-            var genresString: [String] = [String]()
-            self.page = fetchedMovies.page
-            self.totalPages = fetchedMovies.totalPages
-            self.movies = TrendMoviesViewControllerModel(
-                page: fetchedMovies.page,
-                results: fetchedMovies.results.map {
-                    genresString.removeAll()
-                    for item in $0.genreIds {
-                        genresString.append(self.genres[item] ?? "")
-                    }
-                    return MovieShortViewControllerModel(
-                        adult: $0.adult,
-                        backdropPath: $0.backdropPath,
-                        id: $0.id,
-                        title: $0.title,
-                        originalLanguage: $0.originalLanguage,
-                        originalTitle: $0.originalTitle,
-                        overview: $0.overview,
-                        posterPath: $0.posterPath,
-                        mediaType: $0.mediaType,
-                        genreStrings: genresString,
-                        popularity: $0.popularity,
-                        releaseDate: $0.releaseDate,
-                        video: $0.video,
-                        voteAverage: $0.voteAverage,
-                        voteCount: $0.voteCount
-                    )
-                },
-                totalPages: fetchedMovies.totalPages,
-                totalResults: fetchedMovies.totalResults
-            )
-            self.isLoading = false
-            mapToCellDataSource()
-            completionHandler()
-        }
-    }
+    // MARK: - Methods
     
-    func mapToCellDataSource() {
-        guard let movies = self.movies else { return }
-        var tempArray = movies.results.map {
-            return MovieCollectionViewCellModel(
-                id: $0.id,
-                poster: $0.posterPath,
-                title: $0.title,
-                genre: $0.genreStrings.formatted()
-            )
+    func start(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        getGenresAndMovies { result in
+            completionHandler(result)
         }
         for item in tempArray {
             self.dataSource.append(item)
-        }
-        tempArray.removeAll()
     }
     
-    func getGenres() {
-        self.fetchMoviesGroup.enter()
+    func fetch(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        getMovies(page: page) { result in
+            completionHandler(result)
+        }
+    }
+    
+    func getGenresAndMovies(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         self.service.getMoviesGenres { result in
-            self.queueGenres.async(group: self.fetchMoviesGroup) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
                 case .failure(let error):
                     self.error = error.localizedDescription
+                    completionHandler(.failure(error))
                 case .success(let response):
                     for item in response.genres {
                         self.genres[item.id] = item.name
                     }
+                    self.getMovies(page: nil) { _ in
+                        completionHandler(.success(()))
+                    }
                 }
-                self.fetchMoviesGroup.leave()
             }
         }
     }
     
-    func getMovies(page: Int?) {
-        self.fetchMoviesGroup.enter()
+    func getMovies(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         self.service.getTrendingMovies(page: page) { result in
-            self.queueMovies.async(group: self.fetchMoviesGroup) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
                 case .failure(let error):
                     self.error = error.localizedDescription
+                    print(error)
+                    completionHandler(.failure(error))
                 case .success(let response):
-                    self.fetchedMovies = response
+                    self.currentPage = response.page
+                    self.totalPages = response.totalPages
+                    self.setupDataSource(response: response) { result in
+                        completionHandler(result)
+                    }
                 }
-                self.fetchMoviesGroup.leave()
             }
+        }
+    }
+    
+    func setupDataSource(
+        response: TrendMoviesResponseModel,
+        completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        var url = URLComponents()
+        url.scheme = self.scheme
+        url.host = self.host
+        self.dataSource += response.results.map {
+            var genresString: [String] = [String]()
+            url.path = self.path + $0.posterPath
+            for item in $0.genreIds {
+                genresString.append(self.genres[item] ?? "")
+            }
+            return MovieCollectionViewCellModel(
+                id: $0.id,
+                poster: url.description,
+                title: $0.title,
+                genre: genresString.formatted()
+            )
+        }
+        completionHandler(.success(()))
+    }
+    
+    func validatePage(indexPath: IndexPath) -> Bool {
+        if indexPath.item == self.dataSource.count - 1, self.currentPage < self.totalPages {
+            self.currentPage += 1
+            return true
+        } else {
+            return false
         }
     }
 }

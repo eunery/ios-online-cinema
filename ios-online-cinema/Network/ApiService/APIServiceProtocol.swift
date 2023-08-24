@@ -8,7 +8,12 @@
 import Foundation
 
 protocol APIServiceProtocol {
-    func getTrendingMovies(page: Int?, completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void)
-    func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void)
+    
+    func getTrendingMovies(
+        page: Int?,
+        completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void)
+    func getMoviesDetails(
+        movieId: Int,
+        completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void)
     func getMoviesGenres(completionHandler: @escaping (Result<MovieGenresResponseModel, APIError>) -> Void)
 }

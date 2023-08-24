@@ -19,14 +19,18 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     
+    // MARK: - Init
+    
     init(_ navVC: UINavigationController) {
         self.navigationController = navVC
     }
     
+    // MARK: - Methods
+    
     func start() {
-        let vc = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
-        vc.coordinator = self
-        navigationController.setViewControllers([vc], animated: true)
+        let viewController = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
+        viewController.coordinator = self
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showMoviesDetails(movieId: Int) {
