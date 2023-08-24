@@ -8,5 +8,6 @@
 import Foundation
 
 protocol FavouriteMoviesViewModelProtocol {
+    
     func fetch()
 }

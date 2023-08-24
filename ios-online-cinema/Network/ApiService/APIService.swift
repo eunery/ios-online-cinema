@@ -8,15 +8,19 @@
 import Foundation
 
 struct APIService: APIServiceProtocol {
+    
     let worker: NetworkWorkerProtocol
     
-    init(worker: NetworkWorkerProtocol) {
-        self.worker = worker
-    }
-    
-    func getTrendingMovies(completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
+    func getTrendingMovies(
+        page: Int?,
+        completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
+        var params: [URLQueryItem] = []
+        if page != nil {
+            params.append(URLQueryItem(name: "page", value: page?.description))
+        }
         worker.performRequest(
-            endpoint: .trendMoviesEndpoint,
+            queryParametres: params,
+            endpoint: Endpoints.trendMovies.rawValue,
             apiMethod: .get,
             responseType: TrendMoviesResponseModel.self,
             completionHandler: completionHandler
@@ -25,11 +29,21 @@ struct APIService: APIServiceProtocol {
     
     func getMoviesDetails(movieId: Int, completionHandler: @escaping (Result<MoviesDetailsModel, APIError>) -> Void) {
         worker.performRequest(
-            endpoint: .movieDetailsEndpoint,
+            queryParametres: nil,
+            endpoint: Endpoints.movieDetails.rawValue + movieId.description,
             apiMethod: .get,
             responseType: MoviesDetailsModel.self,
             completionHandler: completionHandler
         )
     }
     
+    func getMoviesGenres(completionHandler: @escaping (Result<MovieGenresResponseModel, APIError>) -> Void) {
+        worker.performRequest(
+            queryParametres: nil,
+            endpoint: Endpoints.moviesGenres.rawValue,
+            apiMethod: .get,
+            responseType: MovieGenresResponseModel.self,
+            completionHandler: completionHandler
+        )
+    }
 }

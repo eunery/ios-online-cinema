@@ -9,6 +9,8 @@ import Foundation
 
 class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
+    // MARK: - Methods
+    
     func fetch() {
         
     }

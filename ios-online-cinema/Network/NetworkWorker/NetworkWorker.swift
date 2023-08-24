@@ -8,22 +8,38 @@
 import Foundation
 
 class NetworkWorker: NetworkWorkerProtocol {
+    
+    // MARK: - Properties
+    
     let token: String = Constants.apiKey
     let scheme: String = "https"
     let host: String = "api.themoviedb.org"
+    let imageHost: String = "image.tmdb.org"
     let decoder = JSONDecoder()
     
-    func performRequest<T: Codable>(endpoint: Endpoints, apiMethod: APIMethods, responseType: T.Type, completionHandler: @escaping(Result<T, APIError>) -> Void) {
+    // MARK: - Methods
+    
+    func performRequest<T: Codable>(
+        queryParametres: [URLQueryItem]?,
+        endpoint: String,
+        apiMethod: APIMethods,
+        responseType: T.Type,
+        completionHandler: @escaping(Result<T, APIError>) -> Void) {
+            
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
-        components.path = endpoint.rawValue
-        
-        guard let url = components.url else {
+        components.path = endpoint
+
+        guard var url = components.url else {
             completionHandler(Result.failure(APIError.badURL))
             return
         }
-        
+            
+        if let queryParametres = queryParametres {
+            url.append(queryItems: queryParametres)
+        }
+            
         let headers = [
             "accept": "application/json",
             "Authorization": "\(self.token)"
@@ -42,6 +58,7 @@ class NetworkWorker: NetworkWorkerProtocol {
             } else if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
                 completionHandler(Result.failure(APIError.badResponse(statusCode: httpResponse.statusCode)))
             } else if let data = data {
+                self.decoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
                     let response = try self.decoder.decode(responseType.self, from: data)
                     completionHandler(Result.success(response))

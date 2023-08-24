@@ -10,7 +10,7 @@ import Foundation
 
 protocol TabBarProtocol: Coordinator {
     
-    var tabBarController: UITabBarController {get set}
+    var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
     
@@ -21,41 +21,22 @@ protocol TabBarProtocol: Coordinator {
 
 class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     
+    // MARK: - Properties
+    
     var tabBarController: UITabBarController = TabBarViewController()
-    
     weak var finishDelegate: CoordinatorFinishDelegate?
-    
     var childCoordinators: [Coordinator] = []
-    
     var type: CoordinatorType { .tabbar }
-    
     var parentCoordinator: Coordinator?
-    
     var navigationController: UINavigationController
+    
+    // MARK: - Init
     
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    
-    
-    func start() {
-        let pages: [TabBarPage] = [.moviesFeed, .favouriteMovies]
-            .sorted(by: {$0.pageOrderNumber() < $1.pageOrderNumber() })
-        
-        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
-        
-        prepareTabBarController(withTabBarControllers: controllers)
-    }
-    
-    func prepareTabBarController(withTabBarControllers tabControllers: [UIViewController]) {
-        tabBarController.setViewControllers(tabControllers, animated: true)
-        tabBarController.selectedIndex = TabBarPage.moviesFeed.pageOrderNumber()
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.backgroundColor = .white
-        
-        navigationController.viewControllers = [tabBarController]
-    }
+    // MARK: - Private methods
     
     private func getTabController(_ page: TabBarPage) -> UINavigationController {
         let navController = UINavigationController()
@@ -80,6 +61,26 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
             favouriteMovies.start()
         }
         return navController
+    }
+    
+    // MARK: - Methods
+    
+    func start() {
+        let pages: [TabBarPage] = [.moviesFeed, .favouriteMovies]
+            .sorted(by: {$0.pageOrderNumber() < $1.pageOrderNumber() })
+        
+        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
+        
+        prepareTabBarController(withTabBarControllers: controllers)
+    }
+    
+    func prepareTabBarController(withTabBarControllers tabControllers: [UIViewController]) {
+        tabBarController.setViewControllers(tabControllers, animated: true)
+        tabBarController.selectedIndex = TabBarPage.moviesFeed.pageOrderNumber()
+        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.backgroundColor = .white
+        
+        navigationController.viewControllers = [tabBarController]
     }
     
     func selectPage(_ page: TabBarPage) {
@@ -107,7 +108,7 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
         
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
-        if(widthRatio > heightRatio) {
+        if widthRatio > heightRatio {
             newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
             newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
