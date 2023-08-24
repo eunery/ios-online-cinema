@@ -128,6 +128,4 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             return UITableViewCell()
         }
     }
-    
-    // MARK: - Methods
 }

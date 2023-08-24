@@ -27,8 +27,6 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
         getGenresAndMovies { result in
             completionHandler(result)
         }
-        for item in tempArray {
-            self.dataSource.append(item)
     }
     
     func fetch(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
