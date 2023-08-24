@@ -25,6 +25,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setup()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,7 +63,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     func setupUI() {
-        posterView.translatesAutoresizingMaskIntoConstraints = false
         posterView.clipsToBounds = true
         posterView.layer.cornerRadius = 8
         posterView.contentMode = .scaleAspectFill

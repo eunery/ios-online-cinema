@@ -14,10 +14,12 @@ struct APIService: APIServiceProtocol {
     func getTrendingMovies(
         page: Int?,
         completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {
+        var params: [URLQueryItem] = []
+        if page != nil {
+            params.append(URLQueryItem(name: "page", value: page?.description))
+        }
         worker.performRequest(
-            queryParametres: [
-                URLQueryItem(name: "page", value: page?.description)
-            ],
+            queryParametres: params,
             endpoint: Endpoints.trendMovies.rawValue,
             apiMethod: .get,
             responseType: TrendMoviesResponseModel.self,

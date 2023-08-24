@@ -35,13 +35,11 @@ class NetworkWorker: NetworkWorkerProtocol {
             completionHandler(Result.failure(APIError.badURL))
             return
         }
-        
-        if let queryParametres = queryParametres {
-            if queryParametres[0].name == "page" && queryParametres[0].value != nil {
-                url.append(queryItems: queryParametres)
-            }
+            
+        if let queryParametres = queryParametres, queryParametres.count != 0 {
+            url.append(queryItems: queryParametres)
         }
-        
+            
         let headers = [
             "accept": "application/json",
             "Authorization": "\(self.token)"

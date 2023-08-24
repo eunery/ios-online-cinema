@@ -39,8 +39,8 @@ class MoviesFeedViewController: UIViewController, Coordinating {
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
-                self.errorDidAppear(error: error)
-            case .success(()):
+                self.showError(error: error)
+            case .success:
                 self.moviesFeedCollectionView.reloadData()
                 self.handleLoadingIndication(isLoading: false)
                 self.viewModel.currentPage += 1
@@ -63,8 +63,6 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     }
     
     func setupLayout() {
-        loader.color = .black
-        loader.style = .large
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
@@ -87,7 +85,8 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     func setupUI() {
         self.view.backgroundColor = .white
         self.loader.hidesWhenStopped = true
-        self.handleLoadingIndication(isLoading: false)
+        self.loader.color = .black
+        self.loader.style = .large
         self.headerLabel.text = "Trending movies today"
         self.headerLabel.font = ProximaNovaFont.font(type: .extraBold, size: 28)
     }
@@ -109,7 +108,7 @@ class MoviesFeedViewController: UIViewController, Coordinating {
         }
     }
     
-    func errorDidAppear(error: APIError) {
+    func showError(error: APIError) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
@@ -154,7 +153,7 @@ extension MoviesFeedViewController:
                 self.viewModel.fetch(page: self.viewModel.currentPage) { result in
                     switch result {
                     case .failure(let error):
-                        self.errorDidAppear(error: error)
+                        self.showError(error: error)
                         self.handleLoadingIndication(isLoading: false)
                     case .success:
                         collectionView.reloadData()

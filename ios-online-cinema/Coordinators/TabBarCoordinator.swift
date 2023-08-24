@@ -10,7 +10,7 @@ import Foundation
 
 protocol TabBarProtocol: Coordinator {
     
-    var tabBarController: UITabBarController {get set}
+    var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
     

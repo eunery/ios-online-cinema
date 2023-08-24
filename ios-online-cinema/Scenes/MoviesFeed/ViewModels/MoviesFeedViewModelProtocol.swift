@@ -9,8 +9,8 @@ import Foundation
 
 protocol MoviesFeedViewModelProtocol {
     
-    var dataSource: [MovieCollectionViewCellModel] {get set}
-    var currentPage: Int {get set}
+    var dataSource: [MovieCollectionViewCellModel] { get set }
+    var currentPage: Int { get set }
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void)
     func fetch(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void)

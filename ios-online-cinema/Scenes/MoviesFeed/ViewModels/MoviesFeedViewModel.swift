@@ -17,6 +17,9 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     var dataSource = [MovieCollectionViewCellModel]()
     var currentPage = 1
     var totalPages = 1
+    let host = "image.tmdb.org"
+    let scheme = "https"
+    let path = "/t/p/w500"
 
     // MARK: - Methods
     
@@ -39,13 +42,13 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 switch result {
                 case .failure(let error):
                     self.error = error.localizedDescription
-                    completionHandler(Result.failure(error))
+                    completionHandler(.failure(error))
                 case .success(let response):
                     for item in response.genres {
                         self.genres[item.id] = item.name
                     }
                     self.getMovies(page: nil) { _ in
-                        completionHandler(Result.success(()))
+                        completionHandler(.success(()))
                     }
                 }
             }
@@ -60,7 +63,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 case .failure(let error):
                     self.error = error.localizedDescription
                     print(error)
-                    completionHandler(Result.failure(error))
+                    completionHandler(.failure(error))
                 case .success(let response):
                     self.currentPage = response.page
                     self.totalPages = response.totalPages
@@ -75,16 +78,12 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     func setupDataSource(
         response: TrendMoviesResponseModel,
         completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
         var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        var genresString: [String] = [String]()
-        var tempArray = response.results.map {
-            url.path = path + $0.posterPath
-            genresString.removeAll()
+        url.scheme = self.scheme
+        url.host = self.host
+        self.dataSource += response.results.map {
+            var genresString: [String] = [String]()
+            url.path = self.path + $0.posterPath
             for item in $0.genreIds {
                 genresString.append(self.genres[item] ?? "")
             }
@@ -95,11 +94,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 genre: genresString.formatted()
             )
         }
-        for item in tempArray {
-            self.dataSource.append(item)
-        }
-        tempArray.removeAll()
-        completionHandler(Result.success(()))
+        completionHandler(.success(()))
     }
     
     func validatePage(indexPath: IndexPath) -> Bool {
