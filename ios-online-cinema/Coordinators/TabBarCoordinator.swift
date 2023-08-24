@@ -85,12 +85,12 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     }
     
     func selectedIndex(_ index: Int) {
-        guard let page = TabBarPage.init(index: index) else {return}
+        guard let page = TabBarPage(index: index) else {return}
         
         tabBarController.selectedIndex = page.pageOrderNumber()
     }
     
     func currentPage() -> TabBarPage? {
-        TabBarPage.init(index: tabBarController.selectedIndex)
+        TabBarPage(index: tabBarController.selectedIndex)
     }
 }

@@ -13,6 +13,9 @@ protocol MoviesFeedCoordinatorProtocol: Coordinator {
 }
 
 class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
+    
+    // MARK: - Properties
+    
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType {.moviesFeed}
@@ -34,7 +37,7 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     }
     
     func showMoviesDetails(movieId: Int) {
-        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
-        navigationController.pushViewController(vc, animated: true)
+        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

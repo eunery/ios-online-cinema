@@ -14,9 +14,7 @@ class MoviesDetailsViewController: UIViewController {
     
     let viewModel: MoviesDetailsViewModelProtocol
     
-    let tableView = UITableView(
-        frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-    )
+    let tableView = UITableView()
     let loader = UIActivityIndicatorView()
     
     // MARK: - Init
@@ -34,43 +32,54 @@ class MoviesDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         handleLoadingIndication(isLoading: true)
-        self.viewModel.fetch(movieId: self.viewModel.movieId) { result in
+        self.viewModel.fetch { result in
             switch result {
             case .failure(let error):
-                self.errorDidAppear(error: error)
-            case .success(()):
+                self.showError(error: error)
+            case .success:
                 self.tableView.reloadData()
                 self.handleLoadingIndication(isLoading: false)
             }
         }
-        setupUI()
+        setup()
     }
     
     // MARK: - Methods
     
+    func setup() {
+        self.view.addSubview(loader)
+        self.view.addSubview(tableView)
+        
+        setupUI()
+        setupLayout()
+        tableViewSetup()
+    }
+    
     func setupUI() {
         UINavigationBar.appearance().barStyle = .default
         self.view.backgroundColor = .white
-        
-        view.addSubview(loader)
         loader.hidesWhenStopped = true
+    }
+    
+    func setupLayout() {
         loader.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
-
-        self.view.addSubview(tableView)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.allowsSelection = false
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.top.equalToSuperview()
             maker.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
         }
+    }
+    
+    func tableViewSetup() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.allowsSelection = false
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     func handleLoadingIndication(isLoading: Bool) {
@@ -81,7 +90,7 @@ class MoviesDetailsViewController: UIViewController {
         }
     }
     
-    func errorDidAppear(error: APIError) {
+    func showError(error: APIError) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
@@ -104,7 +113,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MoviePosterTableViewCell.identifier, for: indexPath
             ) as? MoviePosterTableViewCell
-            cell?.configure(cell: self.viewModel.dataSource)
+            cell?.configure(cellModel: self.viewModel.dataSource)
             return cell ?? UITableViewCell()
         case 1:
             tableView.register(
@@ -113,7 +122,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MovieInfoTableViewCell.identifier, for: indexPath
             ) as? MovieInfoTableViewCell
-            cell?.configure(cell: self.viewModel.dataSource)
+            cell?.configure(cellModel: self.viewModel.dataSource)
             return cell ?? UITableViewCell()
         case 2:
             tableView.register(
@@ -122,7 +131,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MovieTitleOverviewTableViewCell.identifier, for: indexPath
             ) as? MovieTitleOverviewTableViewCell
-            cell?.configure(cell: self.viewModel.dataSource)
+            cell?.configure(cellModel: self.viewModel.dataSource)
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()

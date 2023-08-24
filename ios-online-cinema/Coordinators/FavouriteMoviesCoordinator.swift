@@ -13,6 +13,9 @@ protocol FavouriteMoviesCoordinatorProtocol: Coordinator {
 }
 
 class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtocol {
+    
+    // MARK: - Properties
+    
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType {.favouriteMovies}

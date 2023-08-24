@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-class MoviesFeedViewController : UIViewController{
+class MoviesFeedViewController: UIViewController {
     
     var coordinator: MoviesFeedCoordinatorProtocol?
     var viewModel: MoviesFeedViewModelProtocol
@@ -126,7 +126,7 @@ extension MoviesFeedViewController:
             guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MovieCollectionViewCell.identifier,
             for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-            cell.configure(cell: self.viewModel.dataSource[indexPath.row])
+            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row])
             
             return cell
     }

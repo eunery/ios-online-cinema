@@ -16,13 +16,13 @@ class MoviePosterTableViewCell: UITableViewCell {
     static let identifier: String = "MoviePosterCell"
     
     let posterView = UIView()
-    let poster = UIImageView()
+    let posterImageView = UIImageView()
     
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        setup()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,37 +30,39 @@ class MoviePosterTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func setupUI() {
+    func setup() {
         self.contentView.addSubview(posterView)
+        posterView.addSubview(posterImageView)
+        
+        setupUI()
+        setupLayout()
+    }
+    
+    func setupUI() {
         posterView.clipsToBounds = false
         posterView.layer.shadowColor = UIColor.black.cgColor
         posterView.layer.shadowOpacity = 1
         posterView.layer.shadowOffset = CGSize(width: 0, height: 5)
         posterView.layer.shadowRadius = 10
         posterView.layer.cornerRadius = 10
+        
+        posterImageView.clipsToBounds = true
+        posterImageView.layer.cornerRadius = 26
+    }
+    
+    func setupLayout() {
         posterView.snp.makeConstraints { maker in
             maker.edges.equalTo(contentView)
             maker.height.equalTo(UIScreen.main.bounds.height/2 + 100)
             maker.width.equalTo(contentView)
         }
-        
-        posterView.addSubview(poster)
-        poster.clipsToBounds = true
-        poster.layer.cornerRadius = 26
-        poster.snp.makeConstraints { maker in
+        posterImageView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
     }
     
-    func configure(cell: MovieDetailsTableViewCellModel?) {
-        guard let cell = cell else { return }
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + cell.poster
-        self.poster.sd_setImage(with: url.url)
+    func configure(cellModel: MovieDetailsTableViewCellModel?) {
+        guard let cellModel = cellModel else { return }
+        self.posterImageView.sd_setImage(with: URL(string: cellModel.poster))
     }
 }

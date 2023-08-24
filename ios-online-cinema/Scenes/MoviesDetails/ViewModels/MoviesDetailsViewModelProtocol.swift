@@ -8,9 +8,7 @@
 import Foundation
 
 protocol MoviesDetailsViewModelProtocol {
-    var movie: MoviesDetailsModel? {get set}
-    var movieId: Int {get set}
-    var dataSource: MovieDetailsTableViewCellModel? {get set}
+    var dataSource: MovieDetailsTableViewCellModel? { get set }
     
-    func fetch(movieId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void)
+    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void)
 }

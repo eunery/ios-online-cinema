@@ -15,17 +15,17 @@ class MovieInfoTableViewCell: UITableViewCell {
     static let identifier: String = "MovieInfoCell"
     var isButtonOn: Bool = false
     
-    let stackView = UIStackView()
-    var genre = UILabel()
-    var vote = UILabel()
-    var date = UILabel()
-    var button = UIButton()
+    let infoStackView = UIStackView()
+    var genreLabel = UILabel()
+    var voteLabel = UILabel()
+    var dateLabel = UILabel()
+    var addToFavouritesButton = UIButton()
     
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        setup()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -33,46 +33,55 @@ class MovieInfoTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
+    func setup() {
+        self.contentView.addSubview(infoStackView)
+        infoStackView.addArrangedSubview(genreLabel)
+        infoStackView.addArrangedSubview(voteLabel)
+        infoStackView.addArrangedSubview(addToFavouritesButton)
+        infoStackView.addArrangedSubview(dateLabel)
+        
+        setupUI()
+        setupLayout()
+    }
+    
     func setupUI() {
-        self.contentView.addSubview(stackView)
-        stackView.axis = .horizontal
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.distribution = UIStackView.Distribution.fillEqually
-        stackView.snp.makeConstraints { maker in
+        infoStackView.axis = .horizontal
+        infoStackView.alignment = UIStackView.Alignment.center
+        infoStackView.distribution = UIStackView.Distribution.fillEqually
+        
+        genreLabel.font = ProximaNovaFont.font(type: .bold, size: 14)
+        genreLabel.textAlignment = .center
+        genreLabel.numberOfLines = 0
+        
+        voteLabel.font = ProximaNovaFont.font(type: .bold, size: 16)
+        voteLabel.textAlignment = .center
+        
+        addToFavouritesButton.tintColor = .red
+        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        addToFavouritesButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        
+        dateLabel.font = ProximaNovaFont.font(type: .bold, size: 14)
+        dateLabel.textAlignment = .center
+    }
+    
+    func setupLayout() {
+        infoStackView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(10)
             maker.leading.equalToSuperview()
             maker.trailing.equalToSuperview()
             maker.bottom.equalToSuperview().inset(10)
         }
-        
-        stackView.addArrangedSubview(genre)
-        genre.font = ProximaNovaFont.font(type: .bold, size: 14)
-        genre.textAlignment = .center
-        genre.numberOfLines = 0
-
-        stackView.addArrangedSubview(vote)
-        vote.font = ProximaNovaFont.font(type: .bold, size: 16)
-        vote.textAlignment = .center
-
-        stackView.addArrangedSubview(button)
-        button.tintColor = .red
-        button.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
-        stackView.addArrangedSubview(date)
-        date.font = ProximaNovaFont.font(type: .bold, size: 14)
-        date.textAlignment = .center
     }
     
-    func configure(cell: MovieDetailsTableViewCellModel?) {
-        guard let cell = cell else { return }
-        self.genre.text = cell.genre
-        self.vote.text = cell.vote
-        self.date.text = cell.releaseDate
+    func configure(cellModel: MovieDetailsTableViewCellModel?) {
+        guard let cellModel = cellModel else { return }
+        self.genreLabel.text = cellModel.genre
+        self.voteLabel.text = cellModel.vote
+        self.dateLabel.text = cellModel.releaseDate
     }
     
     @objc func buttonPressed() {
         isButtonOn.toggle()
-        button.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
     }
 }

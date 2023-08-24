@@ -14,14 +14,14 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
     
     static let identifier: String = "MovieTitleOverviewCell"
     
-    var header = UILabel()
-    var overview = UILabel()
+    var headerLabel = UILabel()
+    var overviewLabel = UILabel()
     
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        setup()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -29,27 +29,35 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
+    func setup() {
+        self.contentView.addSubview(headerLabel)
+        self.contentView.addSubview(overviewLabel)
+        
+        setupUI()
+        setupLayout()
+    }
+    
     func setupUI() {
-        self.contentView.addSubview(header)
-        header.font = ProximaNovaFont.font(type: .bold, size: 24)
-        header.snp.makeConstraints { maker in
+        headerLabel.font = ProximaNovaFont.font(type: .bold, size: 24)
+        overviewLabel.numberOfLines = 0
+        overviewLabel.font = ProximaNovaFont.font(type: .regular, size: 18)
+    }
+    
+    func setupLayout() {
+        headerLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(10)
             maker.trailing.equalToSuperview().inset(10)
         }
-
-        self.contentView.addSubview(overview)
-        overview.numberOfLines = 0
-        overview.font = ProximaNovaFont.font(type: .regular, size: 18)
-        overview.snp.makeConstraints { maker in
-            maker.leading.equalTo(header)
-            maker.top.equalTo(header.snp.bottom).offset(16)
-            maker.trailing.equalTo(header)
+        overviewLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(headerLabel)
+            maker.top.equalTo(headerLabel.snp.bottom).offset(16)
+            maker.trailing.equalTo(headerLabel)
         }
     }
     
-    func configure(cell: MovieDetailsTableViewCellModel?) {
-        guard let cell = cell else { return }
-        self.header.text = cell.title
-        self.overview.text = cell.overview
+    func configure(cellModel: MovieDetailsTableViewCellModel?) {
+        guard let cellModel = cellModel else { return }
+        self.headerLabel.text = cellModel.title
+        self.overviewLabel.text = cellModel.overview
     }
 }

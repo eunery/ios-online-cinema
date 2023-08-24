@@ -11,10 +11,8 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     // MARK: - Properties
     
-    var error: String?
-    var movie: MoviesDetailsModel?
-    var movieId: Int
-    let service = APIService(worker: NetworkWorker())
+    let movieId: Int
+    let apiService = APIService(worker: NetworkWorker())
     var dataSource: MovieDetailsTableViewCellModel?
     
     // MARK: - Init
@@ -25,37 +23,42 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     // MARK: - Methods
     
-    func fetch(movieId: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        service.getMoviesDetails(movieId: movieId) { result in
+    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        apiService.getMoviesDetails(movieId: self.movieId) { result in
             DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
                 switch result {
                 case .failure(let error):
-                    self?.error = error.localizedDescription
-                    completionHandler(Result.failure(error))
+                    completionHandler(.failure(error))
                 case .success(let response):
-                    self?.movie = response
-                }
-                self?.setupDataSource { result in
-                    completionHandler(result)
+                    self.setupDataSource(response: response) { result in
+                        completionHandler(result)
+                    }
                 }
             }
         }
     }
     
-    func setupDataSource(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        guard let movie = self.movie else { return }
-        var tempArray = movie.genres.map {
+    func setupDataSource(response: MoviesDetailsModel, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        let host = "image.tmdb.org"
+        let scheme = "https"
+        let path = "/t/p/w500"
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = path + response.posterPath
+        let genresNamesArray = response.genres.map {
             $0.name
         }
         self.dataSource = MovieDetailsTableViewCellModel(
-            id: movie.id,
-            poster: movie.posterPath,
-            genre: tempArray.formatted(),
-            vote: movie.voteAverage.description,
-            releaseDate: String(movie.releaseDate.prefix(4)),
-            title: movie.title,
-            overview: movie.overview
+            id: response.id,
+            poster: url.description,
+            genre: genresNamesArray.formatted(),
+            vote: response.voteAverage.description,
+            releaseDate: String(response.releaseDate.prefix(4)),
+            title: response.title,
+            overview: response.overview
         )
-        completionHandler(Result.success(()))
+        completionHandler(.success(()))
     }
 }
