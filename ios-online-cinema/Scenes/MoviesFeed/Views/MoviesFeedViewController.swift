@@ -33,6 +33,7 @@ class MoviesFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         self.handleLoadingIndication(isLoading: true)
         self.viewModel.start { result in
             switch result {
@@ -44,7 +45,6 @@ class MoviesFeedViewController: UIViewController {
                 self.viewModel.currentPage += 1
             }
         }
-        setup()
     }
     
     // MARK: - Methods

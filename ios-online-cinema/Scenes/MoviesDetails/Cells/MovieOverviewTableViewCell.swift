@@ -39,6 +39,7 @@ class MovieOverviewTableViewCell: UITableViewCell {
     
     func setupUI() {
         headerLabel.font = ProximaNovaFont.font(type: .bold, size: 24)
+        headerLabel.numberOfLines = 0
         overviewLabel.numberOfLines = 0
         overviewLabel.font = ProximaNovaFont.font(type: .regular, size: 18)
     }
@@ -46,17 +47,18 @@ class MovieOverviewTableViewCell: UITableViewCell {
     func setupLayout() {
         headerLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(10)
+            maker.top.equalToSuperview()
             maker.trailing.equalToSuperview().inset(10)
         }
         overviewLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(headerLabel)
-            maker.top.equalTo(headerLabel.snp.bottom).offset(16)
-            maker.trailing.equalTo(headerLabel)
+            maker.leading.equalTo(self.headerLabel)
+            maker.top.equalTo(self.headerLabel.snp.bottom).offset(16)
+            maker.trailing.equalTo(self.headerLabel)
+            maker.bottom.equalToSuperview()
         }
     }
     
-    func configure(cellModel: MoviesDetailsOverviewCellData?) {
-        guard let cellModel = cellModel else { return }
+    func configure(cellModel: MoviesDetailsOverviewCellData) {
         self.headerLabel.text = cellModel.title
         self.overviewLabel.text = cellModel.overview
     }

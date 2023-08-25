@@ -31,6 +31,7 @@ class MoviesDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         handleLoadingIndication(isLoading: true)
         self.viewModel.fetch { result in
             switch result {
@@ -41,7 +42,6 @@ class MoviesDetailsViewController: UIViewController {
                 self.handleLoadingIndication(isLoading: false)
             }
         }
-        setup()
     }
     
     // MARK: - Methods
@@ -76,7 +76,6 @@ class MoviesDetailsViewController: UIViewController {
     func tableViewSetup() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.allowsSelection = false
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -112,27 +111,29 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch self.viewModel.dataSource[indexPath.row]?.type {
+        let item = self.viewModel.dataSource[indexPath.row]
+        switch item.type {
         case .poster:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MoviePosterTableViewCell.identifier,
-                                                     for: indexPath) as? MoviePosterTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
-            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsPosterCellData)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviePosterTableViewCell.identifier,
+                                                           for: indexPath) as? MoviePosterTableViewCell,
+                  let item = item as? MoviesDetailsPosterCellData else { return UITableViewCell() }
+            cell.configure(cellModel: item)
+            
             return cell
         case .info:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
-                                                     for: indexPath) as? MovieInfoTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
-            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsInfoCellData)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
+                                                           for: indexPath) as? MovieInfoTableViewCell,
+                  let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
+            cell.configure(cellModel: item)
+            
             return cell
         case .overview:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MovieOverviewTableViewCell.identifier,
-                                                     for: indexPath) as? MovieOverviewTableViewCell
-            guard let cell = cell else { return UITableViewCell() }
-            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsOverviewCellData)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieOverviewTableViewCell.identifier,
+                                                           for: indexPath) as? MovieOverviewTableViewCell,
+                  let item = item as? MoviesDetailsOverviewCellData else { return UITableViewCell() }
+            cell.configure(cellModel: item)
+            
             return cell
-        default:
-            return UITableViewCell()
         }
     }
 }

@@ -70,8 +70,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         genreLabel.font = ProximaNovaFont.font(type: .regular, size: 12)
     }
     
-    func configure(cellModel: MovieCollectionViewCellModel?) {
-        guard let cellModel = cellModel else { return }
+    func configure(cellModel: MovieCollectionViewCellModel) {
         self.posterView.sd_setImage(with: URL(string: cellModel.poster))
         self.id = cellModel.id
         self.titleLabel.text = cellModel.title

@@ -13,7 +13,10 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     let movieId: Int
     let apiService = APIService(worker: NetworkWorker())
-    var dataSource = [MoviesDetailsCellDataProtocol?]()
+    var dataSource = [MoviesDetailsCellDataProtocol]()
+    let host = "image.tmdb.org"
+    let scheme = "https"
+    let path = "/t/p/w500"
     
     // MARK: - Init
     
@@ -41,9 +44,6 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     func setupDataSource(response: MoviesDetailsResponseModel,
                          completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
         var url = URLComponents()
         url.scheme = scheme
         url.host = host
@@ -51,16 +51,20 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         let genresNamesArray = response.genres.map {
             $0.name
         }
+        
         self.dataSource.append(MoviesDetailsPosterCellData(poster: url.description))
+        
         self.dataSource.append(MoviesDetailsInfoCellData(
             genres: genresNamesArray.formatted(),
             vote: response.voteAverage.description,
             date: String(response.releaseDate.prefix(4))
         ))
+        
         self.dataSource.append(MoviesDetailsOverviewCellData(
             title: response.title,
             overview: response.overview
         ))
+        
         completionHandler(.success(()))
     }
 }

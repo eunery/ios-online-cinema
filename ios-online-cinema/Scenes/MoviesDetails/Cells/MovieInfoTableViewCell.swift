@@ -73,8 +73,7 @@ class MovieInfoTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(cellModel: MoviesDetailsInfoCellData?) {
-        guard let cellModel = cellModel else { return }
+    func configure(cellModel: MoviesDetailsInfoCellData) {
         self.genreLabel.text = cellModel.genres
         self.voteLabel.text = cellModel.vote
         self.dateLabel.text = cellModel.date

@@ -54,15 +54,13 @@ class MoviePosterTableViewCell: UITableViewCell {
         posterView.snp.makeConstraints { maker in
             maker.edges.equalTo(contentView)
             maker.height.equalTo(UIScreen.main.bounds.height/2 + 100)
-            maker.width.equalTo(contentView)
         }
         posterImageView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
     }
     
-    func configure(cellModel: MoviesDetailsPosterCellData?) {
-        guard let cellModel = cellModel else { return }
+    func configure(cellModel: MoviesDetailsPosterCellData) {
         self.posterImageView.sd_setImage(with: URL(string: cellModel.poster))
     }
 }
