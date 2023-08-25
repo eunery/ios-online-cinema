@@ -13,7 +13,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     let movieId: Int
     let apiService = APIService(worker: NetworkWorker())
-    var dataSource: MovieDetailsTableViewCellModel?
+    var dataSource = [MoviesDetailsCellDataProtocol?]()
     
     // MARK: - Init
     
@@ -39,7 +39,8 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         }
     }
     
-    func setupDataSource(response: MoviesDetailsModel, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func setupDataSource(response: MoviesDetailsResponseModel,
+                         completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         let host = "image.tmdb.org"
         let scheme = "https"
         let path = "/t/p/w500"
@@ -50,15 +51,16 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         let genresNamesArray = response.genres.map {
             $0.name
         }
-        self.dataSource = MovieDetailsTableViewCellModel(
-            id: response.id,
-            poster: url.description,
-            genre: genresNamesArray.formatted(),
+        self.dataSource.append(MoviesDetailsPosterCellData(poster: url.description))
+        self.dataSource.append(MoviesDetailsInfoCellData(
+            genres: genresNamesArray.formatted(),
             vote: response.voteAverage.description,
-            releaseDate: String(response.releaseDate.prefix(4)),
+            date: String(response.releaseDate.prefix(4))
+        ))
+        self.dataSource.append(MoviesDetailsOverviewCellData(
             title: response.title,
             overview: response.overview
-        )
+        ))
         completionHandler(.success(()))
     }
 }

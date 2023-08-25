@@ -1,5 +1,5 @@
 //
-//  MoviesDetailsModel.swift
+//  MoviesDetailsResponseModel.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 01.08.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MoviesDetailsModel: Codable {
+struct MoviesDetailsResponseModel: Codable {
     let adult: Bool
     let backdropPath: String
     let belongsToCollection: MovieCollectionModel?

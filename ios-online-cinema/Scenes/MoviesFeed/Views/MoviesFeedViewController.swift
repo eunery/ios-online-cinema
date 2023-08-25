@@ -113,15 +113,15 @@ class MoviesFeedViewController: UIViewController {
     }
 }
 
-extension MoviesFeedViewController:
-    UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MoviesFeedViewController: UICollectionViewDelegate,
+                                    UICollectionViewDataSource,
+                                    UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.dataSource.count
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MovieCollectionViewCell.identifier,
@@ -131,10 +131,9 @@ extension MoviesFeedViewController:
             return cell
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
             let cellsPerRow: CGFloat = 2
             let padding: CGFloat = 10
             let cellWidth = (collectionView.bounds.width / cellsPerRow) - padding
@@ -142,10 +141,9 @@ extension MoviesFeedViewController:
             return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
             if self.viewModel.validatePage(indexPath: indexPath) {
                 self.handleLoadingIndication(isLoading: true)
                 self.viewModel.fetch(page: self.viewModel.currentPage) { result in

@@ -80,6 +80,15 @@ class MoviesDetailsViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.allowsSelection = false
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.register(
+            MoviePosterTableViewCell.self, forCellReuseIdentifier: MoviePosterTableViewCell.identifier
+        )
+        tableView.register(
+            MovieInfoTableViewCell.self, forCellReuseIdentifier: MovieInfoTableViewCell.identifier
+        )
+        tableView.register(
+            MovieOverviewTableViewCell.self, forCellReuseIdentifier: MovieOverviewTableViewCell.identifier
+        )
     }
     
     func handleLoadingIndication(isLoading: Bool) {
@@ -99,40 +108,29 @@ class MoviesDetailsViewController: UIViewController {
 
 extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.viewModel.dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.register(MoviePosterTableViewCell.self, forCellReuseIdentifier: MoviePosterTableViewCell.identifier)
-        
-        switch indexPath.row {
-        case 0:
-            tableView.register(
-                MoviePosterTableViewCell.self, forCellReuseIdentifier: MoviePosterTableViewCell.identifier
-            )
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MoviePosterTableViewCell.identifier, for: indexPath
-            ) as? MoviePosterTableViewCell
-            cell?.configure(cellModel: self.viewModel.dataSource)
-            return cell ?? UITableViewCell()
-        case 1:
-            tableView.register(
-                MovieInfoTableViewCell.self, forCellReuseIdentifier: MovieInfoTableViewCell.identifier
-            )
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MovieInfoTableViewCell.identifier, for: indexPath
-            ) as? MovieInfoTableViewCell
-            cell?.configure(cellModel: self.viewModel.dataSource)
-            return cell ?? UITableViewCell()
-        case 2:
-            tableView.register(
-                MovieTitleOverviewTableViewCell.self, forCellReuseIdentifier: MovieTitleOverviewTableViewCell.identifier
-            )
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MovieTitleOverviewTableViewCell.identifier, for: indexPath
-            ) as? MovieTitleOverviewTableViewCell
-            cell?.configure(cellModel: self.viewModel.dataSource)
-            return cell ?? UITableViewCell()
+        switch self.viewModel.dataSource[indexPath.row]?.type {
+        case .poster:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MoviePosterTableViewCell.identifier,
+                                                     for: indexPath) as? MoviePosterTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsPosterCellData)
+            return cell
+        case .info:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
+                                                     for: indexPath) as? MovieInfoTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsInfoCellData)
+            return cell
+        case .overview:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieOverviewTableViewCell.identifier,
+                                                     for: indexPath) as? MovieOverviewTableViewCell
+            guard let cell = cell else { return UITableViewCell() }
+            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row] as? MoviesDetailsOverviewCellData)
+            return cell
         default:
             return UITableViewCell()
         }

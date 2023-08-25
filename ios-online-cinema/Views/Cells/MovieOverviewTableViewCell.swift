@@ -1,5 +1,5 @@
 //
-//  MovieTitleOverviewTableViewCell.swift
+//  MovieOverviewTableViewCell.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 16.08.2023.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MovieTitleOverviewTableViewCell: UITableViewCell {
+class MovieOverviewTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
@@ -55,7 +55,7 @@ class MovieTitleOverviewTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(cellModel: MovieDetailsTableViewCellModel?) {
+    func configure(cellModel: MoviesDetailsOverviewCellData?) {
         guard let cellModel = cellModel else { return }
         self.headerLabel.text = cellModel.title
         self.overviewLabel.text = cellModel.overview

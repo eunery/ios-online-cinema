@@ -61,7 +61,7 @@ class MoviePosterTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(cellModel: MovieDetailsTableViewCellModel?) {
+    func configure(cellModel: MoviesDetailsPosterCellData?) {
         guard let cellModel = cellModel else { return }
         self.posterImageView.sd_setImage(with: URL(string: cellModel.poster))
     }

@@ -71,9 +71,8 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
         }
     }
     
-    func setupDataSource(
-        response: TrendMoviesResponseModel,
-        completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func setupDataSource(response: TrendMoviesResponseModel,
+                         completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         var url = URLComponents()
         url.scheme = self.scheme
         url.host = self.host
