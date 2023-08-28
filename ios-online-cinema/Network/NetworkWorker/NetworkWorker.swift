@@ -19,13 +19,11 @@ class NetworkWorker: NetworkWorkerProtocol {
     
     // MARK: - Methods
     
-    func performRequest<T: Codable>(
-        queryParametres: [URLQueryItem]?,
-        endpoint: String,
-        apiMethod: APIMethods,
-        responseType: T.Type,
-        completionHandler: @escaping(Result<T, APIError>) -> Void) {
-            
+    func performRequest<T: Codable>(queryParametres: [URLQueryItem]?,
+                                    endpoint: String,
+                                    apiMethod: APIMethods,
+                                    responseType: T.Type,
+                                    completionHandler: @escaping(Result<T, APIError>) -> Void) {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host

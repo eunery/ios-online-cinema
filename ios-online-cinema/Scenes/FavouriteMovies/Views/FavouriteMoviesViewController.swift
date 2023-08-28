@@ -12,7 +12,7 @@ class FavouriteMoviesViewController: UIViewController {
     // MARK: - Properties
     
     let viewModel: FavouriteMoviesViewModelProtocol
-    var coordinator: Coordinator?
+    var coordinator: FavouriteMoviesCoordinatorProtocol?
     
     // MARK: - Init
     

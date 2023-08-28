@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-protocol FavouriteMoviesProtocol: Coordinator {
+protocol FavouriteMoviesCoordinatorProtocol: Coordinator {
     
 }
 
-class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesProtocol {
+class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtocol {
     
     // MARK: - Properties
     

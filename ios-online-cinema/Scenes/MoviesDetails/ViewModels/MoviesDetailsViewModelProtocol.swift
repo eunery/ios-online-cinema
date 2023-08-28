@@ -8,6 +8,7 @@
 import Foundation
 
 protocol MoviesDetailsViewModelProtocol {
+    var dataSource: [MoviesDetailsCellDataProtocol] { get set }
     
-    func fetch()
+    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void)
 }

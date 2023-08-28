@@ -1,5 +1,5 @@
 //
-//  MoviesDetailsModel.swift
+//  MoviesDetailsResponseModel.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 01.08.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MoviesDetailsModel: Codable {
+struct MoviesDetailsResponseModel: Codable {
     let adult: Bool
     let backdropPath: String
     let belongsToCollection: MovieCollectionModel?
@@ -97,11 +97,11 @@ struct ProductionCompaniesModel: Codable {
 }
 
 struct ProductionCountriesModel: Codable {
-    let iso316611: String
+    let iso31661: String
     let name: String
     
     enum СodingKeys: String, CodingKey {
-        case iso316611 = "iso_3166_1"
+        case iso31661 = "iso_3166_1"
         case name
     }
 }

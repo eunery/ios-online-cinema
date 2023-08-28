@@ -9,11 +9,9 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-class MoviesFeedViewController: UIViewController, Coordinating {
+class MoviesFeedViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    var coordinator: Coordinator?
+    var coordinator: MoviesFeedCoordinatorProtocol?
     var viewModel: MoviesFeedViewModelProtocol
     
     let loader = UIActivityIndicatorView()
@@ -35,6 +33,7 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         self.handleLoadingIndication(isLoading: true)
         self.viewModel.start { result in
             switch result {
@@ -46,7 +45,6 @@ class MoviesFeedViewController: UIViewController, Coordinating {
                 self.viewModel.currentPage += 1
             }
         }
-        setup()
     }
     
     // MARK: - Methods
@@ -115,28 +113,27 @@ class MoviesFeedViewController: UIViewController, Coordinating {
     }
 }
 
-extension MoviesFeedViewController:
-    UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MoviesFeedViewController: UICollectionViewDelegate,
+                                    UICollectionViewDataSource,
+                                    UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.dataSource.count
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MovieCollectionViewCell.identifier,
             for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-            cell.configure(cell: self.viewModel.dataSource[indexPath.row])
+            cell.configure(cellModel: self.viewModel.dataSource[indexPath.row])
             
             return cell
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
             let cellsPerRow: CGFloat = 2
             let padding: CGFloat = 10
             let cellWidth = (collectionView.bounds.width / cellsPerRow) - padding
@@ -144,10 +141,9 @@ extension MoviesFeedViewController:
             return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
             if self.viewModel.validatePage(indexPath: indexPath) {
                 self.handleLoadingIndication(isLoading: true)
                 self.viewModel.fetch(page: self.viewModel.currentPage) { result in
@@ -161,5 +157,12 @@ extension MoviesFeedViewController:
                     }
                 }
             }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
+            guard let id = cell.id else { return }
+            self.coordinator?.showMoviesDetails(movieId: id)
+        }
     }
 }

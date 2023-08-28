@@ -9,10 +9,9 @@ import Foundation
 
 protocol NetworkWorkerProtocol {
     
-    func performRequest<T: Codable>(
-        queryParametres: [URLQueryItem]?,
-        endpoint: String,
-        apiMethod: APIMethods,
-        responseType: T.Type,
-        completionHandler: @escaping(Result<T, APIError>) -> Void)
+    func performRequest<T: Codable>(queryParametres: [URLQueryItem]?,
+                                    endpoint: String,
+                                    apiMethod: APIMethods,
+                                    responseType: T.Type,
+                                    completionHandler: @escaping(Result<T, APIError>) -> Void)
 }

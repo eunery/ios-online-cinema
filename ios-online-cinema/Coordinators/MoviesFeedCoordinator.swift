@@ -8,12 +8,11 @@
 import Foundation
 import UIKit
 
-protocol MoviesFeedProtocol: Coordinator {
-    
-    func showMoviesDetails()
+protocol MoviesFeedCoordinatorProtocol: Coordinator {
+    func showMoviesDetails(movieId: Int)
 }
 
-class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
+class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     
     // MARK: - Properties
     
@@ -37,8 +36,8 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedProtocol {
         navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func showMoviesDetails() {
-        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel())
-        navigationController.setViewControllers([viewController], animated: true)
+    func showMoviesDetails(movieId: Int) {
+        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

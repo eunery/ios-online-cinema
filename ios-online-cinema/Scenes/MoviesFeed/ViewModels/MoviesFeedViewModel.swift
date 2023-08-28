@@ -11,9 +11,8 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     
     // MARK: - Properties
     
-    var error: String?
     var genres: [Int: String] = [Int: String]()
-    let service = APIService(worker: NetworkWorker())
+    let apiService = APIService(worker: NetworkWorker())
     var dataSource = [MovieCollectionViewCellModel]()
     var currentPage = 1
     var totalPages = 1
@@ -36,12 +35,11 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     }
     
     func getGenresAndMovies(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.service.getMoviesGenres { result in
+        self.apiService.getMoviesGenres { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
                 case .failure(let error):
-                    self.error = error.localizedDescription
                     completionHandler(.failure(error))
                 case .success(let response):
                     for item in response.genres {
@@ -56,13 +54,11 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     }
     
     func getMovies(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.service.getTrendingMovies(page: page) { result in
+        self.apiService.getTrendingMovies(page: page) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
                 case .failure(let error):
-                    self.error = error.localizedDescription
-                    print(error)
                     completionHandler(.failure(error))
                 case .success(let response):
                     self.currentPage = response.page
@@ -75,9 +71,8 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
         }
     }
     
-    func setupDataSource(
-        response: TrendMoviesResponseModel,
-        completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func setupDataSource(response: TrendMoviesResponseModel,
+                         completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         var url = URLComponents()
         url.scheme = self.scheme
         url.host = self.host
