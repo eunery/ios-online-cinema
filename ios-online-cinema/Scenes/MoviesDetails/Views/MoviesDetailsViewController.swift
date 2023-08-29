@@ -23,6 +23,7 @@ class MoviesDetailsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,7 +79,7 @@ class MoviesDetailsViewController: UIViewController {
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.allowsSelection = false
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = .none
         tableView.register(
             MoviePosterTableViewCell.self, forCellReuseIdentifier: MoviePosterTableViewCell.identifier
         )
@@ -125,6 +126,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
                                                            for: indexPath) as? MovieInfoTableViewCell,
                   let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
             cell.configure(cellModel: item)
+            cell.cellDelegate = self
             
             return cell
         case .overview:
@@ -135,5 +137,11 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             
             return cell
         }
+    }
+}
+
+extension MoviesDetailsViewController: MovieInfoTableViewCellCallback {
+    func didTapHeart() {
+        self.viewModel.addToFavourites()
     }
 }

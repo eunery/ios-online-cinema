@@ -14,6 +14,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     let movieId: Int
     let apiService = APIService(worker: NetworkWorker())
     var dataSource = [MoviesDetailsCellDataProtocol]()
+    var response: MoviesDetailsResponseModel?
     let host = "image.tmdb.org"
     let scheme = "https"
     let path = "/t/p/w500"
@@ -34,6 +35,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
+                    self.response = response
                     self.setupDataSource(response: response) { result in
                         completionHandler(result)
                     }
@@ -66,5 +68,21 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         ))
         
         completionHandler(.success(()))
+    }
+    
+    func addToFavourites() {
+        guard let response = self.response else { return }
+        let genresNamesArray = response.genres.map {
+            $0.name
+        }
+        CoreDataManager.shared.createMovie(id: self.movieId,
+                                           poster: response.posterPath,
+                                           genres: genresNamesArray.formatted(),
+                                           vote: response.voteAverage.description,
+                                           releaseDate: String(response.releaseDate.prefix(4)),
+                                           title: response.title,
+                                           overview: response.overview
+        )
+        print(CoreDataManager.shared.getAllMovies())
     }
 }
