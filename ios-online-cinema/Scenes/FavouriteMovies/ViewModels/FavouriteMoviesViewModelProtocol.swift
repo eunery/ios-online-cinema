@@ -9,5 +9,8 @@ import Foundation
 
 protocol FavouriteMoviesViewModelProtocol {
     
-    func fetch()
+    var dataSource: [Movie] { get set }
+    
+    func fetch(completionHandler: () -> Void)
+    func deleteMovie(id: Int, completionHandler: () -> Void)
 }

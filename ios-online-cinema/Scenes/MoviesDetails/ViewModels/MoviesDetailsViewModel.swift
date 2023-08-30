@@ -83,6 +83,13 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
                                            title: response.title,
                                            overview: response.overview
         )
-        print(CoreDataManager.shared.getAllMovies())
+    }
+    
+    func deleteFromFavoruites() {
+        CoreDataManager.shared.deleteMovieById(id: self.movieId)
+    }
+    
+    func isMovieFavourite() -> Bool {
+        return CoreDataManager.shared.isMovieExist(id: self.movieId)
     }
 }

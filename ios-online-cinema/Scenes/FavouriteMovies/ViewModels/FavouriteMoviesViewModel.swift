@@ -9,7 +9,16 @@ import Foundation
 
 class FavouriteMoviesViewModel: FavouriteMoviesViewModelProtocol {
     
-    func fetch() {
-        
+    var dataSource = [Movie]()
+    
+    func fetch(completionHandler: () -> Void) {
+        self.dataSource = CoreDataManager.shared.getAllMovies()
+        completionHandler()
+    }
+    
+    func deleteMovie(id: Int, completionHandler: () -> Void) {
+        CoreDataManager.shared.deleteMovieById(id: id)
+        fetch { }
+        completionHandler()
     }
 }

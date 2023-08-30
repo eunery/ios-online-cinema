@@ -45,6 +45,10 @@ class MoviesDetailsViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     // MARK: - Methods
     
     func setup() {
@@ -125,8 +129,10 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
                                                            for: indexPath) as? MovieInfoTableViewCell,
                   let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
-            cell.configure(cellModel: item)
-            cell.cellDelegate = self
+            cell.configure(cellModel: item) {
+                return self.viewModel.isMovieFavourite()
+            }
+            cell.cellCallback = self
             
             return cell
         case .overview:
@@ -141,7 +147,11 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
 }
 
 extension MoviesDetailsViewController: MovieInfoTableViewCellCallback {
-    func didTapHeart() {
+    func deleteFromFavourites() {
+        self.viewModel.deleteFromFavoruites()
+    }
+    
+    func addToFavourites() {
         self.viewModel.addToFavourites()
     }
 }

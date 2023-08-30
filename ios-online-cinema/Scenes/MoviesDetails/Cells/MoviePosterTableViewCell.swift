@@ -46,7 +46,7 @@ class MoviePosterTableViewCell: UITableViewCell {
         posterView.layer.shadowOffset = CGSize(width: 0, height: 5)
         posterView.layer.shadowRadius = 10
         posterView.layer.cornerRadius = 10
-        
+        posterView.contentMode = .scaleAspectFill
         posterImageView.clipsToBounds = true
         posterImageView.layer.cornerRadius = 26
     }

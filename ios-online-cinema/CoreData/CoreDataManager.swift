@@ -29,6 +29,10 @@ class CoreDataManager: NSObject {
         appDelegate.persistentContainer.viewContext
     }
     
+    private let host = "image.tmdb.org"
+    private let scheme = "https"
+    private let path = "/t/p/w500"
+    
     // MARK: - Init
     
     private override init() {}
@@ -49,8 +53,12 @@ class CoreDataManager: NSObject {
             forEntityName: "Movie",
             in: context) else { return }
         let movie = Movie(entity: movieEntityDescription, insertInto: context)
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = path + poster
         movie.id = id
-        movie.poster = poster
+        movie.poster = url.description
         movie.genres = genres
         movie.vote = vote
         movie.releaseDate = releaseDate
@@ -81,8 +89,8 @@ class CoreDataManager: NSObject {
         appDelegate.saveContext()
     }
     
-    public func deleteMovieById(id: Int16) {
-        self.request.predicate = NSPredicate(format: "id == %@", id)
+    public func deleteMovieById(id: Int) {
+        self.request.predicate = NSPredicate(format: "id == %@", "\(id)")
         do {
             guard let movies = try? context.fetch(self.request) as? [Movie],
                   let movie = movies.first else { return }

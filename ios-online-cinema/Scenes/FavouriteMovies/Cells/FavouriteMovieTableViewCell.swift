@@ -13,7 +13,6 @@ class FavouriteMovieTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     static let identifier: String = "FavouriteMovieCell"
-    
     var id: Int?
     var posterView = UIImageView()
     var genreLabel: UILabel = UILabel()
@@ -42,32 +41,19 @@ class FavouriteMovieTableViewCell: UITableViewCell {
         self.contentView.addSubview(releaseDateLabel)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(overviewLabel)
-        let host = "image.tmdb.org"
-        let scheme = "https"
-        let path = "/t/p/w500"
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + "/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg"
-        posterView.sd_setImage(with: url.url)
-        genreLabel.text = "Genres"
-        voteLabel.text = "Vote"
-        releaseDateLabel.text = "Date"
-        titleLabel.text = "Title"
-        overviewLabel.text = "Overview"
         
         setupUI()
         setupLayout()
     }
     
     func setupUI() {
+        self.selectionStyle = .none
         posterView.clipsToBounds = true
         posterView.layer.cornerRadius = 8
         posterView.contentMode = .scaleAspectFill
-        titleLabel.numberOfLines = 0
-        overviewLabel.numberOfLines = 0
         titleLabel.font = ProximaNovaFont.font(type: .bold, size: 16)
         overviewLabel.font = ProximaNovaFont.font(type: .regular, size: 14)
+        overviewLabel.numberOfLines = 0
         genreLabel.font = ProximaNovaFont.font(type: .regular, size: 14)
         voteLabel.font = ProximaNovaFont.font(type: .regular, size: 14)
         releaseDateLabel.font = ProximaNovaFont.font(type: .regular, size: 14)
@@ -83,9 +69,8 @@ class FavouriteMovieTableViewCell: UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(posterView.snp.trailing).offset(4)
-            maker.top.equalTo(posterView)
-            maker.trailing.equalToSuperview()
+            maker.leading.equalTo(posterView.snp.trailing).offset(8)
+            maker.top.equalTo(posterView.snp.top)
         }
         
         voteLabel.snp.makeConstraints { maker in
@@ -112,10 +97,15 @@ class FavouriteMovieTableViewCell: UITableViewCell {
             maker.trailing.equalToSuperview()
             maker.bottom.equalTo(posterView.snp.bottom)
         }
-        
     }
     
-    func configure() {
-        
+    func configure(cellModel: Movie) {
+        self.id = cellModel.id
+        self.posterView.sd_setImage(with: URL(string: cellModel.poster))
+        self.genreLabel.text = cellModel.genres
+        self.voteLabel.text = cellModel.vote
+        self.releaseDateLabel.text = cellModel.releaseDate
+        self.titleLabel.text = cellModel.title
+        self.overviewLabel.text = cellModel.overview
     }
 }

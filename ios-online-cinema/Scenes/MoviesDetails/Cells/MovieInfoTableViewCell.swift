@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol MovieInfoTableViewCellCallback {
-    func didTapHeart()
+    func addToFavourites()
+    func deleteFromFavourites()
 }
 
 class MovieInfoTableViewCell: UITableViewCell {
@@ -17,9 +18,8 @@ class MovieInfoTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     static let identifier: String = "MovieInfoCell"
+    var cellCallback: MovieInfoTableViewCellCallback?
     var isButtonOn: Bool = false
-    var cellDelegate: MovieInfoTableViewCellCallback?
-    
     let infoStackView = UIStackView()
     var genreLabel = UILabel()
     var voteLabel = UILabel()
@@ -63,7 +63,7 @@ class MovieInfoTableViewCell: UITableViewCell {
         voteLabel.textAlignment = .center
         
         addToFavouritesButton.tintColor = .red
-        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        setButtonImage()
         addToFavouritesButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         dateLabel.font = ProximaNovaFont.font(type: .bold, size: 14)
@@ -79,15 +79,30 @@ class MovieInfoTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(cellModel: MoviesDetailsInfoCellData) {
+    func setButtonImage() {
+        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+    }
+    
+    func configure(cellModel: MoviesDetailsInfoCellData, isMovieFavourite: () -> Bool) {
         self.genreLabel.text = cellModel.genres
         self.voteLabel.text = cellModel.vote
         self.dateLabel.text = cellModel.date
+        if isMovieFavourite() {
+            self.isButtonOn = true
+            setButtonImage()
+        } else {
+            self.isButtonOn = false
+            setButtonImage()
+        }
     }
     
     @objc func buttonPressed() {
-        self.cellDelegate?.didTapHeart()
+        if isButtonOn {
+            self.cellCallback?.deleteFromFavourites()
+        } else {
+            self.cellCallback?.addToFavourites()
+        }
         isButtonOn.toggle()
-        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        setButtonImage()
     }
 }
