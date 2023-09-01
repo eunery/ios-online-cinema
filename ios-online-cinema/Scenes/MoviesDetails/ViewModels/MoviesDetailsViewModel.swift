@@ -18,6 +18,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     let host = "image.tmdb.org"
     let scheme = "https"
     let path = "/t/p/w500"
+    let coreDataRepository = CoreDataRepository()
     
     // MARK: - Init
     
@@ -70,26 +71,37 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         completionHandler(.success(()))
     }
     
-    func addToFavourites() {
-        guard let response = self.response else { return }
+    func addToFavourites(error: (String) -> Void) {
+        guard let response = self.response else {
+            error("Response is nil")
+            return
+        }
         let genresNamesArray = response.genres.map {
             $0.name
         }
-        CoreDataManager.shared.createMovie(id: self.movieId,
-                                           poster: response.posterPath,
-                                           genres: genresNamesArray.formatted(),
-                                           vote: response.voteAverage.description,
-                                           releaseDate: String(response.releaseDate.prefix(4)),
-                                           title: response.title,
-                                           overview: response.overview
-        )
+        var url = URLComponents()
+        url.scheme = scheme
+        url.host = host
+        url.path = path + response.posterPath
+        let dbModel = FavouriteMovieDB(id: response.id,
+                                       poster: url.description,
+                                       genres: genresNamesArray.formatted(),
+                                       vote: response.voteAverage.description,
+                                       releaseDate: response.releaseDate,
+                                       title: response.title,
+                                       overview: response.overview
+            )
+        coreDataRepository.createMovie(model: dbModel)
+        
     }
     
     func deleteFromFavoruites() {
-        CoreDataManager.shared.deleteMovieById(id: self.movieId)
+        guard let response else { return }
+        coreDataRepository.deleteMovieById(id: response.id)
     }
     
     func isMovieFavourite() -> Bool {
-        return CoreDataManager.shared.isMovieExist(id: self.movieId)
+        guard let response else { return false }
+        return coreDataRepository.isMovieExist(id: response.id)
     }
 }

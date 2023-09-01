@@ -36,9 +36,9 @@ class FavouriteMoviesViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.viewModel.fetch {
-            tableView.reloadData()
-        }
+        super.viewDidAppear(animated)
+        self.viewModel.fetch()
+        tableView.reloadData()
     }
 
     // MARK: - Methods
@@ -113,12 +113,10 @@ extension FavouriteMoviesViewController: UITableViewDelegate,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let cell = tableView.cellForRow(at: indexPath) as? FavouriteMovieTableViewCell {
-                guard let id = cell.id else { return }
-                self.viewModel.deleteMovie(id: id) {
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-            }
+            guard let cell = tableView.cellForRow(at: indexPath) as? FavouriteMovieTableViewCell,
+                  let id = cell.id else { return }
+            self.viewModel.deleteMovie(id: id)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 }

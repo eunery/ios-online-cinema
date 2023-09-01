@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol MovieInfoTableViewCellCallback {
+protocol MovieInfoTableViewCellActions: AnyObject {
     func addToFavourites()
     func deleteFromFavourites()
 }
@@ -18,7 +18,7 @@ class MovieInfoTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     static let identifier: String = "MovieInfoCell"
-    var cellCallback: MovieInfoTableViewCellCallback?
+    weak var cellActions: MovieInfoTableViewCellActions?
     var isButtonOn: Bool = false
     let infoStackView = UIStackView()
     var genreLabel = UILabel()
@@ -83,11 +83,11 @@ class MovieInfoTableViewCell: UITableViewCell {
         addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
     }
     
-    func configure(cellModel: MoviesDetailsInfoCellData, isMovieFavourite: () -> Bool) {
+    func configure(cellModel: MoviesDetailsInfoCellData, isMovieFavourite: Bool) {
         self.genreLabel.text = cellModel.genres
         self.voteLabel.text = cellModel.vote
         self.dateLabel.text = cellModel.date
-        if isMovieFavourite() {
+        if isMovieFavourite {
             self.isButtonOn = true
             setButtonImage()
         } else {
@@ -98,9 +98,9 @@ class MovieInfoTableViewCell: UITableViewCell {
     
     @objc func buttonPressed() {
         if isButtonOn {
-            self.cellCallback?.deleteFromFavourites()
+            self.cellActions?.deleteFromFavourites()
         } else {
-            self.cellCallback?.addToFavourites()
+            self.cellActions?.addToFavourites()
         }
         isButtonOn.toggle()
         setButtonImage()

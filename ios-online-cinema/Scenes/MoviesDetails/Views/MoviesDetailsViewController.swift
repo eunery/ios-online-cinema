@@ -108,6 +108,12 @@ class MoviesDetailsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func showError(error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -129,10 +135,8 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
                                                            for: indexPath) as? MovieInfoTableViewCell,
                   let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
-            cell.configure(cellModel: item) {
-                return self.viewModel.isMovieFavourite()
-            }
-            cell.cellCallback = self
+            cell.configure(cellModel: item, isMovieFavourite: self.viewModel.isMovieFavourite())
+            cell.cellActions = self
             
             return cell
         case .overview:
@@ -146,12 +150,14 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-extension MoviesDetailsViewController: MovieInfoTableViewCellCallback {
+extension MoviesDetailsViewController: MovieInfoTableViewCellActions {
     func deleteFromFavourites() {
         self.viewModel.deleteFromFavoruites()
     }
     
     func addToFavourites() {
-        self.viewModel.addToFavourites()
+        self.viewModel.addToFavourites { error in
+            showError(error: error)
+        }
     }
 }

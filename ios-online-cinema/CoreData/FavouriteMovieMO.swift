@@ -1,5 +1,5 @@
 //
-//  Movie+CoreDataClass.swift
+//  FavouriteMovieMO.swift
 //  ios-online-cinema
 //
 //  Created by Sergei Kulagin on 28.08.2023.
@@ -9,8 +9,12 @@
 import Foundation
 import CoreData
 
-@objc(Movie)
-public class Movie: NSManagedObject {
+@objc(FavouriteMovieMO)
+public class FavouriteMovieMO: NSManagedObject {
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<FavouriteMovieMO> {
+        return NSFetchRequest<FavouriteMovieMO>(entityName: "FavouriteMovieMO")
+    }
     
     @NSManaged public var id: Int
     @NSManaged public var poster: String

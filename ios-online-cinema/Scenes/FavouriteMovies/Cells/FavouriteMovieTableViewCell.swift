@@ -99,7 +99,7 @@ class FavouriteMovieTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(cellModel: Movie) {
+    func configure(cellModel: FavouriteMovieDB) {
         self.id = cellModel.id
         self.posterView.sd_setImage(with: URL(string: cellModel.poster))
         self.genreLabel.text = cellModel.genres

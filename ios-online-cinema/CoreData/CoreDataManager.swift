@@ -12,97 +12,113 @@ class CoreDataManager: NSObject {
     
     // MARK: - Properties
     
-    public static let shared = CoreDataManager()
+    var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "FavouriteMoviesData")
+        container.loadPersistentStores(completionHandler: { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    let converter = Converter()
     
     // MARK: - Private properties
     
-    private let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-    
-    private var appDelegate: AppDelegate {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-                fatalError("could not get app delegate ")
-        }
-        return delegate
-    }
-    
     private var context: NSManagedObjectContext {
-        appDelegate.persistentContainer.viewContext
+        persistentContainer.viewContext
     }
-    
-    private let host = "image.tmdb.org"
-    private let scheme = "https"
-    private let path = "/t/p/w500"
-    
-    // MARK: - Init
-    
-    private override init() {}
     
     // MARK: - Methods
     
-    public func createMovie(id: Int,
-                            poster: String,
-                            genres: String,
-                            vote: String,
-                            releaseDate: String,
-                            title: String,
-                            overview: String) {
-        if getMovieById(id: id) != nil {
-            return
-        }
-        guard let movieEntityDescription = NSEntityDescription.entity(
-            forEntityName: "Movie",
-            in: context) else { return }
-        let movie = Movie(entity: movieEntityDescription, insertInto: context)
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + poster
-        movie.id = id
-        movie.poster = url.description
-        movie.genres = genres
-        movie.vote = vote
-        movie.releaseDate = releaseDate
-        movie.title = title
-        movie.overview = overview
-        
-        appDelegate.saveContext()
-    }
-    
-    public func getAllMovies() -> [Movie] {
-        do {
-            return (try? context.fetch(self.request) as? [Movie]) ?? []
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                context.rollback()
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
     }
     
-    public func getMovieById(id: Int) -> Movie? {
-        do {
-            guard let movies = try? context.fetch(self.request) as? [Movie] else { return nil }
-            return movies.first(where: { $0.id == id })
+    public func createMovie(model: FavouriteMovieDB, predicates: NSCompoundPredicate) {
+        context.performAndWait {
+            if getMovieById(predicates: predicates) != nil {
+                print("Dublicate found")
+                return
+            }
+            guard let movieEntityDescription = NSEntityDescription.entity(
+                forEntityName: "FavouriteMovieMO",
+                in: context) else { return }
+            _ = converter.mapToMO(model: model, entity: movieEntityDescription, context: context)
+            
+            saveContext()
+        }
+    }
+    
+    public func getAllMovies() -> [FavouriteMovieDB] {
+        context.performAndWait {
+            do {
+                let movie = (try? context.fetch(FavouriteMovieMO.fetchRequest()) as? [FavouriteMovieMO]) ?? []
+                let result = converter.mapToArrayDB(model: movie)
+                return result
+            }
+        }
+    }
+    
+    public func getMovieById(predicates: NSCompoundPredicate) -> FavouriteMovieDB? {
+        context.performAndWait {
+            let fetchRequest = FavouriteMovieMO.fetchRequest()
+            fetchRequest.predicate = predicates
+            do {
+                guard let movies = try? context.fetch(fetchRequest) as [FavouriteMovieMO],
+                      let movie = movies.first else { return nil }
+                return converter.mapToDB(model: movie)
+            }
         }
     }
     
     public func deleteAllMovies() {
-        do {
-            guard let movies = try? context.fetch(self.request) as? [Movie] else { return }
-            movies.forEach({ context.delete($0) })
+        context.performAndWait {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavouriteMovieMO")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            do {
+                try context.execute(deleteRequest)
+            } catch {
+                print(error)
+            }
+            saveContext()
         }
-        appDelegate.saveContext()
     }
     
-    public func deleteMovieById(id: Int) {
-        self.request.predicate = NSPredicate(format: "id == %@", "\(id)")
-        do {
-            guard let movies = try? context.fetch(self.request) as? [Movie],
-                  let movie = movies.first else { return }
-            context.delete(movie)
+    public func deleteMovieById(predicates: NSCompoundPredicate) {
+        context.performAndWait {
+            let fetchRequest = FavouriteMovieMO.fetchRequest()
+            fetchRequest.predicate = predicates
+            do {
+                guard let movies = try? context.fetch(fetchRequest) as [FavouriteMovieMO],
+                      let movie = movies.first else { return }
+                context.delete(movie)
+            }
+            saveContext()
         }
-        appDelegate.saveContext()
     }
     
-    public func isMovieExist(id: Int) -> Bool {
-        do {
-            guard let movies = try? context.fetch(self.request) as? [Movie] else { return false }
-            return movies.contains(where: { $0.id == id })
+    public func isMovieExist(predicates: NSCompoundPredicate) -> Bool {
+        context.performAndWait {
+            let fetchRequest = FavouriteMovieMO.fetchRequest()
+            fetchRequest.predicate = predicates
+            do {
+                guard let movies = try? context.fetch(fetchRequest) as [FavouriteMovieMO] else { return false }
+                if movies.first != nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
         }
     }
 }
