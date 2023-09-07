@@ -27,6 +27,7 @@ struct MoviesDetailsInfoCellData: MoviesDetailsCellDataProtocol {
     var genres: String
     var vote: String
     var date: String
+    var isFavourite: Bool
 }
 
 struct MoviesDetailsOverviewCellData: MoviesDetailsCellDataProtocol {

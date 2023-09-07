@@ -11,7 +11,7 @@ protocol MoviesDetailsViewModelProtocol {
     var dataSource: [MoviesDetailsCellDataProtocol] { get set }
     
     func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void)
-    func addToFavourites(error: (String) -> Void)
+    func addToFavourites() throws
     func deleteFromFavoruites()
     func isMovieFavourite() -> Bool
 }

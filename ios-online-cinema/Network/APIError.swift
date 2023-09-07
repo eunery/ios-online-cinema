@@ -7,40 +7,29 @@
 
 import Foundation
 
-enum APIError: Error, CustomStringConvertible {
+enum APIError: Error, LocalizedError {
     case badURL
     case badResponse(statusCode: Int)
+    case emptyResponse
     case url(URLError?)
     case parsing(DecodingError?)
     case unknown
         
-    var localizedDescription: String {
+    var errorDescription: String? {
         
         switch self {
         case .badURL:
             return "Invalid url. Check credentials."
         case .parsing:
-            return "Parsing error."
+            return "Parsing error. Check Models."
         case .unknown:
             return "Unknown error."
         case .badResponse(let statusCode):
             return "Bad Response. Status code: \(statusCode)"
+        case .emptyResponse:
+            return "Empty response."
         case .url(let error):
             return error?.localizedDescription ?? "Something went wrong"
-        }
-    }
-        
-    var description: String {
-        switch self {
-        case .unknown: return "unknown error"
-        case .badURL: return "invalid URL"
-        case .url(let error):
-            return error?.localizedDescription ?? "url session error"
-            
-        case .badResponse(statusCode: let statusCode):
-            return "bad response \(statusCode)"
-        case .parsing(let error):
-            return "parsing error \(error?.localizedDescription ?? "")"
         }
     }
 }

@@ -15,10 +15,8 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     let apiService = APIService(worker: NetworkWorker())
     var dataSource = [MoviesDetailsCellDataProtocol]()
     var response: MoviesDetailsResponseModel?
-    let host = "image.tmdb.org"
-    let scheme = "https"
-    let path = "/t/p/w500"
-    let coreDataRepository = CoreDataRepository()
+    let coreDataRepository = FavouriteMovieDataRepository()
+    let converter = MoviesDetailsConverter()
     
     // MARK: - Init
     
@@ -47,20 +45,15 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     func setupDataSource(response: MoviesDetailsResponseModel,
                          completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + response.posterPath
-        let genresNamesArray = response.genres.map {
-            $0.name
-        }
-        
+        let url = converter.createImageURL(posterPath: response.posterPath)
+
         self.dataSource.append(MoviesDetailsPosterCellData(poster: url.description))
         
         self.dataSource.append(MoviesDetailsInfoCellData(
-            genres: genresNamesArray.formatted(),
+            genres: converter.formatGenresNames(genres: response.genres),
             vote: response.voteAverage.description,
-            date: String(response.releaseDate.prefix(4))
+            date: String(response.releaseDate.prefix(4)),
+            isFavourite: isMovieFavourite()
         ))
         
         self.dataSource.append(MoviesDetailsOverviewCellData(
@@ -71,32 +64,40 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
         completionHandler(.success(()))
     }
     
-    func addToFavourites(error: (String) -> Void) {
+    func addToFavourites() throws {
         guard let response = self.response else {
-            error("Response is nil")
-            return
+            throw APIError.emptyResponse
         }
-        let genresNamesArray = response.genres.map {
-            $0.name
-        }
-        var url = URLComponents()
-        url.scheme = scheme
-        url.host = host
-        url.path = path + response.posterPath
-        let dbModel = FavouriteMovieDB(id: response.id,
-                                       poster: url.description,
-                                       genres: genresNamesArray.formatted(),
-                                       vote: response.voteAverage.description,
-                                       releaseDate: response.releaseDate,
-                                       title: response.title,
-                                       overview: response.overview
-            )
+        let dbModel = converter.mapToDB(response: response)
         coreDataRepository.createMovie(model: dbModel)
-        
+        var index = 0
+        for source in self.dataSource {
+            switch source.type {
+            case .poster: break
+            case .info:
+                guard var source = source as? MoviesDetailsInfoCellData else { return }
+                source.isFavourite = true
+                self.dataSource[index] = source
+            case .overview: break
+            }
+            index += 1
+        }
     }
     
     func deleteFromFavoruites() {
         guard let response else { return }
+        var index = 0
+        for source in self.dataSource {
+            switch source.type {
+            case .poster: break
+            case .info:
+                guard var source = source as? MoviesDetailsInfoCellData else { return }
+                source.isFavourite = false
+                self.dataSource[index] = source
+            case .overview: break
+            }
+            index += 1
+        }
         coreDataRepository.deleteMovieById(id: response.id)
     }
     

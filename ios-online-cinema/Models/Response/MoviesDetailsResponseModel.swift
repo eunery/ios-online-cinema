@@ -66,7 +66,7 @@ struct MoviesDetailsResponseModel: Codable {
 struct MovieCollectionModel: Codable {
     let id: Int
     let name: String
-    let posterPath: String
+    let posterPath: String?
     let backdropPath: String
     
     enum СodingKeys: String, CodingKey {

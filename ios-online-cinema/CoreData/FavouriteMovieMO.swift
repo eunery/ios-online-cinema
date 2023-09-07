@@ -12,6 +12,7 @@ import CoreData
 @objc(FavouriteMovieMO)
 public class FavouriteMovieMO: NSManagedObject {
     
+    public static let identifier = "FavouriteMovieMO"
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FavouriteMovieMO> {
         return NSFetchRequest<FavouriteMovieMO>(entityName: "FavouriteMovieMO")
     }

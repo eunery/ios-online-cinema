@@ -7,43 +7,43 @@
 
 import Foundation
 
-class CoreDataRepository {
-    
-    // MARK: - Private properties
-    
-    private let coreDataManager = CoreDataManager()
+class FavouriteMovieDataRepository {
     
     // MARK: - Methods
     
     func createMovie(model: FavouriteMovieDB) {
         let idKeyPredicate =  NSPredicate(format: "id == %@", "\(model.id)")
         let predicates = NSCompoundPredicate(type: .and, subpredicates: [idKeyPredicate])
-        coreDataManager.createMovie(model: model, predicates: predicates)
+        if CoreDataManager.shared.getMovieById(predicates: predicates) != nil {
+            print("Dublicate found")
+            return
+        }
+        CoreDataManager.shared.createMovie(model: model)
     }
     
     func getAllMovies() -> [FavouriteMovieDB] {
-        return coreDataManager.getAllMovies()
+        return CoreDataManager.shared.getAllMovies()
     }
     
     func getMovieById(id: Int) -> FavouriteMovieDB? {
         let idKeyPredicate =  NSPredicate(format: "id == %@", "\(id)")
         let predicates = NSCompoundPredicate(type: .and, subpredicates: [idKeyPredicate])
-        return coreDataManager.getMovieById(predicates: predicates)
+        return CoreDataManager.shared.getMovieById(predicates: predicates)
     }
     
     func deleteAllMovies() {
-        coreDataManager.deleteAllMovies()
+        CoreDataManager.shared.deleteAllMovies()
     }
     
     func deleteMovieById(id: Int) {
         let idKeyPredicate =  NSPredicate(format: "id == %@", "\(id)")
         let predicates = NSCompoundPredicate(type: .and, subpredicates: [idKeyPredicate])
-        coreDataManager.deleteMovieById(predicates: predicates)
+        CoreDataManager.shared.deleteMovieById(predicates: predicates)
     }
     
     func isMovieExist(id: Int) -> Bool {
         let idKeyPredicate =  NSPredicate(format: "id == %@", "\(id)")
         let predicates = NSCompoundPredicate(type: .and, subpredicates: [idKeyPredicate])
-        return coreDataManager.isMovieExist(predicates: predicates)
+        return CoreDataManager.shared.isMovieExist(predicates: predicates)
     }
 }

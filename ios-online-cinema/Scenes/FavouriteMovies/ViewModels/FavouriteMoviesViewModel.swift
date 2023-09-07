@@ -10,7 +10,7 @@ import Foundation
 class FavouriteMoviesViewModel: FavouriteMoviesViewModelProtocol {
     
     var dataSource = [FavouriteMovieDB]()
-    let coreDataRepository = CoreDataRepository()
+    let coreDataRepository = FavouriteMovieDataRepository()
     
     func fetch() {
         self.dataSource = coreDataRepository.getAllMovies()

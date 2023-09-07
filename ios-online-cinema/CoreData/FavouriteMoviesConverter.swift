@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class Converter {
+class FavouriteMoviesConverter {
     
     // MARK: - Methods
     

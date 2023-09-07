@@ -45,7 +45,7 @@ class MoviesDetailsViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
@@ -103,14 +103,8 @@ class MoviesDetailsViewController: UIViewController {
         }
     }
     
-    func showError(error: APIError) {
+    func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showError(error: String) {
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
     }
@@ -135,7 +129,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieInfoTableViewCell.identifier,
                                                            for: indexPath) as? MovieInfoTableViewCell,
                   let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
-            cell.configure(cellModel: item, isMovieFavourite: self.viewModel.isMovieFavourite())
+            cell.configure(cellModel: item)
             cell.cellActions = self
             
             return cell
@@ -156,8 +150,11 @@ extension MoviesDetailsViewController: MovieInfoTableViewCellActions {
     }
     
     func addToFavourites() {
-        self.viewModel.addToFavourites { error in
+        do {
+            try self.viewModel.addToFavourites()
+        } catch let error as APIError {
+            self.tableView.reloadData()
             showError(error: error)
-        }
+        } catch { }
     }
 }
