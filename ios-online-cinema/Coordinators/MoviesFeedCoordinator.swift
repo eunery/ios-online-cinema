@@ -18,7 +18,7 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
-    var type: CoordinatorType {.moviesFeed}
+    var type: CoordinatorType { .moviesFeed }
     var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     

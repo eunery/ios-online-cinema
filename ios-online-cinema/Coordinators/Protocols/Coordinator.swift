@@ -10,17 +10,12 @@ import UIKit
 protocol Coordinator: AnyObject {
     
     var finishDelegate: CoordinatorFinishDelegate? { get set }
-    
     var parentCoordinator: Coordinator? { get set }
-    
     var childCoordinators: [Coordinator] { get set }
-    
     var navigationController: UINavigationController { get set }
-    
     var type: CoordinatorType { get }
     
     func start()
-    
     func finish()
 }
 
@@ -36,5 +31,5 @@ protocol CoordinatorFinishDelegate: AnyObject {
 }
 
 enum CoordinatorType {
-    case app, tabbar, moviesFeed, favouriteMovies, moviesDetails
+    case app, tabbar, moviesFeed, favouriteMovies, moviesDetails, moviesGenerator
 }
