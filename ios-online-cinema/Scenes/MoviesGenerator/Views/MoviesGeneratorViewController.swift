@@ -16,7 +16,7 @@ class MoviesGeneratorViewController: UIViewController {
     var coordinator: MoviesGeneratorCoordinatorProtocol?
     
     let genreLabel = UILabel()
-    let genreTextView = UITextView()
+    let genreTextField = UITextField()
     let genreMenu = UIMenu()
     let yearLabel = UILabel()
     let yearTextView = UITextView()
@@ -45,9 +45,10 @@ class MoviesGeneratorViewController: UIViewController {
     
     func setup() {
         self.view.addSubview(genreLabel)
-        self.view.addSubview(genreTextView)
+        self.view.addSubview(genreTextField)
         self.view.addSubview(yearLabel)
         self.view.addSubview(yearTextView)
+        self.view.addSubview(generateButton)
         
         setupUI()
         setupLayout()
@@ -59,16 +60,20 @@ class MoviesGeneratorViewController: UIViewController {
         genreLabel.text = "Choose genre"
         genreLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
         genreLabel.textAlignment = .center
-        genreTextView.backgroundColor = .systemGray6
-        genreTextView.isEditable = false
-        genreTextView.text = "Genre"
-        genreTextView.textColor = .black
-        genreTextView.layer.cornerRadius = 10
-        genreTextView.font = ProximaNovaFont.font(type: .regular, size: 20)
-        genreTextView.textAlignment = .center
+        
+        genreTextField.backgroundColor = .systemGray6
+        genreTextField.isEnabled = false
+        genreTextField.text = ""
+        genreTextField.textColor = .black
+        genreTextField.layer.cornerRadius = 10
+        genreTextField.font = ProximaNovaFont.font(type: .regular, size: 20)
+        genreTextField.textAlignment = .center
+        genreTextField.addTarget(self, action: #selector(getGenresMenu), for: .touchUpInside)
+        
         yearLabel.text = "Pick a year"
         yearLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
         yearLabel.textAlignment = .center
+        
         yearTextView.inputView = yearPicker
         yearTextView.backgroundColor = .systemGray6
         yearTextView.isEditable = false
@@ -76,6 +81,15 @@ class MoviesGeneratorViewController: UIViewController {
         yearTextView.layer.cornerRadius = 10
         yearTextView.font = ProximaNovaFont.font(type: .regular, size: 20)
         yearTextView.textAlignment = .center
+        
+        generateButton.setTitle("Generate!", for: .disabled)
+        generateButton.setTitleColor(.white, for: .disabled)
+        generateButton.setTitle("Generate!", for: .normal)
+        generateButton.setTitleColor(.white, for: .normal)
+        generateButton.backgroundColor = .systemPink
+        generateButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
+        generateButton.layer.cornerRadius = 10
+        setButtonState(isEnabled: false)
     }
     
     func setupLayout() {
@@ -85,7 +99,7 @@ class MoviesGeneratorViewController: UIViewController {
             maker.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).inset(80)
         }
         
-        genreTextView.snp.makeConstraints { maker in
+        genreTextField.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
             maker.top.equalTo(genreLabel.snp.bottom).offset(6)
             maker.trailing.equalTo(genreLabel)
@@ -94,7 +108,7 @@ class MoviesGeneratorViewController: UIViewController {
         
         yearLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
-            maker.top.equalTo(genreTextView.snp.bottom).offset(20)
+            maker.top.equalTo(genreTextField.snp.bottom).offset(20)
             maker.trailing.equalTo(genreLabel)
         }
         
@@ -104,11 +118,45 @@ class MoviesGeneratorViewController: UIViewController {
             maker.trailing.equalTo(genreLabel)
             maker.height.greaterThanOrEqualTo(40)
         }
+        
+        generateButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(genreLabel)
+            maker.top.equalTo(yearTextView.snp.bottom).offset(20)
+            maker.trailing.equalTo(genreLabel)
+            maker.height.greaterThanOrEqualTo(40)
+        }
     }
     
     func yearPickerViewSetup() {
         yearPicker.delegate = self
         yearPicker.dataSource = self
+    }
+    
+    func showError(error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func setButtonState(isEnabled: Bool) {
+        if isEnabled {
+            generateButton.alpha = 1
+            generateButton.isEnabled = true
+        } else {
+            generateButton.isEnabled = false
+            generateButton.alpha = 0.4
+        }
+    }
+    
+    @objc func getGenresMenu() {
+        self.viewModel.start { result in
+            switch result {
+            case .failure(let error):
+                self.showError(error: error)
+            case .success(()): break
+                
+            }
+        }
     }
 }
 

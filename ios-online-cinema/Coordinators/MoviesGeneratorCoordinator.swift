@@ -35,6 +35,4 @@ class MoviesGeneratorCoordinator: Coordinator, MoviesGeneratorCoordinatorProtoco
         viewController.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
     }
-    
-    
 }
