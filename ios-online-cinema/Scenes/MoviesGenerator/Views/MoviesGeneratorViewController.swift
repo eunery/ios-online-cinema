@@ -17,9 +17,8 @@ class MoviesGeneratorViewController: UIViewController {
     
     let genreLabel = UILabel()
     let genreTextField = UITextField()
-    let genreMenu = UIMenu()
     let yearLabel = UILabel()
-    let yearTextView = UITextView()
+    let yearTextField = UITextField()
     let yearPicker = UIPickerView()
     let generateButton = UIButton()
     
@@ -47,7 +46,7 @@ class MoviesGeneratorViewController: UIViewController {
         self.view.addSubview(genreLabel)
         self.view.addSubview(genreTextField)
         self.view.addSubview(yearLabel)
-        self.view.addSubview(yearTextView)
+        self.view.addSubview(yearTextField)
         self.view.addSubview(generateButton)
         
         setupUI()
@@ -62,25 +61,26 @@ class MoviesGeneratorViewController: UIViewController {
         genreLabel.textAlignment = .center
         
         genreTextField.backgroundColor = .systemGray6
-        genreTextField.isEnabled = false
-        genreTextField.text = ""
         genreTextField.textColor = .black
+        genreTextField.text = ""
         genreTextField.layer.cornerRadius = 10
         genreTextField.font = ProximaNovaFont.font(type: .regular, size: 20)
         genreTextField.textAlignment = .center
-        genreTextField.addTarget(self, action: #selector(getGenresMenu), for: .touchUpInside)
+        genreTextField.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
+        genreTextField.delegate = self
         
         yearLabel.text = "Pick a year"
         yearLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
         yearLabel.textAlignment = .center
         
-        yearTextView.inputView = yearPicker
-        yearTextView.backgroundColor = .systemGray6
-        yearTextView.isEditable = false
-        yearTextView.textColor = .black
-        yearTextView.layer.cornerRadius = 10
-        yearTextView.font = ProximaNovaFont.font(type: .regular, size: 20)
-        yearTextView.textAlignment = .center
+        yearTextField.inputView = yearPicker
+        yearTextField.backgroundColor = .systemGray6
+        yearTextField.textColor = .black
+        yearTextField.layer.cornerRadius = 10
+        yearTextField.font = ProximaNovaFont.font(type: .regular, size: 20)
+        yearTextField.textAlignment = .center
+        yearTextField.addTarget(self, action: #selector(self.validateFields), for: .valueChanged)
+        yearTextField.delegate = self
         
         generateButton.setTitle("Generate!", for: .disabled)
         generateButton.setTitleColor(.white, for: .disabled)
@@ -90,6 +90,7 @@ class MoviesGeneratorViewController: UIViewController {
         generateButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
         generateButton.layer.cornerRadius = 10
         setButtonState(isEnabled: false)
+        
     }
     
     func setupLayout() {
@@ -112,7 +113,7 @@ class MoviesGeneratorViewController: UIViewController {
             maker.trailing.equalTo(genreLabel)
         }
         
-        yearTextView.snp.makeConstraints { maker in
+        yearTextField.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
             maker.top.equalTo(yearLabel.snp.bottom).offset(6)
             maker.trailing.equalTo(genreLabel)
@@ -121,7 +122,7 @@ class MoviesGeneratorViewController: UIViewController {
         
         generateButton.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
-            maker.top.equalTo(yearTextView.snp.bottom).offset(20)
+            maker.top.equalTo(yearTextField.snp.bottom).offset(40)
             maker.trailing.equalTo(genreLabel)
             maker.height.greaterThanOrEqualTo(40)
         }
@@ -149,13 +150,27 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     @objc func getGenresMenu() {
+        let viewController = GenrePickerViewController()
+        viewController.actions = self
+        if let sheet = viewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+        }
+        self.present(viewController, animated: true)
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
                 self.showError(error: error)
             case .success(()): break
-                
+
             }
+        }
+    }
+    
+    @objc func validateFields() {
+        if !(genreTextField.text?.isEmpty ?? true) && !(yearTextField.text?.isEmpty ?? true) {
+            setButtonState(isEnabled: true)
+        } else {
+            setButtonState(isEnabled: false)
         }
     }
 }
@@ -174,7 +189,20 @@ extension MoviesGeneratorViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        yearTextView.text = self.viewModel.yearsArray[row].description
-        yearTextView.resignFirstResponder()
+        yearTextField.text = self.viewModel.yearsArray[row].description
+        yearTextField.resignFirstResponder()
+    }
+}
+
+extension MoviesGeneratorViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.validateFields()
+    }
+}
+
+extension MoviesGeneratorViewController: GenrePickerViewControllerDelegate {
+    func selectData(text: String) {
+        self.genreTextField.text = text
+        self.validateFields()
     }
 }
