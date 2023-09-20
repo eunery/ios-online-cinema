@@ -20,6 +20,7 @@ class GenrePickerViewController: UIViewController {
     let searchBar = UISearchBar()
     let tableView = UITableView()
     var genresNames: [String] = [String]()
+    var filteredGenresNames: [String] = [String]()
     
     // MARK: - Init
     
@@ -54,6 +55,7 @@ class GenrePickerViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.delegate = self
         searchBar.searchTextField.clearButtonMode = .whileEditing
+        filteredGenresNames = genresNames
     }
     
     func setupLayout() {
@@ -82,12 +84,12 @@ class GenrePickerViewController: UIViewController {
 
 extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genresNames.count
+        return filteredGenresNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) ->
     UITableViewCell {
-        let item = genresNames[indexPath.row]
+        let item = filteredGenresNames[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: GenrePickerTableViewCell.identifier,
             for: indexPath) as? GenrePickerTableViewCell else { return UITableViewCell() }
@@ -109,5 +111,13 @@ extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate 
 extension GenrePickerViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dismiss(animated: true)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredGenresNames = searchText.isEmpty ? genresNames : genresNames.filter({(dataString: String) -> Bool in
+                return dataString.range(of: searchText, options: .caseInsensitive) != nil
+        })
+        
+        tableView.reloadData()
     }
 }

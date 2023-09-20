@@ -65,9 +65,7 @@ class MoviesGeneratorViewController: UIViewController {
         genreButton.setTitle(self.viewModel.genre, for: .normal)
         genreButton.layer.cornerRadius = 10
         genreButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
-//        genreTextField.textAlignment = .center
         genreButton.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
-//        genreTextField.delegate = self
         
         yearLabel.text = "Pick a year"
         yearLabel.font = ProximaNovaFont.font(type: .bold, size: 22)

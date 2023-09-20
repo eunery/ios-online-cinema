@@ -21,6 +21,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     // MARK: - Methods
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+        genresNames.removeAll()
         self.apiService.getMoviesGenres { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
