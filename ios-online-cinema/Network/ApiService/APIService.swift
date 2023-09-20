@@ -47,14 +47,14 @@ struct APIService: APIServiceProtocol {
         )
     }
     
-    func getGeneratingMovies(page: Int,
-                             year: Int,
+    func getGeneratingMovies(page: String,
+                             year: String,
                              genre: String,
                              completionHandler: @escaping (Result<MoviesGeneratorResponseModel, APIError>) -> Void) {
         var params: [URLQueryItem] = []
-        params.append(URLQueryItem(name: "page", value: page.description))
+        params.append(URLQueryItem(name: "page", value: page))
         params.append(URLQueryItem(name: "with_genres", value: genre))
-        params.append(URLQueryItem(name: "year", value: year.description))
+        params.append(URLQueryItem(name: "year", value: year))
         worker.performRequest(queryParametres: params,
                               endpoint: Endpoints.moviesGenerator.rawValue,
                               apiMethod: .get,

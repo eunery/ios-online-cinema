@@ -16,7 +16,7 @@ class MoviesGeneratorViewController: UIViewController {
     var coordinator: MoviesGeneratorCoordinatorProtocol?
     
     let genreLabel = UILabel()
-    let genreTextField = UITextField()
+    let genreButton = UIButton()
     let yearLabel = UILabel()
     let yearTextField = UITextField()
     let yearPicker = UIPickerView()
@@ -44,7 +44,7 @@ class MoviesGeneratorViewController: UIViewController {
     
     func setup() {
         self.view.addSubview(genreLabel)
-        self.view.addSubview(genreTextField)
+        self.view.addSubview(genreButton)
         self.view.addSubview(yearLabel)
         self.view.addSubview(yearTextField)
         self.view.addSubview(generateButton)
@@ -60,14 +60,14 @@ class MoviesGeneratorViewController: UIViewController {
         genreLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
         genreLabel.textAlignment = .center
         
-        genreTextField.backgroundColor = .systemGray6
-        genreTextField.textColor = .black
-        genreTextField.text = ""
-        genreTextField.layer.cornerRadius = 10
-        genreTextField.font = ProximaNovaFont.font(type: .regular, size: 20)
-        genreTextField.textAlignment = .center
-        genreTextField.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
-        genreTextField.delegate = self
+        genreButton.backgroundColor = .systemGray6
+        genreButton.setTitleColor(.black, for: .normal)
+        genreButton.setTitle(self.viewModel.genre, for: .normal)
+        genreButton.layer.cornerRadius = 10
+        genreButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
+//        genreTextField.textAlignment = .center
+        genreButton.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
+//        genreTextField.delegate = self
         
         yearLabel.text = "Pick a year"
         yearLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
@@ -90,6 +90,7 @@ class MoviesGeneratorViewController: UIViewController {
         generateButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
         generateButton.layer.cornerRadius = 10
         setButtonState(isEnabled: false)
+        generateButton.addTarget(self, action: #selector(generateMovie), for: .touchUpInside)
         
     }
     
@@ -100,7 +101,7 @@ class MoviesGeneratorViewController: UIViewController {
             maker.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).inset(80)
         }
         
-        genreTextField.snp.makeConstraints { maker in
+        genreButton.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
             maker.top.equalTo(genreLabel.snp.bottom).offset(6)
             maker.trailing.equalTo(genreLabel)
@@ -109,7 +110,7 @@ class MoviesGeneratorViewController: UIViewController {
         
         yearLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(genreLabel)
-            maker.top.equalTo(genreTextField.snp.bottom).offset(20)
+            maker.top.equalTo(genreButton.snp.bottom).offset(20)
             maker.trailing.equalTo(genreLabel)
         }
         
@@ -140,37 +141,42 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     func setButtonState(isEnabled: Bool) {
-        if isEnabled {
-            generateButton.alpha = 1
-            generateButton.isEnabled = true
-        } else {
-            generateButton.isEnabled = false
-            generateButton.alpha = 0.4
-        }
+        generateButton.isEnabled = isEnabled ? true : false
+        generateButton.alpha = isEnabled ? 1 : 0.4
     }
     
     @objc func getGenresMenu() {
-        let viewController = GenrePickerViewController()
-        viewController.actions = self
-        if let sheet = viewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-        }
-        self.present(viewController, animated: true)
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
                 self.showError(error: error)
-            case .success(()): break
-
+            case .success(()):
+                let viewController = GenrePickerViewController()
+                viewController.actions = self
+                viewController.genresNames = self.viewModel.genresNames
+                if let sheet = viewController.sheetPresentationController {
+                    sheet.detents = [.medium()]
+                }
+                self.present(viewController, animated: true)
             }
         }
     }
     
     @objc func validateFields() {
-        if !(genreTextField.text?.isEmpty ?? true) && !(yearTextField.text?.isEmpty ?? true) {
-            setButtonState(isEnabled: true)
-        } else {
-            setButtonState(isEnabled: false)
+        setButtonState(isEnabled: self.viewModel.validateFields() ? true : false)
+    }
+    
+    @objc func generateMovie() {
+        guard let genre = genreButton.titleLabel?.text else { return }
+        guard let year = yearTextField.text else { return }
+        self.viewModel.fetch(genre: genre, year: year) { result in
+            switch result {
+            case .failure(let error):
+                self.showError(error: error)
+            case .success(()):
+                guard let id = self.viewModel.generatedMovieId else { return }
+                self.coordinator?.showMoviesDetails(movieId: id)
+            }
         }
     }
 }
@@ -190,6 +196,7 @@ extension MoviesGeneratorViewController: UIPickerViewDelegate, UIPickerViewDataS
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         yearTextField.text = self.viewModel.yearsArray[row].description
+        self.viewModel.setYear(year: self.viewModel.yearsArray[row].description)
         yearTextField.resignFirstResponder()
     }
 }
@@ -202,7 +209,8 @@ extension MoviesGeneratorViewController: UITextFieldDelegate {
 
 extension MoviesGeneratorViewController: GenrePickerViewControllerDelegate {
     func selectData(text: String) {
-        self.genreTextField.text = text
+        self.viewModel.setGenre(genre: text)
+        self.genreButton.setTitle(self.viewModel.genre, for: .normal)
         self.validateFields()
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol MoviesGeneratorCoordinatorProtocol: Coordinator {
-    
+    func showMoviesDetails(movieId: Int)
 }
 
 class MoviesGeneratorCoordinator: Coordinator, MoviesGeneratorCoordinatorProtocol {
@@ -34,5 +34,10 @@ class MoviesGeneratorCoordinator: Coordinator, MoviesGeneratorCoordinatorProtoco
         let viewController = MoviesGeneratorViewController(viewModel: MoviesGeneratorViewModel())
         viewController.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
+    }
+    
+    func showMoviesDetails(movieId: Int) {
+        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -18,7 +18,7 @@ class MoviesDetailsConverter {
     // MARK: - Methods
     
     func mapToDB(response: MoviesDetailsResponseModel) -> FavouriteMovieDB {
-        let url = createImageURL(posterPath: response.posterPath)
+        let url = createImageURL(posterPath: response.posterPath ?? "")
         return FavouriteMovieDB(id: response.id,
                                 poster: url.description,
                                 genres: formatGenresNames(genres: response.genres),

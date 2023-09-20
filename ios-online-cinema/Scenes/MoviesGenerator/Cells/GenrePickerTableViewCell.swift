@@ -36,7 +36,7 @@ class GenrePickerTableViewCell: UITableViewCell {
     }
     
     func setupUI() {
-        
+        genreName.font = ProximaNovaFont.font(type: .regular, size: 20)
     }
     
     func setupLayout() {

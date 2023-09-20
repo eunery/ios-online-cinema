@@ -19,7 +19,7 @@ class GenrePickerViewController: UIViewController {
     weak var actions: GenrePickerViewControllerDelegate?
     let searchBar = UISearchBar()
     let tableView = UITableView()
-    let test = Array(1...30)
+    var genresNames: [String] = [String]()
     
     // MARK: - Init
     
@@ -82,16 +82,16 @@ class GenrePickerViewController: UIViewController {
 
 extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return genresNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) ->
     UITableViewCell {
-        let item = test[indexPath.row]
+        let item = genresNames[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: GenrePickerTableViewCell.identifier,
             for: indexPath) as? GenrePickerTableViewCell else { return UITableViewCell() }
-        cell.genreName.text = "test" + item.description
+        cell.genreName.text = item.description
         
         return cell
     }

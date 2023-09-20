@@ -13,8 +13,10 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     
     var yearsArray: [Int] = Array(1900...Calendar.current.component(.year, from: .now))
     let apiService = APIService(worker: NetworkWorker())
-    var response: MoviesGeneratorResponseModel?
-    var genresNames: [Int: String] = [Int: String]()
+    var generatedMovieId: Int?
+    var genresNames: [String] = [String]()
+    var genre: String?
+    var year: String?
     
     // MARK: - Methods
     
@@ -27,7 +29,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
                     completionHandler(.failure(error))
                 case .success(let response):
                     for item in response.genres {
-                        self.genresNames[item.id] = item.name
+                        self.genresNames.append(item.name)
                     }
                     completionHandler(.success(()))
                 }
@@ -35,9 +37,9 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
         }
     }
     
-    func fetch(genre: String, year: Int, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func fetch(genre: String, year: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         let page = Int.random(in: 1...500)
-        self.apiService.getGeneratingMovies(page: page,
+        self.apiService.getGeneratingMovies(page: page.description,
                                            year: year,
                                            genre: genre) { result in
             DispatchQueue.main.async { [weak self] in
@@ -46,10 +48,23 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
-                    self.response = response
+                    self.generatedMovieId = response.results.randomElement()?.id
                     completionHandler(.success(()))
                 }
             }
         }
+    }
+    
+    func setGenre(genre: String) {
+        self.genre = genre
+    }
+    
+    func setYear(year: String) {
+        self.year = year
+    }
+    
+    func validateFields() -> Bool {
+        guard let genre, let year else { return false }
+        return !(genre.isEmpty) && !(year.isEmpty) ? true : false
     }
 }
