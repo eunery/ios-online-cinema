@@ -15,8 +15,8 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     let apiService = APIService(worker: NetworkWorker())
     var generatedMovieId: Int?
     var genresNames: [String] = [String]()
-    var genre: String?
-    var year: String?
+    var selectedGenre: String?
+    var selectedYear: String?
     var isLoading: Bool = false
     
     // MARK: - Methods
@@ -58,16 +58,16 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     }
     
     func setGenre(genre: String) {
-        self.genre = genre
+        self.selectedGenre = genre
     }
     
     func setYear(year: String) {
-        self.year = year
+        self.selectedYear = year
     }
     
     func validateFields() -> Bool {
-        guard let genre, let year else { return false }
-        return !(genre.isEmpty) && !(year.isEmpty) ? true : false
+        guard let selectedGenre, let selectedYear else { return false }
+        return !(selectedGenre.isEmpty) && !(selectedYear.isEmpty) ? true : false
     }
     
     func setLoaderState(state: Bool) {

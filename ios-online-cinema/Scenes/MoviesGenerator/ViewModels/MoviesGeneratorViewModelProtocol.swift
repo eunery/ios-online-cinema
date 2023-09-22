@@ -11,8 +11,8 @@ protocol MoviesGeneratorViewModelProtocol {
     var yearsArray: [Int] { get }
     var genresNames: [String] { get set }
     var generatedMovieId: Int? { get set }
-    var genre: String? { get set }
-    var year: String? { get set }
+    var selectedGenre: String? { get }
+    var selectedYear: String? { get }
     var isLoading: Bool { get set }
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void)

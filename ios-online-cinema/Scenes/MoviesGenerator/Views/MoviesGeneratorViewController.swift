@@ -68,7 +68,7 @@ class MoviesGeneratorViewController: UIViewController {
         
         genreButton.backgroundColor = .systemGray6
         genreButton.setTitleColor(.black, for: .normal)
-        genreButton.setTitle(self.viewModel.genre, for: .normal)
+        genreButton.setTitle(self.viewModel.selectedGenre, for: .normal)
         genreButton.layer.cornerRadius = 10
         genreButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
         genreButton.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
@@ -154,7 +154,11 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     func loaderState() {
-        self.viewModel.isLoading ? loader.startAnimating() : loader.stopAnimating()
+        if self.viewModel.isLoading {
+            loader.startAnimating()
+        } else {
+            loader.stopAnimating()
+        }
     }
     
     @objc func getGenresMenu() {
@@ -164,10 +168,10 @@ class MoviesGeneratorViewController: UIViewController {
             switch result {
             case .failure(let error):
                 self.showError(error: error)
-            case .success(()):
-                let viewController = GenrePickerViewController()
-                viewController.actions = self
-                viewController.genresNames = self.viewModel.genresNames
+            case .success:
+                let viewController = GenrePickerViewController(viewModel: GenrePickerViewModel())
+                viewController.delegate = self
+                viewController.viewModel.genresNames = self.viewModel.genresNames
                 if let sheet = viewController.sheetPresentationController {
                     sheet.detents = [.medium()]
                 }
@@ -191,7 +195,7 @@ class MoviesGeneratorViewController: UIViewController {
             switch result {
             case .failure(let error):
                 self.showError(error: error)
-            case .success(()):
+            case .success:
                 guard let id = self.viewModel.generatedMovieId else { return }
                 self.viewModel.setLoaderState(state: false)
                 self.loaderState()
@@ -230,7 +234,7 @@ extension MoviesGeneratorViewController: UITextFieldDelegate {
 extension MoviesGeneratorViewController: GenrePickerViewControllerDelegate {
     func selectData(text: String) {
         self.viewModel.setGenre(genre: text)
-        self.genreButton.setTitle(self.viewModel.genre, for: .normal)
+        self.genreButton.setTitle(self.viewModel.selectedGenre, for: .normal)
         self.validateFields()
     }
 }

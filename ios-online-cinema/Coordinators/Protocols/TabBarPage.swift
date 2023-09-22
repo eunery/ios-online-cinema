@@ -17,9 +17,9 @@ enum TabBarPage {
         switch index {
         case 0:
             self = .moviesFeed
-        case 2:
-            self = .moviesGenerator
         case 1:
+            self = .moviesGenerator
+        case 2:
             self = .favouriteMovies
         default:
             return nil

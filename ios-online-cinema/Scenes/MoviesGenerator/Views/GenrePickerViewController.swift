@@ -16,15 +16,16 @@ class GenrePickerViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var actions: GenrePickerViewControllerDelegate?
+    var viewModel: GenrePickerViewModelProtocol
+    weak var delegate: GenrePickerViewControllerDelegate?
     let searchBar = UISearchBar()
     let tableView = UITableView()
-    var genresNames: [String] = [String]()
     var filteredGenresNames: [String] = [String]()
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: GenrePickerViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,7 +56,7 @@ class GenrePickerViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.delegate = self
         searchBar.searchTextField.clearButtonMode = .whileEditing
-        filteredGenresNames = genresNames
+        filteredGenresNames = self.viewModel.genresNames
     }
     
     func setupLayout() {
@@ -101,7 +102,7 @@ extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? GenrePickerTableViewCell {
             guard let item = cell.genreName.text else { return }
-            self.actions?.selectData(text: item)
+            self.delegate?.selectData(text: item)
             self.dismiss(animated: true)
         }
         
@@ -114,10 +115,8 @@ extension GenrePickerViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredGenresNames = searchText.isEmpty ? genresNames : genresNames.filter({(dataString: String) -> Bool in
-                return dataString.range(of: searchText, options: .caseInsensitive) != nil
-        })
-        
+        filteredGenresNames = self.viewModel.filterGenres(searchText: searchText)
+
         tableView.reloadData()
     }
 }
