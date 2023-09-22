@@ -25,6 +25,7 @@ class MoviesFeedViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,7 +77,7 @@ class MoviesFeedViewController: UIViewController {
             maker.leading.equalTo(headerLabel)
             maker.top.equalTo(headerLabel.snp.bottom).offset(14)
             maker.trailing.equalTo(headerLabel)
-            maker.bottom.equalTo(self.view)
+            maker.bottom.equalToSuperview()
         }
     }
     

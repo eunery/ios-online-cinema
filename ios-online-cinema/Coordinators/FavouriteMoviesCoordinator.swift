@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol FavouriteMoviesCoordinatorProtocol: Coordinator {
-    
+    func showMoviesDetails(movieId: Int)
 }
 
 class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtocol {
@@ -35,5 +35,10 @@ class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtoco
         let viewController = FavouriteMoviesViewController(viewModel: FavouriteMoviesViewModel())
         viewController.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
+    }
+    
+    func showMoviesDetails(movieId: Int) {
+        let viewController = MoviesDetailsViewController(viewModel: MoviesDetailsViewModel(movieId: movieId))
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

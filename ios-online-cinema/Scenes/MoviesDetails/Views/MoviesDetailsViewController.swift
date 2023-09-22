@@ -23,6 +23,7 @@ class MoviesDetailsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -42,6 +43,10 @@ class MoviesDetailsViewController: UIViewController {
                 self.handleLoadingIndication(isLoading: false)
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     // MARK: - Methods
@@ -78,7 +83,7 @@ class MoviesDetailsViewController: UIViewController {
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.allowsSelection = false
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = .none
         tableView.register(
             MoviePosterTableViewCell.self, forCellReuseIdentifier: MoviePosterTableViewCell.identifier
         )
@@ -98,7 +103,7 @@ class MoviesDetailsViewController: UIViewController {
         }
     }
     
-    func showError(error: APIError) {
+    func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
@@ -125,6 +130,7 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
                                                            for: indexPath) as? MovieInfoTableViewCell,
                   let item = item as? MoviesDetailsInfoCellData else { return UITableViewCell() }
             cell.configure(cellModel: item)
+            cell.cellActions = self
             
             return cell
         case .overview:
@@ -135,5 +141,20 @@ extension MoviesDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             
             return cell
         }
+    }
+}
+
+extension MoviesDetailsViewController: MovieInfoTableViewCellActions {
+    func deleteFromFavourites() {
+        self.viewModel.deleteFromFavoruites()
+    }
+    
+    func addToFavourites() {
+        do {
+            try self.viewModel.addToFavourites()
+        } catch let error as APIError {
+            self.tableView.reloadData()
+            showError(error: error)
+        } catch { }
     }
 }

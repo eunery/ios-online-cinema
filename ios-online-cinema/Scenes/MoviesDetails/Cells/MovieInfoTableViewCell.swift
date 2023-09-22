@@ -8,13 +8,18 @@
 import Foundation
 import UIKit
 
+protocol MovieInfoTableViewCellActions: AnyObject {
+    func addToFavourites()
+    func deleteFromFavourites()
+}
+
 class MovieInfoTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
     static let identifier: String = "MovieInfoCell"
+    weak var cellActions: MovieInfoTableViewCellActions?
     var isButtonOn: Bool = false
-    
     let infoStackView = UIStackView()
     var genreLabel = UILabel()
     var voteLabel = UILabel()
@@ -27,6 +32,7 @@ class MovieInfoTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,7 +63,7 @@ class MovieInfoTableViewCell: UITableViewCell {
         voteLabel.textAlignment = .center
         
         addToFavouritesButton.tintColor = .red
-        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        setButtonImage()
         addToFavouritesButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         dateLabel.font = ProximaNovaFont.font(type: .bold, size: 14)
@@ -67,20 +73,36 @@ class MovieInfoTableViewCell: UITableViewCell {
     func setupLayout() {
         infoStackView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(10)
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
+            maker.leading.equalToSuperview().inset(5)
+            maker.trailing.equalToSuperview().inset(5)
             maker.bottom.equalToSuperview().inset(10)
         }
+    }
+    
+    func setButtonImage() {
+        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
     }
     
     func configure(cellModel: MoviesDetailsInfoCellData) {
         self.genreLabel.text = cellModel.genres
         self.voteLabel.text = cellModel.vote
         self.dateLabel.text = cellModel.date
+        if cellModel.isFavourite {
+            self.isButtonOn = true
+            setButtonImage()
+        } else {
+            self.isButtonOn = false
+            setButtonImage()
+        }
     }
     
     @objc func buttonPressed() {
+        if isButtonOn {
+            self.cellActions?.deleteFromFavourites()
+        } else {
+            self.cellActions?.addToFavourites()
+        }
         isButtonOn.toggle()
-        addToFavouritesButton.setImage(UIImage(systemName: isButtonOn ? "heart.fill" : "heart"), for: .normal)
+        setButtonImage()
     }
 }

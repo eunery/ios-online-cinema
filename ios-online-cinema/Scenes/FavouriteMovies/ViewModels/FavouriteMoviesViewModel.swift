@@ -9,7 +9,15 @@ import Foundation
 
 class FavouriteMoviesViewModel: FavouriteMoviesViewModelProtocol {
     
+    var dataSource = [FavouriteMovieDB]()
+    let coreDataRepository = FavouriteMovieDataRepository()
+    
     func fetch() {
-        
+        self.dataSource = coreDataRepository.getAllMovies()
+    }
+    
+    func deleteMovie(id: Int) {
+        coreDataRepository.deleteMovieById(id: id)
+        fetch()
     }
 }
