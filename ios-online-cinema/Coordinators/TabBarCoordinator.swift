@@ -75,7 +75,7 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     
     func prepareTabBarController(withTabBarControllers tabControllers: [UIViewController]) {
         tabBarController.setViewControllers(tabControllers, animated: true)
-        tabBarController.selectedIndex = TabBarPage.moviesGenerator.pageOrderNumber()
+        tabBarController.selectedIndex = TabBarPage.moviesFeed.pageOrderNumber()
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.backgroundColor = .white
         

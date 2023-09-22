@@ -21,6 +21,7 @@ class MoviesGeneratorViewController: UIViewController {
     let yearTextField = UITextField()
     let yearPicker = UIPickerView()
     let generateButton = UIButton()
+    let loader = UIActivityIndicatorView()
     
     // MARK: - Init
     
@@ -48,6 +49,7 @@ class MoviesGeneratorViewController: UIViewController {
         self.view.addSubview(yearLabel)
         self.view.addSubview(yearTextField)
         self.view.addSubview(generateButton)
+        self.view.addSubview(loader)
         
         setupUI()
         setupLayout()
@@ -56,6 +58,10 @@ class MoviesGeneratorViewController: UIViewController {
     
     func setupUI() {
         self.view.backgroundColor = .white
+        
+        loader.hidesWhenStopped = true
+        loader.stopAnimating()
+        
         genreLabel.text = "Choose genre"
         genreLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
         genreLabel.textAlignment = .center
@@ -93,6 +99,10 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     func setupLayout() {
+        loader.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+        
         genreLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).inset(80)
             maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -143,7 +153,13 @@ class MoviesGeneratorViewController: UIViewController {
         generateButton.alpha = isEnabled ? 1 : 0.4
     }
     
+    func loaderState() {
+        self.viewModel.isLoading ? loader.startAnimating() : loader.stopAnimating()
+    }
+    
     @objc func getGenresMenu() {
+        self.viewModel.setLoaderState(state: true)
+        loaderState()
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
@@ -155,6 +171,8 @@ class MoviesGeneratorViewController: UIViewController {
                 if let sheet = viewController.sheetPresentationController {
                     sheet.detents = [.medium()]
                 }
+                self.viewModel.setLoaderState(state: false)
+                self.loaderState()
                 self.present(viewController, animated: true)
             }
         }
@@ -165,6 +183,8 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     @objc func generateMovie() {
+        self.viewModel.setLoaderState(state: true)
+        self.loaderState()
         guard let genre = genreButton.titleLabel?.text else { return }
         guard let year = yearTextField.text else { return }
         self.viewModel.fetch(genre: genre, year: year) { result in
@@ -173,6 +193,8 @@ class MoviesGeneratorViewController: UIViewController {
                 self.showError(error: error)
             case .success(()):
                 guard let id = self.viewModel.generatedMovieId else { return }
+                self.viewModel.setLoaderState(state: false)
+                self.loaderState()
                 self.coordinator?.showMoviesDetails(movieId: id)
             }
         }

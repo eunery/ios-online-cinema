@@ -17,6 +17,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     var genresNames: [String] = [String]()
     var genre: String?
     var year: String?
+    var isLoading: Bool = false
     
     // MARK: - Methods
     
@@ -67,5 +68,9 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     func validateFields() -> Bool {
         guard let genre, let year else { return false }
         return !(genre.isEmpty) && !(year.isEmpty) ? true : false
+    }
+    
+    func setLoaderState(state: Bool) {
+        self.isLoading = state
     }
 }
