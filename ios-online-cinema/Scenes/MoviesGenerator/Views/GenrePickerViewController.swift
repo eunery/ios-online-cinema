@@ -20,7 +20,6 @@ class GenrePickerViewController: UIViewController {
     weak var delegate: GenrePickerViewControllerDelegate?
     let searchBar = UISearchBar()
     let tableView = UITableView()
-    var filteredGenresNames: [String] = [String]()
     
     // MARK: - Init
     
@@ -56,7 +55,6 @@ class GenrePickerViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.delegate = self
         searchBar.searchTextField.clearButtonMode = .whileEditing
-        filteredGenresNames = self.viewModel.genresNames
     }
     
     func setupLayout() {
@@ -85,12 +83,12 @@ class GenrePickerViewController: UIViewController {
 
 extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredGenresNames.count
+        return self.viewModel.filteredGenresNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) ->
     UITableViewCell {
-        let item = filteredGenresNames[indexPath.row]
+        let item = self.viewModel.filteredGenresNames[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: GenrePickerTableViewCell.identifier,
             for: indexPath) as? GenrePickerTableViewCell else { return UITableViewCell() }
@@ -115,7 +113,7 @@ extension GenrePickerViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredGenresNames = self.viewModel.filterGenres(searchText: searchText)
+        self.viewModel.filterGenres(searchText: searchText)
 
         tableView.reloadData()
     }

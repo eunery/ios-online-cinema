@@ -11,12 +11,20 @@ class GenrePickerViewModel: GenrePickerViewModelProtocol {
     
     // MARK: - Properties
     
-    var genresNames: [String] = [String]()
+    var genresNames: [String]
+    var filteredGenresNames: [String] = [String]()
+    
+    // MARK: - Init
+    
+    init(genresNames: [String]) {
+        self.genresNames = genresNames
+        self.filteredGenresNames = genresNames
+    }
     
     // MARK: - Methods
     
-    func filterGenres(searchText: String) -> [String] {
-        return searchText.isEmpty ? genresNames : genresNames.filter({(dataString: String) -> Bool in
+    func filterGenres(searchText: String) {
+        filteredGenresNames = searchText.isEmpty ? genresNames : genresNames.filter({(dataString: String) -> Bool in
                 return dataString.range(of: searchText, options: .caseInsensitive) != nil
         })
     }

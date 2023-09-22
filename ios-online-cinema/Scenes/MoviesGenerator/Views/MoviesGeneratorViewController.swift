@@ -39,6 +39,15 @@ class MoviesGeneratorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        loader.startAnimating()
+        self.viewModel.start { result in
+            switch result {
+            case .failure(let error):
+                self.showError(error: error)
+            case .success:
+                self.loader.stopAnimating()
+            }
+        }
     }
     
     // MARK: - Methods
@@ -71,7 +80,7 @@ class MoviesGeneratorViewController: UIViewController {
         genreButton.setTitle(self.viewModel.selectedGenre, for: .normal)
         genreButton.layer.cornerRadius = 10
         genreButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
-        genreButton.addTarget(self, action: #selector(self.getGenresMenu), for: .touchDown)
+        genreButton.addTarget(self, action: #selector(self.openGenresMenu), for: .touchDown)
         
         yearLabel.text = "Pick a year"
         yearLabel.font = ProximaNovaFont.font(type: .bold, size: 22)
@@ -153,33 +162,15 @@ class MoviesGeneratorViewController: UIViewController {
         generateButton.alpha = isEnabled ? 1 : 0.4
     }
     
-    func loaderState() {
-        if self.viewModel.isLoading {
-            loader.startAnimating()
-        } else {
-            loader.stopAnimating()
+    @objc func openGenresMenu() {
+        let viewController = GenrePickerViewController(
+            viewModel: GenrePickerViewModel(genresNames: self.viewModel.genresNames)
+        )
+        viewController.delegate = self
+        if let sheet = viewController.sheetPresentationController {
+            sheet.detents = [.medium()]
         }
-    }
-    
-    @objc func getGenresMenu() {
-        self.viewModel.setLoaderState(state: true)
-        loaderState()
-        self.viewModel.start { result in
-            switch result {
-            case .failure(let error):
-                self.showError(error: error)
-            case .success:
-                let viewController = GenrePickerViewController(viewModel: GenrePickerViewModel())
-                viewController.delegate = self
-                viewController.viewModel.genresNames = self.viewModel.genresNames
-                if let sheet = viewController.sheetPresentationController {
-                    sheet.detents = [.medium()]
-                }
-                self.viewModel.setLoaderState(state: false)
-                self.loaderState()
-                self.present(viewController, animated: true)
-            }
-        }
+        self.present(viewController, animated: true)
     }
     
     @objc func validateFields() {
@@ -187,8 +178,7 @@ class MoviesGeneratorViewController: UIViewController {
     }
     
     @objc func generateMovie() {
-        self.viewModel.setLoaderState(state: true)
-        self.loaderState()
+        loader.startAnimating()
         guard let genre = genreButton.titleLabel?.text else { return }
         guard let year = yearTextField.text else { return }
         self.viewModel.fetch(genre: genre, year: year) { result in
@@ -197,8 +187,7 @@ class MoviesGeneratorViewController: UIViewController {
                 self.showError(error: error)
             case .success:
                 guard let id = self.viewModel.generatedMovieId else { return }
-                self.viewModel.setLoaderState(state: false)
-                self.loaderState()
+                self.loader.stopAnimating()
                 self.coordinator?.showMoviesDetails(movieId: id)
             }
         }
@@ -234,7 +223,7 @@ extension MoviesGeneratorViewController: UITextFieldDelegate {
 extension MoviesGeneratorViewController: GenrePickerViewControllerDelegate {
     func selectData(text: String) {
         self.viewModel.setGenre(genre: text)
-        self.genreButton.setTitle(self.viewModel.selectedGenre, for: .normal)
+        self.genreButton.setTitle(text, for: .normal)
         self.validateFields()
     }
 }

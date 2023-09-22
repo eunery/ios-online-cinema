@@ -8,7 +8,8 @@
 import Foundation
 
 protocol GenrePickerViewModelProtocol {
-    var genresNames: [String] { get set }
+    var genresNames: [String] { get }
+    var filteredGenresNames: [String] { get }
     
-    func filterGenres(searchText: String) -> [String]
+    func filterGenres(searchText: String)
 }

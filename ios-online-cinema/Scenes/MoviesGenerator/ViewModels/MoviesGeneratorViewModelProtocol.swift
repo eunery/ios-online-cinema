@@ -9,16 +9,13 @@ import Foundation
 
 protocol MoviesGeneratorViewModelProtocol {
     var yearsArray: [Int] { get }
-    var genresNames: [String] { get set }
-    var generatedMovieId: Int? { get set }
+    var genresNames: [String] { get }
+    var generatedMovieId: Int? { get }
     var selectedGenre: String? { get }
-    var selectedYear: String? { get }
-    var isLoading: Bool { get set }
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void)
     func fetch(genre: String, year: String, completionHandler: @escaping (Result<Void, APIError>) -> Void)
     func setGenre(genre: String)
     func setYear(year: String)
     func validateFields() -> Bool
-    func setLoaderState(state: Bool)
 }
