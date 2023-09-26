@@ -43,6 +43,7 @@ class MoviesGeneratorViewController: UIViewController {
         self.viewModel.start { result in
             switch result {
             case .failure(let error):
+                self.loader.stopAnimating()
                 self.showError(error: error)
             case .success:
                 self.loader.stopAnimating()
@@ -77,7 +78,6 @@ class MoviesGeneratorViewController: UIViewController {
         
         genreButton.backgroundColor = .systemGray6
         genreButton.setTitleColor(.black, for: .normal)
-        genreButton.setTitle(self.viewModel.selectedGenre, for: .normal)
         genreButton.layer.cornerRadius = 10
         genreButton.titleLabel?.font = ProximaNovaFont.font(type: .regular, size: 20)
         genreButton.addTarget(self, action: #selector(self.openGenresMenu), for: .touchDown)
@@ -182,6 +182,7 @@ class MoviesGeneratorViewController: UIViewController {
         self.viewModel.fetch { result in
             switch result {
             case .failure(let error):
+                self.loader.stopAnimating()
                 self.showError(error: error)
             case .success:
                 guard let id = self.viewModel.generatedMovieId else { return }
