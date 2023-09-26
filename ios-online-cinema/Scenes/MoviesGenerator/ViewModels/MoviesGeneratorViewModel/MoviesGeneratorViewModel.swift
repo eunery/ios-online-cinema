@@ -51,6 +51,9 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
+                    if response.results.count == 0 {
+                        completionHandler(.failure(.emptyResponse))
+                    }
                     self.generatedMovieId = response.results.randomElement()?.id
                     completionHandler(.success(()))
                 }
