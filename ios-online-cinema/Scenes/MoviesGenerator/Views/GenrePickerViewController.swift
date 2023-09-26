@@ -98,12 +98,9 @@ extension GenrePickerViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? GenrePickerTableViewCell {
-            guard let item = cell.genreName.text else { return }
-            self.delegate?.selectData(text: item)
-            self.dismiss(animated: true)
-        }
-        
+        let item = self.viewModel.filteredGenresNames[indexPath.row]
+        self.delegate?.selectData(text: item)
+        self.dismiss(animated: true)
     }
 }
 

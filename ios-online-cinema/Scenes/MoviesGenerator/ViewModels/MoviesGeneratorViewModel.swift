@@ -38,11 +38,13 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
         }
     }
     
-    func fetch(genre: String, year: String, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         let page = Int.random(in: 1...500)
+        guard let genre = self.selectedGenre else { return }
+        guard let year = self.selectedYear else { return }
         self.apiService.getGeneratingMovies(page: page.description,
-                                           year: year,
-                                           genre: genre) { result in
+                                            year: year,
+                                            genre: genre) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {

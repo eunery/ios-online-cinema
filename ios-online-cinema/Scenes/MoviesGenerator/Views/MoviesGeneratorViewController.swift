@@ -179,9 +179,7 @@ class MoviesGeneratorViewController: UIViewController {
     
     @objc func generateMovie() {
         loader.startAnimating()
-        guard let genre = genreButton.titleLabel?.text else { return }
-        guard let year = yearTextField.text else { return }
-        self.viewModel.fetch(genre: genre, year: year) { result in
+        self.viewModel.fetch { result in
             switch result {
             case .failure(let error):
                 self.showError(error: error)
