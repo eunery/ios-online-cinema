@@ -41,12 +41,11 @@ class MoviesGeneratorViewController: UIViewController {
         setup()
         loader.startAnimating()
         self.viewModel.start { result in
+            self.loader.stopAnimating()
             switch result {
             case .failure(let error):
-                self.loader.stopAnimating()
                 self.showError(error: error)
-            case .success:
-                self.loader.stopAnimating()
+            case .success: break
             }
         }
     }
@@ -180,13 +179,12 @@ class MoviesGeneratorViewController: UIViewController {
     @objc func generateMovie() {
         loader.startAnimating()
         self.viewModel.fetch { result in
+            self.loader.stopAnimating()
             switch result {
             case .failure(let error):
-                self.loader.stopAnimating()
                 self.showError(error: error)
             case .success:
                 guard let id = self.viewModel.generatedMovieId else { return }
-                self.loader.stopAnimating()
                 self.coordinator?.showMoviesDetails(movieId: id)
             }
         }
