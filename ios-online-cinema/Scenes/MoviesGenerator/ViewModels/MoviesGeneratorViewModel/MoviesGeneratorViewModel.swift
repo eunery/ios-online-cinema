@@ -38,7 +38,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
         }
     }
     
-    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
+    func fetch(completionHandler: @escaping (Result<Void, Error>) -> Void) {
         let page = Int.random(in: 1...500)
         guard let genre = self.selectedGenre else { return }
         guard let year = self.selectedYear else { return }
@@ -52,7 +52,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
                     completionHandler(.failure(error))
                 case .success(let response):
                     if response.results.count == 0 {
-                        completionHandler(.failure(.emptyResponse))
+                        completionHandler(.failure(MoviesGeneratorError.generationError))
                     }
                     self.generatedMovieId = response.results.randomElement()?.id
                     completionHandler(.success(()))

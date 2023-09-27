@@ -27,7 +27,7 @@ enum APIError: Error, LocalizedError {
         case .badResponse(let statusCode):
             return "Bad Response. Status code: \(statusCode)"
         case .emptyResponse:
-            return "Не удалось сгенерировать фильм"
+            return "Empty response."
         case .url(let error):
             return error?.localizedDescription ?? "Something went wrong"
         }

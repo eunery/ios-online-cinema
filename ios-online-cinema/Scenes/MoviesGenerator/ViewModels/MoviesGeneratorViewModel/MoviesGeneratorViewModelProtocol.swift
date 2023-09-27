@@ -13,7 +13,7 @@ protocol MoviesGeneratorViewModelProtocol {
     var generatedMovieId: Int? { get }
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void)
-    func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void)
+    func fetch(completionHandler: @escaping (Result<Void, Error>) -> Void)
     func setGenre(genre: String)
     func setYear(year: String)
     func validateFields() -> Bool
