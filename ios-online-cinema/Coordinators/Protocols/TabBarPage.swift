@@ -11,12 +11,15 @@ import UIKit
 enum TabBarPage {
     case moviesFeed
     case favouriteMovies
+    case moviesGenerator
     
     init?(index: Int) {
         switch index {
         case 0:
             self = .moviesFeed
         case 1:
+            self = .moviesGenerator
+        case 2:
             self = .favouriteMovies
         default:
             return nil
@@ -27,6 +30,8 @@ enum TabBarPage {
         switch self {
         case .moviesFeed:
             return "Feed"
+        case .moviesGenerator:
+            return "Generator"
         case .favouriteMovies:
             return "Favourite"
         }
@@ -36,8 +41,10 @@ enum TabBarPage {
         switch self {
         case .moviesFeed:
             return 0
-        case .favouriteMovies:
+        case .moviesGenerator:
             return 1
+        case .favouriteMovies:
+            return 2
         }
     }
     
@@ -45,6 +52,8 @@ enum TabBarPage {
         switch self {
         case .moviesFeed:
             return UIImage(systemName: "list.bullet")
+        case .moviesGenerator:
+            return UIImage(systemName: "paperplane")
         case .favouriteMovies:
             return UIImage(systemName: "heart")
         }

@@ -14,4 +14,8 @@ protocol APIServiceProtocol {
     func getMoviesDetails(movieId: Int,
                           completionHandler: @escaping (Result<MoviesDetailsResponseModel, APIError>) -> Void)
     func getMoviesGenres(completionHandler: @escaping (Result<MovieGenresResponseModel, APIError>) -> Void)
+    func getGeneratingMovies(page: String,
+                             year: String,
+                             genre: String,
+                             completionHandler: @escaping (Result<MoviesGeneratorResponseModel, APIError>) -> Void)
 }

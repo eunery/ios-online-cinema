@@ -9,24 +9,24 @@ import Foundation
 
 struct MoviesDetailsResponseModel: Codable {
     let adult: Bool
-    let backdropPath: String
+    let backdropPath: String?
     let belongsToCollection: MovieCollectionModel?
     let budget: Int
     let genres: [GenreIdModel]
     let homepage: String
     let id: Int
-    let imdbId: String
+    let imdbId: String?
     let originalLanguage: String
     let originalTitle: String
     let overview: String
     let popularity: Double
-    let posterPath: String
+    let posterPath: String?
     let productionCompanies: [ProductionCompaniesModel?]
     let productionCountries: [ProductionCountriesModel?]
     let releaseDate: String
     let revenue: Int
     let runtime: Int
-    let spokenLanguages: [SpokenLanguagesModel]
+    let spokenLanguages: [SpokenLanguagesModel?]
     let status: String
     let tagline: String
     let title: String
@@ -67,7 +67,7 @@ struct MovieCollectionModel: Codable {
     let id: Int
     let name: String
     let posterPath: String?
-    let backdropPath: String
+    let backdropPath: String?
     
     enum СodingKeys: String, CodingKey {
         case id

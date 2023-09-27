@@ -18,9 +18,8 @@ class FavouriteMoviesCoordinator: Coordinator, FavouriteMoviesCoordinatorProtoco
     
     var finishDelegate: CoordinatorFinishDelegate?
     var childCoordinators: [Coordinator] = []
-    var type: CoordinatorType {.favouriteMovies}
+    var type: CoordinatorType { .favouriteMovies }
     var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []
     var navigationController: UINavigationController
     
     // MARK: - Init

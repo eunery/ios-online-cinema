@@ -30,7 +30,7 @@ struct APIService: APIServiceProtocol {
                           completionHandler: @escaping (Result<MoviesDetailsResponseModel, APIError>) -> Void) {
         worker.performRequest(
             queryParametres: nil,
-            endpoint: Endpoints.movieDetails.rawValue + movieId.description,
+            endpoint: Endpoints.moviesDetails.rawValue + movieId.description,
             apiMethod: .get,
             responseType: MoviesDetailsResponseModel.self,
             completionHandler: completionHandler
@@ -44,6 +44,22 @@ struct APIService: APIServiceProtocol {
             apiMethod: .get,
             responseType: MovieGenresResponseModel.self,
             completionHandler: completionHandler
+        )
+    }
+    
+    func getGeneratingMovies(page: String,
+                             year: String,
+                             genre: String,
+                             completionHandler: @escaping (Result<MoviesGeneratorResponseModel, APIError>) -> Void) {
+        var params: [URLQueryItem] = []
+        params.append(URLQueryItem(name: "page", value: page))
+        params.append(URLQueryItem(name: "with_genres", value: genre))
+        params.append(URLQueryItem(name: "year", value: year))
+        worker.performRequest(queryParametres: params,
+                              endpoint: Endpoints.moviesGenerator.rawValue,
+                              apiMethod: .get,
+                              responseType: MoviesGeneratorResponseModel.self,
+                              completionHandler: completionHandler
         )
     }
 }

@@ -45,7 +45,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     func setupDataSource(response: MoviesDetailsResponseModel,
                          completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        let url = converter.createImageURL(posterPath: response.posterPath)
+        let url = converter.createImageURL(posterPath: response.posterPath ?? "")
 
         self.dataSource.append(MoviesDetailsPosterCellData(poster: url.description))
         

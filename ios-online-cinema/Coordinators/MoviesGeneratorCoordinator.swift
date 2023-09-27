@@ -1,26 +1,26 @@
 //
-//  MoviesFeedCoordinator.swift
+//  MoviesGeneratorCoordinator.swift
 //  ios-online-cinema
 //
-//  Created by Sergei Kulagin on 03.08.2023.
+//  Created by Sergei Kulagin on 08.09.2023.
 //
 
 import Foundation
 import UIKit
 
-protocol MoviesFeedCoordinatorProtocol: Coordinator {
+protocol MoviesGeneratorCoordinatorProtocol: Coordinator {
     func showMoviesDetails(movieId: Int)
 }
 
-class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
+class MoviesGeneratorCoordinator: Coordinator, MoviesGeneratorCoordinatorProtocol {
     
     // MARK: - Properties
     
     var finishDelegate: CoordinatorFinishDelegate?
-    var childCoordinators: [Coordinator] = []
-    var type: CoordinatorType { .moviesFeed }
     var parentCoordinator: Coordinator?
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    var type: CoordinatorType { .moviesGenerator }
     
     // MARK: - Init
     
@@ -31,9 +31,9 @@ class MoviesFeedCoordinator: Coordinator, MoviesFeedCoordinatorProtocol {
     // MARK: - Methods
     
     func start() {
-        let viewController = MoviesFeedViewController(viewModel: MoviesFeedViewModel())
+        let viewController = MoviesGeneratorViewController(viewModel: MoviesGeneratorViewModel())
         viewController.coordinator = self
-        navigationController.setViewControllers([viewController], animated: true)
+        navigationController.setViewControllers([viewController], animated: false)
     }
     
     func showMoviesDetails(movieId: Int) {

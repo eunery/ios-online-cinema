@@ -13,9 +13,7 @@ protocol TabBarProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
     
     func selectPage(_ page: TabBarPage)
-    
     func selectedIndex(_ index: Int)
-    
     func currentPage() -> TabBarPage?
 }
 
@@ -52,6 +50,10 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
             let moviesFeedVC = MoviesFeedCoordinator(navController)
             moviesFeedVC.parentCoordinator = self
             moviesFeedVC.start()
+        case .moviesGenerator:
+            let moviesGenerator = MoviesGeneratorCoordinator(navController)
+            moviesGenerator.parentCoordinator = self
+            moviesGenerator.start()
         case .favouriteMovies:
             let favouriteMovies = FavouriteMoviesCoordinator(navController)
             favouriteMovies.parentCoordinator = self
@@ -63,7 +65,7 @@ class TabBarCoordinator: NSObject, TabBarProtocol, Coordinator {
     // MARK: - Methods
     
     func start() {
-        let pages: [TabBarPage] = [.moviesFeed, .favouriteMovies]
+        let pages: [TabBarPage] = [.moviesFeed, .moviesGenerator, .favouriteMovies]
             .sorted(by: {$0.pageOrderNumber() < $1.pageOrderNumber() })
         
         let controllers: [UINavigationController] = pages.map({ getTabController($0) })
