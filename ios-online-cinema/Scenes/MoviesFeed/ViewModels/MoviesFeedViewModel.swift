@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Resolver
 
 class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     
     // MARK: - Properties
     
     var genres: [Int: String] = [Int: String]()
-    let apiService = APIService(worker: NetworkWorker())
+    @Injected var apiService: APIServiceProtocol
     var dataSource = [MovieCollectionViewCellModel]()
     var currentPage = 1
     var totalPages = 1
