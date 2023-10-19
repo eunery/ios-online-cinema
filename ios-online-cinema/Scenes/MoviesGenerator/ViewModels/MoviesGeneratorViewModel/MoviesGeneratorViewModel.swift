@@ -18,6 +18,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     var genresNames: [String] = [String]()
     var selectedGenre: String?
     var selectedYear: String?
+    let converter = MoviesGeneratorConverter()
     
     // MARK: - Methods
     
@@ -30,9 +31,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
-                    for item in response.genres {
-                        self.genresNames.append(item.name)
-                    }
+                    self.genresNames = converter.fromResponseToGenresNames(response: response)
                     completionHandler(.success(()))
                 }
             }

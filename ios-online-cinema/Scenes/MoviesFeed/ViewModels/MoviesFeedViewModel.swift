@@ -20,6 +20,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     let host = "image.tmdb.org"
     let scheme = "https"
     let path = "/t/p/w500"
+    let converter = MoviesFeedConverter()
 
     // MARK: - Methods
     
@@ -43,9 +44,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
-                    for item in response.genres {
-                        self.genres[item.id] = item.name
-                    }
+                    self.genres = converter.fromResponseToGenres(response: response)
                     self.getMovies(page: nil) { _ in
                         completionHandler(.success(()))
                     }
@@ -83,7 +82,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
             for item in $0.genreIds {
                 genresString.append(self.genres[item] ?? "")
             }
-            return MovieCollectionViewCellModel(
+            return converter.fromResponseToDataSource(
                 id: $0.id,
                 poster: url.description,
                 title: $0.title,
