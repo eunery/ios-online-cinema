@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MoviesGeneratorViewController: UIViewController {
+class MoviesGeneratorViewController: UIViewController, ShowErrorProtocol {
     
     // MARK: - Properties
     
@@ -208,19 +208,5 @@ extension MoviesGeneratorViewController: UIPickerViewDelegate, UIPickerViewDataS
         yearTextField.text = self.viewModel.yearsArray[row].description
         self.viewModel.setYear(year: self.viewModel.yearsArray[row].description)
         yearTextField.resignFirstResponder()
-    }
-}
-
-extension MoviesGeneratorViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.validateFields()
-    }
-}
-
-extension MoviesGeneratorViewController: GenrePickerViewControllerDelegate {
-    func selectData(text: String) {
-        self.viewModel.setGenre(genre: text)
-        self.genreButton.setTitle(text, for: .normal)
-        self.validateFields()
     }
 }
