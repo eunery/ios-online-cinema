@@ -13,7 +13,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     // MARK: - Properties
     
     var genres: [Int: String] = [Int: String]()
-    @Injected var apiService: APIServiceProtocol
+    @Injected var apiRepository: APIRepositoryProtocol
     var dataSource = [MovieCollectionViewCellModel]()
     var currentPage = 1
     var totalPages = 1
@@ -37,7 +37,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     }
     
     func getGenresAndMovies(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.apiService.getMoviesGenres { result in
+        self.apiRepository.getMoviesGenres { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
@@ -54,7 +54,7 @@ class MoviesFeedViewModel: MoviesFeedViewModelProtocol {
     }
     
     func getMovies(page: Int?, completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        self.apiService.getTrendingMovies(page: page) { result in
+        self.apiRepository.getTrendingMovies(page: page) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {

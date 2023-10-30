@@ -16,5 +16,7 @@ extension Resolver: ResolverRegistering {
             .implements(NetworkWorkerProtocol.self)
         register { APIService() }
             .implements(APIServiceProtocol.self)
+        register { APIRepository() }
+            .implements(APIRepositoryProtocol.self)
     }
 }

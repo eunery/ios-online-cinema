@@ -13,7 +13,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     // MARK: - Properties
     
     var yearsArray: [Int] = Array(1900...Calendar.current.component(.year, from: .now))
-    @Injected var apiService: APIServiceProtocol
+    @Injected var apiRepository: APIRepositoryProtocol
     var generatedMovieId: Int?
     var genresNames: [String] = [String]()
     var selectedGenre: String?
@@ -24,7 +24,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         genresNames.removeAll()
-        self.apiService.getMoviesGenres { result in
+        self.apiRepository.getMoviesGenres { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
@@ -42,7 +42,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
         let page = Int.random(in: 1...500)
         guard let genre = self.selectedGenre else { return }
         guard let year = self.selectedYear else { return }
-        self.apiService.getGeneratingMovies(page: page.description,
+        self.apiRepository.getGeneratingMovies(page: page.description,
                                             year: year,
                                             genre: genre) { result in
             DispatchQueue.main.async { [weak self] in
