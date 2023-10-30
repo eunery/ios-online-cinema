@@ -62,6 +62,9 @@ class MoviePosterTableViewCell: UITableViewCell {
     }
     
     func configure(cellModel: MoviesDetailsPosterCellData) {
-        self.posterImageView.sd_setImage(with: URL(string: cellModel.poster))
+        self.posterImageView.sd_setImage(
+            with: URL(string: cellModel.poster),
+            placeholderImage: UIImage(named: "noimage")
+        )
     }
 }

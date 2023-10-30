@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Resolver
 
 struct APIService: APIServiceProtocol {
     
-    let worker: NetworkWorkerProtocol
+    @Injected var worker: NetworkWorkerProtocol
     
     func getTrendingMovies(page: Int?,
                            completionHandler: @escaping (Result<TrendMoviesResponseModel, APIError>) -> Void) {

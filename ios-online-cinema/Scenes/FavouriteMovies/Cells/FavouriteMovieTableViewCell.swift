@@ -101,7 +101,7 @@ class FavouriteMovieTableViewCell: UITableViewCell {
     
     func configure(cellModel: FavouriteMovieDB) {
         self.id = cellModel.id
-        self.posterView.sd_setImage(with: URL(string: cellModel.poster))
+        self.posterView.sd_setImage(with: URL(string: cellModel.poster), placeholderImage: UIImage(named: "noimage"))
         self.genreLabel.text = cellModel.genres
         self.voteLabel.text = cellModel.vote
         self.releaseDateLabel.text = cellModel.releaseDate

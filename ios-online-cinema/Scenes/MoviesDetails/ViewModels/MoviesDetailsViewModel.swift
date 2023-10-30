@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Resolver
 
 class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     // MARK: - Properties
     
     let movieId: Int
-    let apiService = APIService(worker: NetworkWorker())
+    @Injected var apiRepository: APIRepositoryProtocol
     var dataSource = [MoviesDetailsCellDataProtocol]()
     var response: MoviesDetailsResponseModel?
     let coreDataRepository = FavouriteMovieDataRepository()
@@ -27,7 +28,7 @@ class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     // MARK: - Methods
     
     func fetch(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
-        apiService.getMoviesDetails(movieId: self.movieId) { result in
+        apiRepository.getMoviesDetails(movieId: self.movieId) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {

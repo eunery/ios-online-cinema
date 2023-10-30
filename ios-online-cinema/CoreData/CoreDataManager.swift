@@ -12,7 +12,6 @@ class CoreDataManager: NSObject {
     
     // MARK: - Properties
     
-    public static let shared = CoreDataManager()
     var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FavouriteMoviesData")
         container.loadPersistentStores(completionHandler: { (_, error) in

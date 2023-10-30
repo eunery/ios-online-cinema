@@ -71,7 +71,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(cellModel: MovieCollectionViewCellModel) {
-        self.posterView.sd_setImage(with: URL(string: cellModel.poster))
+        self.posterView.sd_setImage(with: URL(string: cellModel.poster), placeholderImage: UIImage(named: "noimage"))
         self.id = cellModel.id
         self.titleLabel.text = cellModel.title
         self.genreLabel.text = cellModel.genre

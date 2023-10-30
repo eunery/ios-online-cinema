@@ -6,32 +6,32 @@
 //
 
 import Foundation
+import Resolver
 
 class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     
     // MARK: - Properties
     
     var yearsArray: [Int] = Array(1900...Calendar.current.component(.year, from: .now))
-    let apiService = APIService(worker: NetworkWorker())
+    @Injected var apiRepository: APIRepositoryProtocol
     var generatedMovieId: Int?
     var genresNames: [String] = [String]()
     var selectedGenre: String?
     var selectedYear: String?
+    let converter = MoviesGeneratorConverter()
     
     // MARK: - Methods
     
     func start(completionHandler: @escaping (Result<Void, APIError>) -> Void) {
         genresNames.removeAll()
-        self.apiService.getMoviesGenres { result in
+        self.apiRepository.getMoviesGenres { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 switch result {
                 case .failure(let error):
                     completionHandler(.failure(error))
                 case .success(let response):
-                    for item in response.genres {
-                        self.genresNames.append(item.name)
-                    }
+                    self.genresNames = converter.fromResponseToGenresNames(response: response)
                     completionHandler(.success(()))
                 }
             }
@@ -42,7 +42,7 @@ class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
         let page = Int.random(in: 1...500)
         guard let genre = self.selectedGenre else { return }
         guard let year = self.selectedYear else { return }
-        self.apiService.getGeneratingMovies(page: page.description,
+        self.apiRepository.getGeneratingMovies(page: page.description,
                                             year: year,
                                             genre: genre) { result in
             DispatchQueue.main.async { [weak self] in
