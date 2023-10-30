@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Resolver
 
 class MoviesDetailsViewModel: MoviesDetailsViewModelProtocol {
     
     // MARK: - Properties
     
     let movieId: Int
-    let apiService = APIService(worker: NetworkWorker())
+    @Injected var apiService: APIServiceProtocol
     var dataSource = [MoviesDetailsCellDataProtocol]()
     var response: MoviesDetailsResponseModel?
     let coreDataRepository = FavouriteMovieDataRepository()

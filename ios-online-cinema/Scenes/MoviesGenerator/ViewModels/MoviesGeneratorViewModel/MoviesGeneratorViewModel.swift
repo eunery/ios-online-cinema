@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Resolver
 
 class MoviesGeneratorViewModel: MoviesGeneratorViewModelProtocol {
     
     // MARK: - Properties
     
     var yearsArray: [Int] = Array(1900...Calendar.current.component(.year, from: .now))
-    let apiService = APIService(worker: NetworkWorker())
+    @Injected var apiService: APIServiceProtocol
     var generatedMovieId: Int?
     var genresNames: [String] = [String]()
     var selectedGenre: String?

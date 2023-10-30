@@ -9,6 +9,7 @@ target 'ios-online-cinema' do
 
 pod 'SnapKit', '5.6.0'
 pod 'SDWebImage', '5.17.0'
+pod 'Resolver', '1.5.0'
 
   target 'ios-online-cinemaTests' do
     inherit! :search_paths
